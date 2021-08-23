@@ -18,7 +18,7 @@ public class JsonGetter {
     public JsonGetter() {
     }
 
-    public void getJson () throws IOException, InterruptedException{
+    public List getJson () throws IOException, InterruptedException{
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -32,5 +32,6 @@ public class JsonGetter {
         ObjectMapper mapper = new ObjectMapper();
         List<Greeting>greetings = mapper.readValue(response.body(),new TypeReference<List<Greeting>>(){});
         greetings.forEach(System.out::println);
+        return greetings;
     }
 }
