@@ -1,6 +1,7 @@
 package com.example.restservice.material;
 
 import com.example.restservice.material.Material;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
