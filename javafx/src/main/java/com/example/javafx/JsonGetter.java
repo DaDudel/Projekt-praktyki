@@ -12,7 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 public class JsonGetter {
-    private static final String POSTS_API_URL ="http://localhost:8080/greeting/?name=Maciej";
+    //private static final String POSTS_API_URL ="http://localhost:8080/greeting/?name=Maciej";
+    private static final String POSTS_API_URL ="http://localhost:8080/";
 
     public JsonGetter() {
     }
@@ -26,9 +27,10 @@ public class JsonGetter {
                 .build();
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
+        System.out.println();
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        List<Greeting>greetings = mapper.readValue(response.body(),new TypeReference<List<Greeting>>(){});
-//        greetings.forEach(System.out::println);
+        ObjectMapper mapper = new ObjectMapper();
+        List<Greeting>greetings = mapper.readValue(response.body(),new TypeReference<List<Greeting>>(){});
+        greetings.forEach(System.out::println);
     }
 }

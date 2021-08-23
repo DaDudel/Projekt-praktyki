@@ -32,4 +32,7 @@ public class Greeting {
                 ", content='" + content + '\'' +
                 '}';
     }
+
+    public Greeting() {
+    }
 }
