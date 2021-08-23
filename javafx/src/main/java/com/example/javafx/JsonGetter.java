@@ -13,7 +13,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 public class JsonGetter {
     //private static final String POSTS_API_URL ="http://localhost:8080/greeting/?name=Maciej";
-    private static final String POSTS_API_URL ="http://localhost:8080/";
+    private static final String POSTS_API_URL ="http://localhost:8080/materials";
+    private MaterialList materialList = new MaterialList();
 
     public JsonGetter() {
     }
@@ -30,8 +31,11 @@ public class JsonGetter {
         System.out.println();
 
         ObjectMapper mapper = new ObjectMapper();
-        List<Greeting>greetings = mapper.readValue(response.body(),new TypeReference<List<Greeting>>(){});
-        greetings.forEach(System.out::println);
-        return greetings;
+        materialList = mapper.readValue(response.body(),new TypeReference<MaterialList>(){});
+        //List<Material>greetings = mapper.readValue(response.body(),new TypeReference<List<Material>>(){});
+        //greetings.forEach(System.out::println);
+        //return greetings;
+
+        return materialList.getMaterials();
     }
 }

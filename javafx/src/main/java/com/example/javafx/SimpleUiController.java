@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -28,6 +29,9 @@ public class SimpleUiController {
     @FXML
     public ListView testList;
 
+    @FXML
+    public TextField filterMaterial;
+
     SimpleUiController(HostServices hostServices) {
         this.hostServices = hostServices;
     }
@@ -41,7 +45,7 @@ public class SimpleUiController {
     @FXML
     public void connectJson(){
         try {
-            jsonGetter.getJson();
+            //jsonGetter.getJson();
             ObservableList<Greeting> helpList = FXCollections.observableList(jsonGetter.getJson());
             testList.setItems(helpList);
         } catch (IOException e) {
@@ -49,5 +53,9 @@ public class SimpleUiController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    public void filterTable(){
+
     }
 }
