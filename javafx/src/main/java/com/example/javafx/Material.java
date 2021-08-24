@@ -12,6 +12,9 @@ public class Material {
         this.price = price;
     }
 
+    public Material() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +52,13 @@ public class Material {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Material{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                '}';
     }
 }
