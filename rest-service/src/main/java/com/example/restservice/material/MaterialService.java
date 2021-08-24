@@ -26,4 +26,8 @@ public class MaterialService {
 
         return materialRepository.findAll();
     }
+
+    public void addNewMaterial(Material material) {
+        System.out.println(material);
+    }
 }
