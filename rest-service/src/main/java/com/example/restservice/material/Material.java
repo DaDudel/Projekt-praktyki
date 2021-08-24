@@ -1,10 +1,27 @@
 package com.example.restservice.material;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Material {
+    @Id
+    @SequenceGenerator(
+            name = "material_sequence",
+            sequenceName = "material_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "material_sequence"
+    )
     private Integer id;
     private String name;
     private Integer quantity;
     private Double price;
+
+    public Material() {
+    }
 
     public Material(Integer id, String name, Integer quantity, Double price) {
         this.id = id;

@@ -21,10 +21,6 @@ public class MaterialController {
     @GetMapping("/API/materials")
     public List<Material> getMaterial() {
 
-        List<Material>templist = new ArrayList<Material>();
-        templist.add(new Material(1,"Gumka",20,5.00));
-        templist.add(new Material(2,"Pasek",15,7.50));
-        templist.add(new Material(3,"Koronka",40,3.00));
-        return templist;
+        return materialService.getMaterial();
     }
 }
