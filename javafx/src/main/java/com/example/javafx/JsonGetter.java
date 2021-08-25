@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 public class JsonGetter {
     //private static final String POSTS_API_URL ="http://localhost:8080/greeting/?name=Maciej";
-    private static final String POSTS_API_URL ="http://localhost:8080/API/materials/getmaterial";
+    private static final String POSTS_API_URL ="http://localhost:8080/API/materials";
     //private MaterialList materialList = new MaterialList();
 
     public JsonGetter() {
