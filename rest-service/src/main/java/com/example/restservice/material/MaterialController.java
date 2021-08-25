@@ -18,7 +18,7 @@ public class MaterialController {
     }
 
 
-    @GetMapping
+    @GetMapping(path = "/getmaterial")
     public List<Material> getMaterial() {
 
         return materialService.getMaterial();
@@ -28,4 +28,9 @@ public class MaterialController {
     public void registerNewMaterial(@RequestBody Material material){
         materialService.addNewMaterial(material);
     }
+
+//    @PostMapping(path="/testmapping")
+//    public void testMapping(@RequestBody String string){
+//        System.out.println(string);
+//    }
 }
