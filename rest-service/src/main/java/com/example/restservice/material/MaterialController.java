@@ -18,7 +18,7 @@ public class MaterialController {
     }
 
 
-    @GetMapping(path = "/getmaterial")
+    @GetMapping
     public List<Material> getMaterial() {
 
         return materialService.getMaterial();
@@ -29,8 +29,17 @@ public class MaterialController {
         materialService.addNewMaterial(material);
     }
 
-//    @PostMapping(path="/testmapping")
-//    public void testMapping(@RequestBody String string){
-//        System.out.println(string);
-//    }
+    @DeleteMapping(path = "{materialId}")
+    public void deleteMaterial(@PathVariable("materialId") Integer materialId){
+        materialService.deleteMaterial(materialId);
+    }
+
+    @PutMapping(path = "{materialId}")
+    public void updateMaterial(
+            @PathVariable("materialId") Integer materialId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer quantity,
+            @RequestParam(required = false) Double price){
+        materialService.updateMaterial(materialId,name, quantity,price);
+    }
 }

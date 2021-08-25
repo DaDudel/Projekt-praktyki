@@ -2,9 +2,12 @@ package com.example.restservice.material;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class MaterialService {
@@ -28,6 +31,43 @@ public class MaterialService {
     }
 
     public void addNewMaterial(Material material) {
-        System.out.println(material);
+        Optional<Material> materialOptional = materialRepository
+                .findMaterialByName(material.getName());
+        if(materialOptional.isPresent()){
+            throw new IllegalStateException("name taken");
+        }
+        //System.out.println(material);
+        materialRepository.save(material);
+    }
+
+    public void deleteMaterial(Integer materialId) {
+        //materialRepository.findById(materialId);
+        boolean exists = materialRepository.existsById(materialId);
+        if(!exists){
+            throw new IllegalStateException("material with id "+ materialId + " does not exist");
+        }
+        materialRepository.deleteById(materialId);
+    }
+
+    @Transactional
+    public void updateMaterial(Integer materialId, String name, Integer quantity, Double price) {
+        Material material = materialRepository.findById(materialId)
+                .orElseThrow(()->new IllegalStateException("material with id " + materialId + " does not exist"));
+
+        if(name != null &&
+                name.length() > 0 &&
+                !Objects.equals(material.getName(),name)){
+            material.setName(name);
+        }
+
+        if(quantity != null &&
+                !Objects.equals(material.getQuantity(),quantity)){
+            material.setQuantity(quantity);
+        }
+
+        if(price != null &&
+        !Objects.equals(material.getPrice(),price)){
+            material.setPrice(price);
+        }
     }
 }
