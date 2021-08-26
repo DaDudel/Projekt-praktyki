@@ -51,6 +51,7 @@ public class SimpleUiController {
             testList.setItems(helpList);
             //jsonGetter.deleteElement(8);
             //httpRequester.deleteRequest(8);
+            httpRequester.editRequest(new Material(4,"Test material", 5, 7.20));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
