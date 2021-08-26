@@ -15,6 +15,7 @@ import java.io.IOException;
 @Component
 public class SimpleUiController {
     private JsonGetter jsonGetter = new JsonGetter();
+    private HttpRequester httpRequester = new HttpRequester();
     private final HostServices hostServices;
 
     @FXML
@@ -46,8 +47,10 @@ public class SimpleUiController {
     public void connectJson(){
         try {
             //jsonGetter.getJson();
-            ObservableList<Greeting> helpList = FXCollections.observableList(jsonGetter.getJson());
+            ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
             testList.setItems(helpList);
+            //jsonGetter.deleteElement(8);
+            //httpRequester.deleteRequest(8);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
