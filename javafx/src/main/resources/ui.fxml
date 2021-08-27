@@ -21,5 +21,10 @@
       <TextField fx:id="quantityTextField" layoutX="1034.0" layoutY="406.0" />
       <TextField fx:id="priceTextField" layoutX="1034.0" layoutY="431.0" />
       <Label layoutX="1183.0" layoutY="435.0" text="zł" />
+      <Button fx:id="updateButton" layoutX="986.0" layoutY="465.0" mnemonicParsing="false" onAction="#updateDetails" prefHeight="26.0" prefWidth="280.0" text="Zaktualizuj dane" />
+      <Button fx:id="deleteMaterialButton" layoutX="986.0" layoutY="500.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="280.0" text="Usuń wybrany materiał" />
+      <Button fx:id="addMaterialButton" layoutX="986.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="280.0" text="Dodaj nowy materiał" />
+      <Label fx:id="priceErrorLabel" layoutX="986.0" layoutY="605.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
+      <Label fx:id="quantityErrorLabel" layoutX="986.0" layoutY="570.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

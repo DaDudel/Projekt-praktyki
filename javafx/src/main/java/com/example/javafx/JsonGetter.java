@@ -25,12 +25,12 @@ public class JsonGetter {
                 .uri(URI.create(POSTS_API_URL))
                 .build();
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        System.out.println();
+        //System.out.println(response.body());
+        //System.out.println();
 
         ObjectMapper mapper = new ObjectMapper();
         List<Material>materials = mapper.readValue(response.body(),new TypeReference<List<Material>>(){});
-        materials.forEach(System.out::println);
+        //materials.forEach(System.out::println);
         return materials;
     }
 }
