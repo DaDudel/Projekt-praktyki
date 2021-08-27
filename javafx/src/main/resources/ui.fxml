@@ -27,5 +27,7 @@
       <Label fx:id="priceErrorLabel" layoutX="986.0" layoutY="605.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
       <Label fx:id="quantityErrorLabel" layoutX="986.0" layoutY="570.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
       <Label fx:id="deleteMaterialLabel" layoutX="986.0" layoutY="640.0" prefHeight="18.0" prefWidth="280.0" />
+      <Button fx:id="plusButton" layoutX="1192.0" layoutY="407.0" mnemonicParsing="false" onAction="#plusQuantity" prefWidth="25.6" text="+" />
+      <Button fx:id="minusButton" layoutX="1218.0" layoutY="407.0" mnemonicParsing="false" onAction="#minusQuantity" prefWidth="25.6" text="-" />
    </children>
 </AnchorPane>

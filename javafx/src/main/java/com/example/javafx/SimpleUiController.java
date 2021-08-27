@@ -217,4 +217,34 @@ public class SimpleUiController implements Initializable {
         }
 
     }
+
+    @FXML
+    public Button plusButton;
+
+    @FXML
+    public Button minusButton;
+
+    @FXML
+    public void plusQuantity(){
+        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        }
+        httpRequester.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
+        Integer temp = tempMaterial.getQuantity()+1;
+        tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
+        quantityTextField.setText(temp.toString());
+        refreshDatabase();
+    }
+
+    @FXML
+    public void minusQuantity(){
+        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        }
+        httpRequester.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
+        Integer temp = tempMaterial.getQuantity()-1;
+        tempMaterial.setQuantity(tempMaterial.getQuantity()-1);
+        quantityTextField.setText(temp.toString());
+        refreshDatabase();
+    }
 }
