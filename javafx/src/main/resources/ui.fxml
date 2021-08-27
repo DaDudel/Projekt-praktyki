@@ -11,11 +11,15 @@
       <Button fx:id="button" layoutX="49.0" layoutY="48.0" mnemonicParsing="false" text="Button" />
       <Label fx:id="label" layoutX="69.0" layoutY="149.0" prefHeight="18.0" prefWidth="401.0" text="Label" />
       <Button fx:id="connectButton" layoutX="14.0" layoutY="680.0" mnemonicParsing="false" onAction="#connectJson" text="Odśwież" />
-      <ListView fx:id="testList" layoutX="986.0" layoutY="48.0" prefHeight="320.0" prefWidth="280.0" />
+      <ListView fx:id="testList" layoutX="986.0" layoutY="48.0" onMouseClicked="#displaySelected" prefHeight="320.0" prefWidth="280.0" />
       <TextField fx:id="filterMaterial" layoutX="986.0" layoutY="14.0" onKeyTyped="#filterTable" prefHeight="26.0" prefWidth="280.0" promptText="Szukaj materiału" />
       <Label fx:id="connectionLabel" layoutX="84.0" layoutY="683.0" prefHeight="18.0" prefWidth="170.0" />
       <Label fx:id="nameLabel" layoutX="986.0" layoutY="385.0" text="Nazwa:" />
       <Label fx:id="quantityLabel" layoutX="986.0" layoutY="410.0" prefHeight="18.0" prefWidth="38.0" text="Ilość:" />
       <Label fx:id="priceLabel" layoutX="986.0" layoutY="435.0" prefHeight="18.0" prefWidth="38.0" text="Cena:" />
+      <TextField fx:id="nameTextField" layoutX="1034.0" layoutY="381.0" />
+      <TextField fx:id="quantityTextField" layoutX="1034.0" layoutY="406.0" />
+      <TextField fx:id="priceTextField" layoutX="1034.0" layoutY="431.0" />
+      <Label layoutX="1183.0" layoutY="435.0" text="zł" />
    </children>
 </AnchorPane>
