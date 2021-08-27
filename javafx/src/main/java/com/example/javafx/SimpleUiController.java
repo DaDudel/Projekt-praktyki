@@ -199,4 +199,22 @@ public class SimpleUiController implements Initializable {
         }
         refreshDatabase();
     }
+
+    @FXML
+    public Label deleteMaterialLabel;
+
+    @FXML
+    public void deleteMaterial(){
+        Material material = (Material) testList.getSelectionModel().getSelectedItem();
+        if(material==null){
+            deleteMaterialLabel.setTextFill(Color.RED);
+            deleteMaterialLabel.setText("Wybierz materiał do usunięcia");
+        }
+        else {
+            httpRequester.deleteRequest(material.getId());
+            deleteMaterialLabel.setText("");
+            refreshDatabase();
+        }
+
+    }
 }
