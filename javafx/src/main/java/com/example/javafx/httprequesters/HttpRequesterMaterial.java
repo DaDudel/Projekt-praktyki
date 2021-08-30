@@ -1,4 +1,6 @@
-package com.example.javafx;
+package com.example.javafx.httprequesters;
+
+import com.example.javafx.Material;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class HttpRequester {
+public class HttpRequesterMaterial {
     private HttpURLConnection connection;
 
     public void deleteRequest (Integer id){
@@ -79,6 +81,6 @@ public class HttpRequester {
 
     }
 
-    public HttpRequester() {
+    public HttpRequesterMaterial() {
     }
 }

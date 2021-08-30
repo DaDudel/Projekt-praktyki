@@ -1,5 +1,6 @@
 package com.example.javafx;
 
+import com.example.javafx.httprequesters.HttpRequesterMaterial;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 @Component
 public class SimpleUiController implements Initializable {
     private JsonGetter jsonGetter = new JsonGetter();
-    private HttpRequester httpRequester = new HttpRequester();
+    private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
     private final HostServices hostServices;
     private Material tempMaterial;
 
@@ -201,7 +202,7 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequester.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
+            httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
             tempMaterial.setName(nameTextField.getText());
             tempMaterial.setPrice(updatePrice());
             //errorLabel.setText("");
@@ -222,7 +223,7 @@ public class SimpleUiController implements Initializable {
             deleteMaterialLabel.setText("Wybierz materiał do usunięcia");
         }
         else {
-            httpRequester.deleteRequest(material.getId());
+            httpRequesterMaterial.deleteRequest(material.getId());
             deleteMaterialLabel.setText("");
             nameTextField.setText("");
             priceTextField.setText("");
@@ -243,7 +244,7 @@ public class SimpleUiController implements Initializable {
         if((Material) testList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
         }
-        httpRequester.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
+        httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
         Integer temp = tempMaterial.getQuantity()+1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
         quantityTextField.setText(temp.toString());
@@ -255,7 +256,7 @@ public class SimpleUiController implements Initializable {
         if((Material) testList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
         }
-        httpRequester.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
+        httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
         Integer temp = tempMaterial.getQuantity()-1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()-1);
         quantityTextField.setText(temp.toString());
@@ -298,7 +299,7 @@ public class SimpleUiController implements Initializable {
                     stage = (Stage) acceptButton.getScene().getWindow();
                     Material material = new Material(getNewMaterialName(),getNewMaterialQuantity(),getNewMaterialPrice());
                     if(checkAdding()){
-                        httpRequester.addRequest(material);
+                        httpRequesterMaterial.addRequest(material);
                         stage.close();
                     }
                 }

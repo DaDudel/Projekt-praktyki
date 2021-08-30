@@ -11,4 +11,5 @@ module javafx {
     requires com.fasterxml.jackson.databind;
 
     opens com.example.javafx;
+    opens com.example.javafx.httprequesters;
 }
