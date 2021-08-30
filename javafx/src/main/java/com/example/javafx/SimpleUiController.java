@@ -224,6 +224,9 @@ public class SimpleUiController implements Initializable {
         else {
             httpRequester.deleteRequest(material.getId());
             deleteMaterialLabel.setText("");
+            nameTextField.setText("");
+            priceTextField.setText("");
+            quantityTextField.setText("");
             refreshDatabase();
         }
 
@@ -244,7 +247,7 @@ public class SimpleUiController implements Initializable {
         Integer temp = tempMaterial.getQuantity()+1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
         quantityTextField.setText(temp.toString());
-        refreshDatabase();
+        //refreshDatabase();
     }
 
     @FXML
@@ -279,8 +282,28 @@ public class SimpleUiController implements Initializable {
             stage.showAndWait();
         }
         else{
-            stage = (Stage) returnButton.getScene().getWindow();
-            stage.close();
+//            stage = (Stage) returnButton.getScene().getWindow();
+//            getNewMaterialName();
+//            System.out.println(getNewMaterialQuantity());
+//            getNewMaterialPrice();
+//            //stage.close();
+            if(event.getSource()==returnButton){
+                stage = (Stage) returnButton.getScene().getWindow();
+                stage.close();
+            }
+            else {
+                if(event.getSource()==acceptButton){
+                    stage = (Stage) acceptButton.getScene().getWindow();
+                    Material material = new Material(getNewMaterialName(),getNewMaterialQuantity(),getNewMaterialPrice());
+                    System.out.println("AcceptButton pressed "+ checkAdding().toString());
+                    if(checkAdding()){
+                        System.out.println("Adding..");
+                        httpRequester.addRequest(material);
+                        stage.close();
+                        //refreshDatabase();
+                    }
+                }
+            }
         }
     }
 
@@ -292,5 +315,79 @@ public class SimpleUiController implements Initializable {
 
     }
 
+    @FXML
+    public TextField createMaterialNameTF;
+
+    @FXML
+    public Label createNameErrorLabel;
+
+    public String getNewMaterialName(){
+        String temp;
+        temp = createMaterialNameTF.getText();
+        if (temp.equals("")){
+            createNameErrorLabel.setTextFill(Color.RED);
+            createNameErrorLabel.setText("Podaj nazwę materiału.");
+        }else{
+            createNameErrorLabel.setText("");
+        }
+        return temp;
+    }
+
+    @FXML
+    public TextField createMaterialQuantityTF;
+
+    @FXML
+    public Label createQuantityErrorLabel;
+
+    public Integer getNewMaterialQuantity(){
+        Integer quantity;
+        try{
+            quantity=Integer.parseInt(createMaterialQuantityTF.getText());
+            createQuantityErrorLabel.setText("");
+            return quantity;
+        }catch (Exception e){
+            createQuantityErrorLabel.setTextFill(Color.RED);
+            createQuantityErrorLabel.setText("Ilość musi być liczbą całkowitą.");
+            return 0;
+        }
+    }
+
+    @FXML
+    public Label createPriceErrorLabel;
+
+    @FXML
+    public TextField createMaterialPriceTF;
+
+    public Double getNewMaterialPrice(){
+        String temp = createMaterialPriceTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            createPriceErrorLabel.setText("");
+            return price;
+
+        }catch (Exception e){
+            createPriceErrorLabel.setTextFill(Color.RED);
+            createPriceErrorLabel.setText("Cena musi być liczbą.");
+        }
+        return 0.0;
+    }
+
+    @FXML
+    public Button acceptButton;
+
+    Boolean checkAdding(){
+        if(!createNameErrorLabel.getText().equals("")){
+            return false;
+        }
+        if(!createQuantityErrorLabel.getText().equals("")){
+            return false;
+        }
+        if(!createPriceErrorLabel.getText().equals("")){
+            return false;
+        }
+        return true;
+    }
 
 }

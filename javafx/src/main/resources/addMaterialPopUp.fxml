@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="480.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="360.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="returnButton" layoutX="401.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleAddMaterialScene" text="Powrót" />
+      <Button fx:id="returnButton" layoutX="504.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleAddMaterialScene" text="Anuluj" />
+      <Button fx:id="acceptButton" layoutX="563.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleAddMaterialScene" text="Akceptuj" />
+      <Label layoutX="14.0" layoutY="14.0" text="Nazwa:" />
+      <Label layoutX="14.0" layoutY="40.0" text="Ilość:" />
+      <Label layoutX="14.0" layoutY="66.0" text="Cena:" />
+      <TextField fx:id="createMaterialNameTF" layoutX="66.0" layoutY="10.0" />
+      <TextField fx:id="createMaterialQuantityTF" layoutX="66.0" layoutY="36.0" />
+      <TextField fx:id="createMaterialPriceTF" layoutX="66.0" layoutY="62.0" />
+      <Label layoutX="215.0" layoutY="66.0" text="zł" />
+      <Label fx:id="createNameErrorLabel" alignment="CENTER" layoutX="50.0" layoutY="170.0" prefHeight="18.0" prefWidth="180.0" textAlignment="CENTER" />
+      <Label fx:id="createQuantityErrorLabel" alignment="CENTER" layoutX="50.0" layoutY="220.0" prefHeight="18.0" prefWidth="180.0" textAlignment="CENTER" />
+      <Label fx:id="createPriceErrorLabel" alignment="CENTER" layoutX="50.0" layoutY="270.0" prefHeight="18.0" prefWidth="180.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>
