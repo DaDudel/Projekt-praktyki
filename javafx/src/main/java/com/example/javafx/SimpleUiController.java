@@ -193,6 +193,8 @@ public class SimpleUiController implements Initializable {
         }
         try{
             httpRequester.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
+            tempMaterial.setName(nameTextField.getText());
+            tempMaterial.setPrice(updatePrice());
             //errorLabel.setText("");
         }catch (Exception e){
 
