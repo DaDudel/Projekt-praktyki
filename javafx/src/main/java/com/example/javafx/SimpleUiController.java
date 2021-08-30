@@ -267,6 +267,7 @@ public class SimpleUiController implements Initializable {
         Stage stage;
         Parent root;
         System.out.println("Button pressed");
+
         if(event.getSource()==addMaterialButton){
             stage = new Stage();
             //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
@@ -280,6 +281,7 @@ public class SimpleUiController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addMaterialButton.getScene().getWindow());
             stage.showAndWait();
+            refreshDatabase();
         }
         else{
 //            stage = (Stage) returnButton.getScene().getWindow();
@@ -295,12 +297,9 @@ public class SimpleUiController implements Initializable {
                 if(event.getSource()==acceptButton){
                     stage = (Stage) acceptButton.getScene().getWindow();
                     Material material = new Material(getNewMaterialName(),getNewMaterialQuantity(),getNewMaterialPrice());
-                    System.out.println("AcceptButton pressed "+ checkAdding().toString());
                     if(checkAdding()){
-                        System.out.println("Adding..");
                         httpRequester.addRequest(material);
                         stage.close();
-                        //refreshDatabase();
                     }
                 }
             }
