@@ -3,14 +3,20 @@ package com.example.javafx;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,6 +29,7 @@ public class SimpleUiController implements Initializable {
     private HttpRequester httpRequester = new HttpRequester();
     private final HostServices hostServices;
     private Material tempMaterial;
+
 
     @FXML
     public Label label;
@@ -57,7 +64,9 @@ public class SimpleUiController implements Initializable {
 
     @Override
     public void initialize (URL url, ResourceBundle rb){
-        refreshDatabase();
+        if(testList!=null){
+            refreshDatabase();
+        }
     }
 
     @FXML
@@ -249,4 +258,39 @@ public class SimpleUiController implements Initializable {
         quantityTextField.setText(temp.toString());
         refreshDatabase();
     }
+
+    @FXML
+    public void handleAddMaterialScene(ActionEvent event) throws  IOException{
+        Stage stage;
+        Parent root;
+        System.out.println("Button pressed");
+        if(event.getSource()==addMaterialButton){
+            stage = new Stage();
+            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addMaterialPopUp.fxml"));
+            loader.setController(new SimpleUiController(hostServices));
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dodawanie materiału");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.showAndWait();
+        }
+        else{
+            stage = (Stage) returnButton.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    @FXML
+    public Button returnButton;
+
+    @FXML
+    public void acceptMaterial(){
+
+    }
+
+
 }

@@ -35,6 +35,7 @@ public class StageListener implements ApplicationListener<StageReadyEvent> {
         try {
             Stage stage = stageReadyEvent.getStage();
             URL url = this.fxml.getURL();
+            System.out.println(url);
             FXMLLoader fxmlLoader = new FXMLLoader(url);
             fxmlLoader.setControllerFactory(ac::getBean);
             Parent root = fxmlLoader.load();
@@ -42,6 +43,7 @@ public class StageListener implements ApplicationListener<StageReadyEvent> {
             stage.setScene(scene);
             stage.setTitle(this.applicationTitle);
             stage.show();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
