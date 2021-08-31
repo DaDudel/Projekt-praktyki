@@ -457,18 +457,72 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
+        String codedMaterials;
         if(tempArticle==null){
             nameTextField1.setText("");
             quantityTextField1.setText("");
             priceTextField1.setText("");
+            codedMaterials="";
         }
         else{
             nameTextField1.setText(tempArticle.getName());
             quantityTextField1.setText(tempArticle.getQuantity().toString());
             priceTextField1.setText(tempArticle.getPrice().toString());
+            codedMaterials=tempArticle.getMaterials();
         }
+
+        stringCutter(codedMaterials);
+
+
 
     }
 
+    public Material findMaterial(Integer id, Integer quantity){
+        try {
+            ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
+            for (Material temp: helpList){
+                if(temp.getId()==id){
+                    return new Material(id,temp.getName(),quantity,temp.getPrice());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @FXML
+    public ListView materialsList;
+
+    public void stringCutter(String string){
+        ObservableList<Material> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            materialsList.setItems(templist);
+            return;
+        }
+
+        while (!string.equals("")){
+            //System.out.println("string: " + string);
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            //System.out.println("substring id: " + sIdNumber);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            //System.out.println("string: " + string);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            //System.out.println("substring q: " + sQ);
+            Integer q = Integer.parseInt(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findMaterial(idNumber,q));
+
+        }
+        materialsList.setItems(templist);
+    }
 
 }
