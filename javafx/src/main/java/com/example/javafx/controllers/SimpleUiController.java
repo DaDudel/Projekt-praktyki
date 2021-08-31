@@ -31,6 +31,7 @@ public class SimpleUiController implements Initializable {
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
     private final HostServices hostServices;
     private Material tempMaterial;
+    private Article tempArticle;
     //private SafetyController safetyController = new SafetyController();
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
 
@@ -441,6 +442,33 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public ListView articleList;
+
+    @FXML
+    public TextField nameTextField1;
+
+    @FXML
+    public TextField quantityTextField1;
+
+    @FXML
+    public TextField priceTextField1;
+
+    @FXML
+    private void displaySelectedArticle(MouseEvent event){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        if(tempArticle==null){
+            nameTextField1.setText("");
+            quantityTextField1.setText("");
+            priceTextField1.setText("");
+        }
+        else{
+            nameTextField1.setText(tempArticle.getName());
+            quantityTextField1.setText(tempArticle.getQuantity().toString());
+            priceTextField1.setText(tempArticle.getPrice().toString());
+        }
+
+    }
 
 
 }
