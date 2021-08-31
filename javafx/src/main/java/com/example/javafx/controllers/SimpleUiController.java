@@ -46,7 +46,7 @@ public class SimpleUiController implements Initializable {
     public Button connectButton;
 
     @FXML
-    public ListView testList;
+    public ListView materialList;
 
     @FXML
     public TextField filterMaterial;
@@ -70,7 +70,7 @@ public class SimpleUiController implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle rb){
 
-        if(testList!=null){
+        if(materialList !=null){
 //            try {
 //                handlePasswordScene(null);
 //            } catch (IOException e) {
@@ -100,8 +100,8 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     private void displaySelected(MouseEvent event){
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         if(tempMaterial==null){
             nameTextField.setText("");
@@ -119,7 +119,7 @@ public class SimpleUiController implements Initializable {
     public void refreshDatabase(){
         try {
             ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
-            testList.setItems(helpList);
+            materialList.setItems(helpList);
 
             ObservableList<Article> tempList = FXCollections.observableList(httpRequesterArticle.getRequest());
             articleList.setItems(tempList);
@@ -139,8 +139,8 @@ public class SimpleUiController implements Initializable {
 
     public String updateName(){
         //Material material = (Material) testList.getSelectionModel().getSelectedItem();
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
 
         if(nameTextField.getText()==""){
@@ -171,8 +171,8 @@ public class SimpleUiController implements Initializable {
 
     public Integer updateQuantity(){
         //Material material = (Material) testList.getSelectionModel().getSelectedItem();
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         Integer quantity;
         try{
@@ -190,8 +190,8 @@ public class SimpleUiController implements Initializable {
 
     public Double updatePrice(){
         //Material material = (Material) testList.getSelectionModel().getSelectedItem();
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         String temp = priceTextField.getText();
         temp=temp.replaceAll(",",".");
@@ -212,8 +212,8 @@ public class SimpleUiController implements Initializable {
     @FXML
     public void updateDetails(){
         //Material material = (Material) testList.getSelectionModel().getSelectedItem();
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         try{
             httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
@@ -231,7 +231,7 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public void deleteMaterial(){
-        Material material = (Material) testList.getSelectionModel().getSelectedItem();
+        Material material = (Material) materialList.getSelectionModel().getSelectedItem();
         if(material==null){
             deleteMaterialLabel.setTextFill(Color.RED);
             deleteMaterialLabel.setText("Wybierz materiał do usunięcia");
@@ -255,20 +255,20 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public void plusQuantity(){
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
         Integer temp = tempMaterial.getQuantity()+1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
         quantityTextField.setText(temp.toString());
-        //refreshDatabase();
+        refreshDatabase();
     }
 
     @FXML
     public void minusQuantity(){
-        if((Material) testList.getSelectionModel().getSelectedItem()!=null){
-            tempMaterial = (Material) testList.getSelectionModel().getSelectedItem();
+        if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
         Integer temp = tempMaterial.getQuantity()-1;
