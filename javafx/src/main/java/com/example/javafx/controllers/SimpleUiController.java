@@ -561,6 +561,72 @@ public class SimpleUiController implements Initializable {
 
     }
 
+    public Integer updateArticleQuantity(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        Integer quantity;
+        try{
+            quantity=Integer.parseInt(quantityTextField1.getText());
+            quantityErrorLabel1.setText("");
+            //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
+            return quantity;
+
+        }catch (Exception e){
+            quantityErrorLabel1.setTextFill(Color.RED);
+            quantityErrorLabel1.setText("Ilość musi być liczbą całkowitą");
+        }
+        return tempArticle.getQuantity();
+    }
+
+    public Double updateArticlePrice(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        String temp = priceTextField1.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            priceErrorLabel1.setText("");
+            //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
+            return price;
+
+        }catch (Exception e){
+            priceErrorLabel1.setTextFill(Color.RED);
+            priceErrorLabel1.setText("Cena musi być liczbą");
+        }
+        return tempArticle.getPrice();
+    }
+
+    public String updateArticleName(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+
+        if(nameTextField1.getText()==""){
+        }
+        else{
+            return nameTextField1.getText();
+        }
+        return tempArticle.getName();
+    }
+
+    @FXML
+    public void updateArticleDetails(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        try{
+            httpRequesterArticle.editRequest(new Article(tempArticle.getId(), updateArticleName(),updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials()));
+            tempArticle.setName(nameTextField1.getText());
+            tempArticle.setPrice(updateArticlePrice());
+            //errorLabel.setText("");
+        }catch (Exception e){
+
+        }
+        refreshDatabase();
+    }
 
 
 }
