@@ -1,6 +1,8 @@
-package com.example.javafx;
+package com.example.javafx.controllers;
 
+import com.example.javafx.Material;
 import com.example.javafx.httprequesters.HttpRequesterMaterial;
+import com.example.javafx.httprequesters.JsonGetter;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,10 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -30,6 +29,7 @@ public class SimpleUiController implements Initializable {
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
     private final HostServices hostServices;
     private Material tempMaterial;
+    private SafetyController safetyController = new SafetyController();
 
 
     @FXML
@@ -65,7 +65,13 @@ public class SimpleUiController implements Initializable {
 
     @Override
     public void initialize (URL url, ResourceBundle rb){
+
         if(testList!=null){
+//            try {
+//                handlePasswordScene(null);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             refreshDatabase();
         }
     }
@@ -389,5 +395,42 @@ public class SimpleUiController implements Initializable {
         }
         return true;
     }
+
+    @FXML
+    public Button enterButton;
+
+    @FXML
+    public  Button exitButton;
+
+    @FXML
+    public PasswordField passwordField;
+
+    @FXML
+    public void handlePasswordScene(ActionEvent event)throws IOException{
+        Stage stage;
+        Parent root;
+        if(event==null){
+            stage = new Stage();
+            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/safetyPopUp.fxml"));
+            loader.setController(new SimpleUiController(hostServices));
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Podaj hasło");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.show();
+
+        }
+        else{
+            if(event.getSource()==exitButton){
+                stage = (Stage) exitButton.getScene().getWindow();
+                stage.close();
+            }
+        }
+    }
+
 
 }

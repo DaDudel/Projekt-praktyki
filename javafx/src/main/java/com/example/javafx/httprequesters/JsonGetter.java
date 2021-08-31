@@ -1,4 +1,4 @@
-package com.example.javafx;
+package com.example.javafx.httprequesters;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
+import com.example.javafx.Material;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 

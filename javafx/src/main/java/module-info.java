@@ -12,4 +12,5 @@ module javafx {
 
     opens com.example.javafx;
     opens com.example.javafx.httprequesters;
+    opens com.example.javafx.controllers;
 }
