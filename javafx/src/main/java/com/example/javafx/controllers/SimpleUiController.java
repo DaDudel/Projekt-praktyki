@@ -1,6 +1,8 @@
 package com.example.javafx.controllers;
 
+import com.example.javafx.Article;
 import com.example.javafx.Material;
+import com.example.javafx.httprequesters.HttpRequesterArticle;
 import com.example.javafx.httprequesters.HttpRequesterMaterial;
 import com.example.javafx.httprequesters.JsonGetter;
 import javafx.application.HostServices;
@@ -29,7 +31,8 @@ public class SimpleUiController implements Initializable {
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
     private final HostServices hostServices;
     private Material tempMaterial;
-    private SafetyController safetyController = new SafetyController();
+    //private SafetyController safetyController = new SafetyController();
+    private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
 
 
     @FXML
@@ -116,6 +119,10 @@ public class SimpleUiController implements Initializable {
         try {
             ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
             testList.setItems(helpList);
+
+            ObservableList<Article> tempList = FXCollections.observableList(httpRequesterArticle.getRequest());
+            articleList.setItems(tempList);
+
             connectionLabel.setTextFill(Color.GREEN);
             connectionLabel.setText("Połączono");
         } catch (IOException e) {
@@ -431,6 +438,9 @@ public class SimpleUiController implements Initializable {
             }
         }
     }
+
+    @FXML
+    public ListView articleList;
 
 
 }
