@@ -525,4 +525,42 @@ public class SimpleUiController implements Initializable {
         materialsList.setItems(templist);
     }
 
+    @FXML
+    public Button updateArticleButton;
+
+    @FXML
+    public Button deleteArticleButton;
+
+    @FXML
+    public Button addArticleButton;
+
+    @FXML
+    public Label priceErrorLabel1;
+
+    @FXML
+    public Label quantityErrorLabel1;
+
+    @FXML
+    public Label deleteArticleLabel;
+
+    @FXML
+    public void deleteArticle(){
+        Article article = (Article) articleList.getSelectionModel().getSelectedItem();
+        if(article==null){
+            deleteArticleLabel.setTextFill(Color.RED);
+            deleteArticleLabel.setText("Wybierz przedmiot do usunięcia");
+        }
+        else {
+            httpRequesterArticle.deleteRequest(article.getId());
+            deleteArticleLabel.setText("");
+            nameTextField1.setText("");
+            priceTextField1.setText("");
+            quantityTextField1.setText("");
+            refreshDatabase();
+        }
+
+    }
+
+
+
 }
