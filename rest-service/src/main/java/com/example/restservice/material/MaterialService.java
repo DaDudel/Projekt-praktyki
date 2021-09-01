@@ -50,7 +50,7 @@ public class MaterialService {
     }
 
     @Transactional
-    public void updateMaterial(Integer materialId, String name, Integer quantity, Double price) {
+    public void updateMaterial(Integer materialId, String name, Double quantity, Double price) {
         Material material = materialRepository.findById(materialId)
                 .orElseThrow(()->new IllegalStateException("material with id " + materialId + " does not exist"));
 

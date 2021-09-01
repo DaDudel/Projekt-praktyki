@@ -17,13 +17,13 @@ public class Material {
     )
     private Integer id;
     private String name;
-    private Integer quantity;
+    private Double quantity;
     private Double price;
 
     public Material() {
     }
 
-    public Material(Integer id, String name, Integer quantity, Double price) {
+    public Material(Integer id, String name, Double quantity, Double price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -38,7 +38,7 @@ public class Material {
         this.id = id;
     }
 
-    public Material(String name, Integer quantity, Double price) {
+    public Material(String name, Double quantity, Double price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
@@ -48,7 +48,7 @@ public class Material {
         return name;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
@@ -60,7 +60,7 @@ public class Material {
         this.name = name;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 

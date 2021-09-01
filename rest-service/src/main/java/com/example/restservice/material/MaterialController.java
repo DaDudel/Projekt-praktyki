@@ -38,7 +38,7 @@ public class MaterialController {
     public void updateMaterial(
             @PathVariable("materialId") Integer materialId,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer quantity,
+            @RequestParam(required = false) Double quantity,
             @RequestParam(required = false) Double price){
         materialService.updateMaterial(materialId,name, quantity,price);
     }
