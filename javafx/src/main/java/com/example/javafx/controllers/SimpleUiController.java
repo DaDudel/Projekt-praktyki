@@ -35,13 +35,6 @@ public class SimpleUiController implements Initializable {
     //private SafetyController safetyController = new SafetyController();
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
 
-
-    @FXML
-    public Label label;
-
-    @FXML
-    public Button button;
-
     @FXML
     public Button connectButton;
 
@@ -62,6 +55,7 @@ public class SimpleUiController implements Initializable {
     public void connectJson(){
         refreshDatabase();
     }
+
     @FXML
     public void filterTable(){
 
@@ -71,11 +65,6 @@ public class SimpleUiController implements Initializable {
     public void initialize (URL url, ResourceBundle rb){
 
         if(materialList !=null){
-//            try {
-//                handlePasswordScene(null);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             refreshDatabase();
         }
     }
@@ -473,8 +462,6 @@ public class SimpleUiController implements Initializable {
 
         stringCutter(codedMaterials);
 
-
-
     }
 
     public Material findMaterial(Integer id, Integer quantity){
@@ -569,7 +556,6 @@ public class SimpleUiController implements Initializable {
         try{
             quantity=Integer.parseInt(quantityTextField1.getText());
             quantityErrorLabel1.setText("");
-            //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
             return quantity;
 
         }catch (Exception e){
@@ -589,7 +575,6 @@ public class SimpleUiController implements Initializable {
         try{
             price=Double.parseDouble(temp);
             priceErrorLabel1.setText("");
-            //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
             return price;
 
         }catch (Exception e){
@@ -621,11 +606,33 @@ public class SimpleUiController implements Initializable {
             httpRequesterArticle.editRequest(new Article(tempArticle.getId(), updateArticleName(),updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials()));
             tempArticle.setName(nameTextField1.getText());
             tempArticle.setPrice(updateArticlePrice());
-            //errorLabel.setText("");
         }catch (Exception e){
 
         }
         refreshDatabase();
+    }
+
+    @FXML
+    public Button plusButton1;
+
+    @FXML
+    public Button minusButton1;
+
+    @FXML
+    public void plusArticleQuantity(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(), tempArticle.getQuantity()+1, tempArticle.getPrice(), tempArticle.getMaterials()));
+        Integer temp = tempArticle.getQuantity()+1;
+        tempArticle.setQuantity(tempArticle.getQuantity()+1);
+        quantityTextField1.setText(temp.toString());
+        refreshDatabase();
+    }
+
+    @FXML
+    public void minusArticleQuantity(){
+        
     }
 
 
