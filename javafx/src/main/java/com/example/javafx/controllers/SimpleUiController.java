@@ -647,5 +647,30 @@ public class SimpleUiController implements Initializable {
         refreshDatabase();
     }
 
+    @FXML
+    public Button editMaterialsButton;
+
+    @FXML
+    public void handleEditMaterialsWindow(ActionEvent event) throws IOException{
+        Stage stage;
+        Parent root;
+
+        if(event.getSource()==editMaterialsButton){
+            stage = new Stage();
+            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editArticleMaterials.fxml"));
+            loader.setController(new SimpleUiController(hostServices));
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Edycja materiałów");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.showAndWait();
+            refreshDatabase();
+        }
+    }
+
 
 }
