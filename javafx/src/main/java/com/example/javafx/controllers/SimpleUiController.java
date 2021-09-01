@@ -158,21 +158,21 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label quantityErrorLabel;
 
-    public Integer updateQuantity(){
+    public Double updateQuantity(){
         //Material material = (Material) testList.getSelectionModel().getSelectedItem();
         if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
-        Integer quantity;
+        Double quantity;
         try{
-            quantity=Integer.parseInt(quantityTextField.getText());
+            quantity=Double.parseDouble(quantityTextField.getText());
             quantityErrorLabel.setText("");
             //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
             return quantity;
 
         }catch (Exception e){
             quantityErrorLabel.setTextFill(Color.RED);
-            quantityErrorLabel.setText("Ilość musi być liczbą całkowitą");
+            quantityErrorLabel.setText("Ilość musi być liczbą");
         }
         return tempMaterial.getQuantity();
     }
@@ -208,6 +208,7 @@ public class SimpleUiController implements Initializable {
             httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
             tempMaterial.setName(nameTextField.getText());
             tempMaterial.setPrice(updatePrice());
+            tempMaterial.setQuantity(updateQuantity());
             //errorLabel.setText("");
         }catch (Exception e){
 
@@ -248,7 +249,7 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
-        Integer temp = tempMaterial.getQuantity()+1;
+        Double temp = tempMaterial.getQuantity()+1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
         quantityTextField.setText(temp.toString());
         refreshDatabase();
@@ -260,7 +261,7 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
-        Integer temp = tempMaterial.getQuantity()-1;
+        Double temp = tempMaterial.getQuantity()-1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()-1);
         quantityTextField.setText(temp.toString());
         refreshDatabase();
@@ -342,16 +343,16 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label createQuantityErrorLabel;
 
-    public Integer getNewMaterialQuantity(){
-        Integer quantity;
+    public Double getNewMaterialQuantity(){
+        Double quantity;
         try{
-            quantity=Integer.parseInt(createMaterialQuantityTF.getText());
+            quantity=Double.parseDouble(createMaterialQuantityTF.getText());
             createQuantityErrorLabel.setText("");
             return quantity;
         }catch (Exception e){
             createQuantityErrorLabel.setTextFill(Color.RED);
-            createQuantityErrorLabel.setText("Ilość musi być liczbą całkowitą.");
-            return 0;
+            createQuantityErrorLabel.setText("Ilość musi być liczbą.");
+            return 0.0;
         }
     }
 
@@ -464,7 +465,7 @@ public class SimpleUiController implements Initializable {
 
     }
 
-    public Material findMaterial(Integer id, Integer quantity){
+    public Material findMaterial(Integer id, Double quantity){
         try {
             ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
             for (Material temp: helpList){
@@ -502,7 +503,7 @@ public class SimpleUiController implements Initializable {
             index = string.indexOf(";");
             String sQ = string.substring(0,index);
             //System.out.println("substring q: " + sQ);
-            Integer q = Integer.parseInt(sQ);
+            Double q = Double.parseDouble(sQ);
 
             string = string.substring(index+1);
 
