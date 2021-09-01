@@ -632,7 +632,14 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public void minusArticleQuantity(){
-        
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(), tempArticle.getQuantity()-1, tempArticle.getPrice(), tempArticle.getMaterials()));
+        Integer temp = tempArticle.getQuantity()-1;
+        tempArticle.setQuantity(tempArticle.getQuantity()-1);
+        quantityTextField1.setText(temp.toString());
+        refreshDatabase();
     }
 
 
