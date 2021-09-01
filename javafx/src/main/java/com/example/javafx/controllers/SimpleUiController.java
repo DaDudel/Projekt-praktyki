@@ -164,8 +164,10 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         Double quantity;
+        String temp = quantityTextField.getText();
+        temp=temp.replaceAll(",",".");
         try{
-            quantity=Double.parseDouble(quantityTextField.getText());
+            quantity=Double.parseDouble(temp);
             quantityErrorLabel.setText("");
             //httpRequester.editRequest(new Material(material.getId(), material.getName(),quantity, material.getPrice()));
             return quantity;
@@ -346,7 +348,9 @@ public class SimpleUiController implements Initializable {
     public Double getNewMaterialQuantity(){
         Double quantity;
         try{
-            quantity=Double.parseDouble(createMaterialQuantityTF.getText());
+            String temp = createMaterialQuantityTF.getText();
+            temp=temp.replaceAll(",",".");
+            quantity=Double.parseDouble(temp);
             createQuantityErrorLabel.setText("");
             return quantity;
         }catch (Exception e){
