@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class SimpleUiController implements Initializable {
@@ -651,13 +652,17 @@ public class SimpleUiController implements Initializable {
     public Button editMaterialsButton;
 
     @FXML
+    public ListView editMaterialsList;
+
+    @FXML
     public void handleEditMaterialsWindow(ActionEvent event) throws IOException{
         Stage stage;
         Parent root;
 
         if(event.getSource()==editMaterialsButton){
+
+
             stage = new Stage();
-            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/editArticleMaterials.fxml"));
             loader.setController(new SimpleUiController(hostServices));
@@ -667,10 +672,27 @@ public class SimpleUiController implements Initializable {
             stage.setTitle("Edycja materiałów");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addMaterialButton.getScene().getWindow());
-            stage.showAndWait();
-            refreshDatabase();
+            stage.show();
+
+
+
+
+
+
+            //refreshDatabase();
+        }
+        else {
+            if(event.getSource()==exitEditButton){
+                stage = (Stage) exitEditButton.getScene().getWindow();
+                stage.close();
+            }
         }
     }
+
+    @FXML
+    public Button exitEditButton;
+
+
 
 
 }
