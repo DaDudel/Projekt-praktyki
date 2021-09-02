@@ -680,9 +680,9 @@ public class SimpleUiController implements Initializable {
             stage.setTitle("Edycja materiałów");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addMaterialButton.getScene().getWindow());
-            stage.show();
+            stage.showAndWait();
 
-            //refreshDatabase();
+            refreshDatabase();
         }
         else {
             if(event.getSource()==connectEditButton){
@@ -708,11 +708,23 @@ public class SimpleUiController implements Initializable {
                 else {
                     if(event.getSource()==addMaterialToListButton){
                         Material gotOne = (Material) editMaterialsList.getSelectionModel().getSelectedItem();
+                        System.out.println(gotOne);
+                        addMaterialToArticle(tempArticle,gotOne);
+                        //refreshDatabase();
                     }
                 }
             }
         }
     }
+
+    public void addMaterialToArticle(Article art, Material mat){
+        String str = art.getMaterials();
+        str = str + mat.getId()+",0;";
+        art.setMaterials(str);
+        httpRequesterArticle.editRequest(art);
+    }
+
+
 
     @FXML
     public ListView editMaterialsList2;
