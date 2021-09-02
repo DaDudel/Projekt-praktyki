@@ -11,7 +11,7 @@
         <ListView fx:id="editMaterialsList" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
         <ListView fx:id="editMaterialsList2" layoutX="426.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
         <Label layoutX="306.0" layoutY="105.0" text="&gt;&gt;" />
-        <Button layoutX="64.0" layoutY="230.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Dodaj" />
+        <Button fx:id="addMaterialToListButton" layoutX="64.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleEditMaterialsWindow" prefHeight="26.0" prefWidth="100.0" text="Dodaj" />
         <Button layoutX="476.0" layoutY="260.0" mnemonicParsing="false" text="Zaktualizuj ilość" />
         <Label layoutX="426.0" layoutY="235.0" text="Ilość:" />
         <TextField layoutX="452.0" layoutY="231.0" />

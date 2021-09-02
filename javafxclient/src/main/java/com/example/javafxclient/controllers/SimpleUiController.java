@@ -29,13 +29,16 @@ import java.util.concurrent.TimeUnit;
 public class SimpleUiController implements Initializable {
     private JsonGetter jsonGetter = new JsonGetter();
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
-    //private final HostServices hostServices;
     private Material tempMaterial;
     private Article tempArticle;
     //private SafetyController safetyController = new SafetyController();
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
 
     public SimpleUiController() {
+    }
+
+    public SimpleUiController(Article tempArticle) {
+        this.tempArticle = tempArticle;
     }
 
     @FXML
@@ -661,15 +664,16 @@ public class SimpleUiController implements Initializable {
         Stage stage;
         Parent root;
 
+        System.out.println(tempArticle);
 
         if(event.getSource()==editMaterialsButton){
 
-            System.out.println(tempArticle);
+
 
             stage = new Stage();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/editArticleMaterials.fxml"));
-            loader.setController(new SimpleUiController());
+            loader.setController(new SimpleUiController(tempArticle));
             root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -692,14 +696,19 @@ public class SimpleUiController implements Initializable {
                 }
                 editMaterialsList.setItems(helpList);
 
-//                String codedMaterials=tempArticle.getMaterials();
-//                stringCutterEdit(codedMaterials);
+                String codedMaterials=tempArticle.getMaterials();
+                stringCutterEdit(codedMaterials);
 
             }
             else {
                 if(event.getSource()==exitEditButton){
                     stage = (Stage) exitEditButton.getScene().getWindow();
                     stage.close();
+                }
+                else {
+                    if(event.getSource()==addMaterialToListButton){
+                        Material gotOne = (Material) editMaterialsList.getSelectionModel().getSelectedItem();
+                    }
                 }
             }
         }
@@ -735,6 +744,7 @@ public class SimpleUiController implements Initializable {
 
         }
         editMaterialsList2.setItems(templist);
+
     }
 
     @FXML
@@ -742,6 +752,9 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public Button connectEditButton;
+
+    @FXML
+    public Button addMaterialToListButton;
 
 
 }
