@@ -5,6 +5,7 @@ module com.example.javafxclient {
     requires com.fasterxml.jackson.databind;
 
 
-    opens com.example.javafxclient to javafx.fxml;
-    exports com.example.javafxclient;
+    opens com.example.javafxclient;
+    opens com.example.javafxclient.httprequesters;
+    opens com.example.javafxclient.controllers;
 }
