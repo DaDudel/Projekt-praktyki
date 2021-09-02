@@ -1,10 +1,11 @@
-package com.example.javafx.controllers;
+package com.example.javafxclient.controllers;
 
-import com.example.javafx.Article;
-import com.example.javafx.Material;
-import com.example.javafx.httprequesters.HttpRequesterArticle;
-import com.example.javafx.httprequesters.HttpRequesterMaterial;
-import com.example.javafx.httprequesters.JsonGetter;
+
+import com.example.javafxclient.Article;
+import com.example.javafxclient.Material;
+import com.example.javafxclient.httprequesters.HttpRequesterArticle;
+import com.example.javafxclient.httprequesters.HttpRequesterMaterial;
+import com.example.javafxclient.httprequesters.JsonGetter;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,24 +20,23 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-@Component
 public class SimpleUiController implements Initializable {
     private JsonGetter jsonGetter = new JsonGetter();
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
-    private final HostServices hostServices;
+    //private final HostServices hostServices;
     private Material tempMaterial;
     private Article tempArticle;
     //private SafetyController safetyController = new SafetyController();
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
 
-
+    public SimpleUiController() {
+    }
 
     @FXML
     public Button connectButton;
@@ -50,9 +50,9 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label connectionLabel;
 
-    SimpleUiController(HostServices hostServices) {
-        this.hostServices = hostServices;
-    }
+//    //SimpleUiController(HostServices hostServices) {
+//        this.hostServices = hostServices;
+//    }
 
     @FXML
     public void connectJson(){
@@ -283,7 +283,7 @@ public class SimpleUiController implements Initializable {
             //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/addMaterialPopUp.fxml"));
-            loader.setController(new SimpleUiController(hostServices));
+            loader.setController(new SimpleUiController());
             root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -419,7 +419,7 @@ public class SimpleUiController implements Initializable {
             //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/safetyPopUp.fxml"));
-            loader.setController(new SimpleUiController(hostServices));
+            loader.setController(new SimpleUiController());
             root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -669,7 +669,7 @@ public class SimpleUiController implements Initializable {
             stage = new Stage();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/editArticleMaterials.fxml"));
-            loader.setController(new SimpleUiController(hostServices));
+            loader.setController(new SimpleUiController());
             root = loader.load();
 
             stage.setScene(new Scene(root));
@@ -745,3 +745,4 @@ public class SimpleUiController implements Initializable {
 
 
 }
+
