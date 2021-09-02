@@ -707,15 +707,26 @@ public class SimpleUiController implements Initializable {
                 }
                 else {
                     if(event.getSource()==addMaterialToListButton){
+                        stage = (Stage) addMaterialToListButton.getScene().getWindow();
                         Material gotOne = (Material) editMaterialsList.getSelectionModel().getSelectedItem();
                         System.out.println(gotOne);
                         addMaterialToArticle(tempArticle,gotOne);
                         //refreshDatabase();
                     }
+                    else {
+                        if(event.getSource()==deleteFromMaterials){
+                            stage = (Stage) deleteFromMaterials.getScene().getWindow();
+                            Material gotOne = (Material) editMaterialsList2.getSelectionModel().getSelectedItem();
+                            deleteMaterialFromArticle(tempArticle,gotOne);
+                        }
+                    }
                 }
             }
         }
     }
+
+    @FXML
+    public Button deleteFromMaterials;
 
     public void addMaterialToArticle(Article art, Material mat){
         String str = art.getMaterials();
@@ -724,7 +735,40 @@ public class SimpleUiController implements Initializable {
         httpRequesterArticle.editRequest(art);
     }
 
+    public void deleteMaterialFromArticle(Article art, Material mat){
+        String str = art.getMaterials();
+        String fullStr = art.getMaterials();
+        Integer index = str.indexOf(mat.getId()+",");
+        //System.out.println(index);
+        if(index!=0){
+            index = str.indexOf(";"+mat.getId()+",")+1;
+        }
+        str = str.substring(index);
+        String temp = mat.getId().toString();
+        Integer tempLength = temp.length() + 1;
 
+        //System.out.println(str);
+
+        //str = str.substring(tempLength);
+
+        //System.out.println(str);
+
+        index = str.indexOf(";");
+        str = str.substring(0,index+1);
+
+        //System.out.println(str);
+
+        if(fullStr.indexOf(str)==0){
+            fullStr=fullStr.replace(str,"");
+        }
+        else {
+            fullStr=fullStr.replace(";"+str,";");
+        }
+
+        //System.out.println(fullStr);
+        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
+
+    }
 
     @FXML
     public ListView editMaterialsList2;
