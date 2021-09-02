@@ -674,25 +674,69 @@ public class SimpleUiController implements Initializable {
             stage.initOwner(addMaterialButton.getScene().getWindow());
             stage.show();
 
-
-
-
-
-
             //refreshDatabase();
         }
         else {
-            if(event.getSource()==exitEditButton){
-                stage = (Stage) exitEditButton.getScene().getWindow();
-                stage.close();
+            if(event.getSource()==connectEditButton){
+                stage = (Stage) connectEditButton.getScene().getWindow();
+                ObservableList<Material> helpList = null;
+                try {
+                    helpList = FXCollections.observableList(jsonGetter.getJson());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                editMaterialsList.setItems(helpList);
+
+//                String codedMaterials=tempArticle.getMaterials();
+//                stringCutterEdit(codedMaterials);
+
+            }
+            else {
+                if(event.getSource()==exitEditButton){
+                    stage = (Stage) exitEditButton.getScene().getWindow();
+                    stage.close();
+                }
             }
         }
     }
 
     @FXML
+    public ListView editMaterialsList2;
+
+    public void stringCutterEdit(String string){
+        ObservableList<Material> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            editMaterialsList2.setItems(templist);
+            return;
+        }
+
+        while (!string.equals("")){
+            //System.out.println("string: " + string);
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            //System.out.println("substring id: " + sIdNumber);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            //System.out.println("string: " + string);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            //System.out.println("substring q: " + sQ);
+            Double q = Double.parseDouble(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findMaterial(idNumber,q));
+
+        }
+        editMaterialsList2.setItems(templist);
+    }
+
+    @FXML
     public Button exitEditButton;
 
-
+    @FXML
+    public Button connectEditButton;
 
 
 }
