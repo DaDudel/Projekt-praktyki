@@ -233,15 +233,24 @@ public class SimpleUiController implements Initializable {
         Material material = (Material) materialList.getSelectionModel().getSelectedItem();
         if(material==null){
             deleteMaterialLabel.setTextFill(Color.RED);
-            deleteMaterialLabel.setText("Wybierz materiał do usunięcia");
+            deleteMaterialLabel.setText("Wybierz materiał do usunięcia.");
         }
         else {
-            httpRequesterMaterial.deleteRequest(material.getId());
-            deleteMaterialLabel.setText("");
-            nameTextField.setText("");
-            priceTextField.setText("");
-            quantityTextField.setText("");
-            refreshDatabase();
+            if(canDeleteMaterial(material)){
+                httpRequesterMaterial.deleteRequest(material.getId());
+                //System.out.println("delete");
+
+                deleteMaterialLabel.setText("");
+                nameTextField.setText("");
+                priceTextField.setText("");
+                quantityTextField.setText("");
+                refreshDatabase();
+            }
+            else {
+                deleteMaterialLabel.setTextFill(Color.RED);
+                deleteMaterialLabel.setText("Nie można usunąć, materiał jest wykorzystywany.");
+            }
+
         }
 
     }
@@ -966,6 +975,48 @@ public class SimpleUiController implements Initializable {
             createQuantityErrorLabel.setText("Ilość musi być liczbą całkowitą.");
             return 0;
         }
+    }
+
+    public Boolean canDeleteMaterial(Material material){
+        Integer matId = material.getId();
+        String matIdStr = matId.toString();
+        Integer index;
+
+        try {
+            ObservableList<Article> tempList = FXCollections.observableList(httpRequesterArticle.getRequest());
+
+            for(Article art:tempList){
+
+                String mats = art.getMaterials();
+
+                index = mats.indexOf(matIdStr+",");
+
+//                if (index == -1){
+//                    return true;
+//                }
+                if (index == 0){
+                    return false;
+                }
+                if (index > 1){
+                    index = mats.indexOf(";"+matIdStr+",");
+                    if(index == -1){
+                        //return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 
