@@ -10,6 +10,7 @@ import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -660,15 +661,13 @@ public class SimpleUiController implements Initializable {
     public ListView editMaterialsList;
 
     @FXML
-    public void handleEditMaterialsWindow(ActionEvent event) throws IOException{
+    public void handleEditMaterialsWindow(Event event) throws IOException{
         Stage stage;
         Parent root;
 
         //System.out.println(tempArticle);
 
         if(event.getSource()==editMaterialsButton){
-
-
 
             stage = new Stage();
 
@@ -727,11 +726,30 @@ public class SimpleUiController implements Initializable {
                             String codedMaterials=tempArticle.getMaterials();
                             stringCutterEdit(codedMaterials);
                         }
+                        else{
+                            if(event.getSource()==materialWindowUpdateButton){
+                                stage = (Stage) materialWindowUpdateButton.getScene().getWindow();
+
+                            }
+                            else{
+                                if(event.getSource()==editMaterialsList2){
+                                    stage = (Stage) editMaterialsList2.getScene().getWindow();
+                                    Material tmp = (Material) editMaterialsList2.getSelectionModel().getSelectedItem();
+                                    articleMaterialsQuantity.setText(tmp.getQuantity().toString());
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
+
+    @FXML
+    public TextField articleMaterialsQuantity;
+
+    @FXML
+    public Button materialWindowUpdateButton;
 
     @FXML
     public Button deleteFromMaterials;
