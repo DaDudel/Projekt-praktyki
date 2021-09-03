@@ -711,15 +711,21 @@ public class SimpleUiController implements Initializable {
                     if(event.getSource()==addMaterialToListButton){
                         stage = (Stage) addMaterialToListButton.getScene().getWindow();
                         Material gotOne = (Material) editMaterialsList.getSelectionModel().getSelectedItem();
-                        System.out.println(gotOne);
+                        //System.out.println(gotOne);
                         addMaterialToArticle(tempArticle,gotOne);
                         //refreshDatabase();
+                        tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
+                        String codedMaterials=tempArticle.getMaterials();
+                        stringCutterEdit(codedMaterials);
                     }
                     else {
                         if(event.getSource()==deleteFromMaterials){
                             stage = (Stage) deleteFromMaterials.getScene().getWindow();
                             Material gotOne = (Material) editMaterialsList2.getSelectionModel().getSelectedItem();
                             deleteMaterialFromArticle(tempArticle,gotOne);
+                            tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
+                            String codedMaterials=tempArticle.getMaterials();
+                            stringCutterEdit(codedMaterials);
                         }
                     }
                 }
