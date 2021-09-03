@@ -39,7 +39,7 @@
         <Label layoutX="699.0" layoutY="520.0" text="zł" />
         <Button fx:id="updateArticleButton" layoutX="500.0" layoutY="548.0" mnemonicParsing="false" onAction="#updateArticleDetails" prefHeight="26.0" prefWidth="280.0" text="Zaktualizuj dane" />
         <Button fx:id="deleteArticleButton" layoutX="500.0" layoutY="579.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="26.0" prefWidth="280.0" text="Usuń wybrany przedmiot" />
-        <Button fx:id="addArticleButton" layoutX="500.0" layoutY="610.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="280.0" text="Dodaj nowy przedmiot" />
+        <Button fx:id="addArticleButton" layoutX="500.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleAddArticleScene" prefHeight="26.0" prefWidth="280.0" text="Dodaj nowy przedmiot" />
         <Label fx:id="quantityErrorLabel1" layoutX="500.0" layoutY="640.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
         <Label fx:id="priceErrorLabel1" layoutX="500.0" layoutY="660.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
         <Label fx:id="deleteArticleLabel" layoutX="500.0" layoutY="680.0" prefHeight="18.0" prefWidth="280.0" />

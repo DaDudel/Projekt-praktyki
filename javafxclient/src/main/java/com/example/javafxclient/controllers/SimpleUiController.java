@@ -799,7 +799,6 @@ public class SimpleUiController implements Initializable {
         String str = art.getMaterials();
         String fullStr = art.getMaterials();
         Integer index = str.indexOf(mat.getId()+",");
-        //System.out.println(index);
         if(index!=0){
             index = str.indexOf(";"+mat.getId()+",")+1;
         }
@@ -807,16 +806,8 @@ public class SimpleUiController implements Initializable {
         String temp = mat.getId().toString();
         Integer tempLength = temp.length() + 1;
 
-        //System.out.println(str);
-
-        //str = str.substring(tempLength);
-
-        //System.out.println(str);
-
         index = str.indexOf(";");
         str = str.substring(0,index+1);
-
-        //System.out.println(str);
 
         if(fullStr.indexOf(str)==0){
             fullStr=fullStr.replace(str,"");
@@ -926,6 +917,57 @@ public class SimpleUiController implements Initializable {
 
         stringCutter(codedMaterials);
     }
+
+    @FXML
+    public void handleAddArticleScene(Event event) throws IOException{
+        Stage stage;
+        Parent root;
+        if(event.getSource()==addArticleButton){
+            stage = new Stage();
+            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addArticlePopUp.fxml"));
+            loader.setController(new SimpleUiController());
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dodawanie przedmiotu");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.showAndWait();
+            refreshDatabase();
+        }
+        else {
+            if(event.getSource()==acceptButton){
+                stage = (Stage) acceptButton.getScene().getWindow();
+                Article article = new Article(getNewMaterialName(),getNewArticleQuantity(),getNewMaterialPrice(),"");
+                if(checkAdding()){
+                    httpRequesterArticle.addRequest(article);
+                    stage.close();
+                }
+            }
+            else{
+                if(event.getSource()==returnButton){
+                    stage = (Stage) returnButton.getScene().getWindow();
+                    stage.close();
+                }
+            }
+        }
+    }
+    public Integer getNewArticleQuantity(){
+        Integer quantity;
+        try{
+            String temp = createMaterialQuantityTF.getText();
+            quantity = Integer.parseInt(temp);
+            createQuantityErrorLabel.setText("");
+            return quantity;
+        }catch (Exception e){
+            createQuantityErrorLabel.setTextFill(Color.RED);
+            createQuantityErrorLabel.setText("Ilość musi być liczbą całkowitą.");
+            return 0;
+        }
+    }
+
 
 
 }
