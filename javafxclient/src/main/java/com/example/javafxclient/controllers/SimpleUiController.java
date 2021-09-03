@@ -668,6 +668,9 @@ public class SimpleUiController implements Initializable {
         //System.out.println(tempArticle);
 
         if(event.getSource()==editMaterialsButton){
+            if(tempArticle==null){
+                return;
+            }
 
             stage = new Stage();
 
