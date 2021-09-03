@@ -732,6 +732,14 @@ public class SimpleUiController implements Initializable {
                         else{
                             if(event.getSource()==materialWindowUpdateButton){
                                 stage = (Stage) materialWindowUpdateButton.getScene().getWindow();
+                                Material gotOne = (Material) editMaterialsList2.getSelectionModel().getSelectedItem();
+                                gotOne.setQuantity(returnMaterialQuantity());
+
+                                editMaterialQuantityInArticle(tempArticle,gotOne);
+
+                                tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
+                                String codedMaterials=tempArticle.getMaterials();
+                                stringCutterEdit(codedMaterials);
 
                             }
                             else{
@@ -747,6 +755,29 @@ public class SimpleUiController implements Initializable {
             }
         }
     }
+
+    public Double returnMaterialQuantity(){
+        if((Material) editMaterialsList2.getSelectionModel().getSelectedItem()!=null){
+            tempMaterial = (Material) editMaterialsList2.getSelectionModel().getSelectedItem();
+        }
+        String temp = articleMaterialsQuantity.getText();
+        temp=temp.replaceAll(",",".");
+        Double quantity;
+        try{
+            quantity=Double.parseDouble(temp);
+            editMaterialsWindowLabel.setText("");
+            return quantity;
+
+        }catch (Exception e){
+            editMaterialsWindowLabel.setTextFill(Color.RED);
+            editMaterialsWindowLabel.setText("Cena musi być liczbą");
+        }
+        return tempMaterial.getQuantity();
+
+    }
+
+    @FXML
+    public Label editMaterialsWindowLabel;
 
     @FXML
     public TextField articleMaterialsQuantity;
@@ -793,6 +824,35 @@ public class SimpleUiController implements Initializable {
         else {
             fullStr=fullStr.replace(";"+str,";");
         }
+
+        //System.out.println(fullStr);
+        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
+        tempArticle.setMaterials(fullStr);
+    }
+
+    public void editMaterialQuantityInArticle(Article art, Material mat){
+        String str = art.getMaterials();
+        String fullStr = art.getMaterials();
+        Integer index = str.indexOf(mat.getId()+",");
+        //System.out.println(index);
+        if(index!=0){
+            index = str.indexOf(";"+mat.getId()+",")+1;
+        }
+        str = str.substring(index);
+        String temp = mat.getId().toString();
+        Integer tempLength = temp.length() + 1;
+
+        index = str.indexOf(";");
+        str = str.substring(0,index+1);
+
+        if(fullStr.indexOf(str)==0){
+            fullStr=fullStr.replace(str,"");
+        }
+        else {
+            fullStr=fullStr.replace(";"+str,";");
+        }
+
+        fullStr = fullStr+mat.getId()+","+mat.getQuantity()+";";
 
         //System.out.println(fullStr);
         httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
