@@ -664,7 +664,7 @@ public class SimpleUiController implements Initializable {
         Stage stage;
         Parent root;
 
-        System.out.println(tempArticle);
+        //System.out.println(tempArticle);
 
         if(event.getSource()==editMaterialsButton){
 
@@ -683,6 +683,8 @@ public class SimpleUiController implements Initializable {
             stage.showAndWait();
 
             refreshDatabase();
+            tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
+            refreshArticleList();
         }
         else {
             if(event.getSource()==connectEditButton){
@@ -767,7 +769,7 @@ public class SimpleUiController implements Initializable {
 
         //System.out.println(fullStr);
         httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
-
+        tempArticle.setMaterials(fullStr);
     }
 
     @FXML
@@ -811,6 +813,32 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public Button addMaterialToListButton;
+
+    public Article getSingleArticle(Integer id){
+        try {
+            ObservableList<Article> helpList = FXCollections.observableList(httpRequesterArticle.getRequest());
+            for(Article art: helpList){
+                if(id == art.getId()){
+                    return art;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void refreshArticleList(){
+        String codedMaterials;
+        nameTextField1.setText(tempArticle.getName());
+        quantityTextField1.setText(tempArticle.getQuantity().toString());
+        priceTextField1.setText(tempArticle.getPrice().toString());
+        codedMaterials=tempArticle.getMaterials();
+
+        stringCutter(codedMaterials);
+    }
 
 
 }
