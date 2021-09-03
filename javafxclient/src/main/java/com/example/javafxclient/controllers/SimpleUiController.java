@@ -307,11 +307,6 @@ public class SimpleUiController implements Initializable {
             refreshDatabase();
         }
         else{
-//            stage = (Stage) returnButton.getScene().getWindow();
-//            getNewMaterialName();
-//            System.out.println(getNewMaterialQuantity());
-//            getNewMaterialPrice();
-//            //stage.close();
             if(event.getSource()==returnButton){
                 stage = (Stage) returnButton.getScene().getWindow();
                 stage.close();
@@ -415,42 +410,6 @@ public class SimpleUiController implements Initializable {
     }
 
     @FXML
-    public Button enterButton;
-
-    @FXML
-    public  Button exitButton;
-
-    @FXML
-    public PasswordField passwordField;
-
-    @FXML
-    public void handlePasswordScene(ActionEvent event)throws IOException{
-        Stage stage;
-        Parent root;
-        if(event==null){
-            stage = new Stage();
-            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/safetyPopUp.fxml"));
-            loader.setController(new SimpleUiController());
-            root = loader.load();
-
-            stage.setScene(new Scene(root));
-            stage.setTitle("Podaj hasło");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(addMaterialButton.getScene().getWindow());
-            stage.show();
-
-        }
-        else{
-            if(event.getSource()==exitButton){
-                stage = (Stage) exitButton.getScene().getWindow();
-                stage.close();
-            }
-        }
-    }
-
-    @FXML
     public ListView articleList;
 
     @FXML
@@ -512,17 +471,13 @@ public class SimpleUiController implements Initializable {
         }
 
         while (!string.equals("")){
-            //System.out.println("string: " + string);
             Integer index = string.indexOf(",");
             String sIdNumber = string.substring(0,index);
-            //System.out.println("substring id: " + sIdNumber);
             Integer idNumber = Integer.parseInt(sIdNumber);
 
             string = string.substring(index+1);
-            //System.out.println("string: " + string);
             index = string.indexOf(";");
             String sQ = string.substring(0,index);
-            //System.out.println("substring q: " + sQ);
             Double q = Double.parseDouble(sQ);
 
             string = string.substring(index+1);
@@ -674,8 +629,6 @@ public class SimpleUiController implements Initializable {
         Stage stage;
         Parent root;
 
-        //System.out.println(tempArticle);
-
         if(event.getSource()==editMaterialsButton){
             if(tempArticle==null){
                 return;
@@ -722,9 +675,7 @@ public class SimpleUiController implements Initializable {
                     if(event.getSource()==addMaterialToListButton){
                         stage = (Stage) addMaterialToListButton.getScene().getWindow();
                         Material gotOne = (Material) editMaterialsList.getSelectionModel().getSelectedItem();
-                        //System.out.println(gotOne);
                         addMaterialToArticle(tempArticle,gotOne);
-                        //refreshDatabase();
                         tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
                         String codedMaterials=tempArticle.getMaterials();
                         stringCutterEdit(codedMaterials);
@@ -854,7 +805,6 @@ public class SimpleUiController implements Initializable {
 
         fullStr = fullStr+mat.getId()+","+mat.getQuantity()+";";
 
-        //System.out.println(fullStr);
         httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
         tempArticle.setMaterials(fullStr);
     }
@@ -870,17 +820,13 @@ public class SimpleUiController implements Initializable {
         }
 
         while (!string.equals("")){
-            //System.out.println("string: " + string);
             Integer index = string.indexOf(",");
             String sIdNumber = string.substring(0,index);
-            //System.out.println("substring id: " + sIdNumber);
             Integer idNumber = Integer.parseInt(sIdNumber);
 
             string = string.substring(index+1);
-            //System.out.println("string: " + string);
             index = string.indexOf(";");
             String sQ = string.substring(0,index);
-            //System.out.println("substring q: " + sQ);
             Double q = Double.parseDouble(sQ);
 
             string = string.substring(index+1);
@@ -933,7 +879,6 @@ public class SimpleUiController implements Initializable {
         Parent root;
         if(event.getSource()==addArticleButton){
             stage = new Stage();
-            //root = FXMLLoader.load(getClass().getResource("/addMaterialPopUp.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/addArticlePopUp.fxml"));
             loader.setController(new SimpleUiController());
@@ -978,6 +923,7 @@ public class SimpleUiController implements Initializable {
     }
 
     public Boolean canDeleteMaterial(Material material){
+
         Integer matId = material.getId();
         String matIdStr = matId.toString();
         Integer index;
@@ -991,16 +937,13 @@ public class SimpleUiController implements Initializable {
 
                 index = mats.indexOf(matIdStr+",");
 
-//                if (index == -1){
-//                    return true;
-//                }
                 if (index == 0){
                     return false;
                 }
                 if (index > 1){
                     index = mats.indexOf(";"+matIdStr+",");
                     if(index == -1){
-                        //return true;
+
                     }
                     else{
                         return false;
@@ -1017,6 +960,7 @@ public class SimpleUiController implements Initializable {
         }
 
         return false;
+
     }
 
 

@@ -33,7 +33,6 @@ public class HttpRequesterArticle {
             connection.setReadTimeout(5000);
 
             Integer status = connection.getResponseCode();
-            //System.out.println(status);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e){
@@ -80,7 +79,6 @@ public class HttpRequesterArticle {
             fixedName = fixedName.replaceAll(" ","%20");
             String editLink = "name="+fixedName+"&quantity="+article.getQuantity()+"&price="+article.getPrice()+"&materials="+article.getMaterials();
             URL url = new URL("http://localhost:8080/API/articles/"+article.getId()+"?"+editLink);
-            //System.out.println(url);
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("PUT");
@@ -88,7 +86,6 @@ public class HttpRequesterArticle {
             connection.setReadTimeout(5000);
 
             Integer status = connection.getResponseCode();
-            //System.out.println(status);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e){
