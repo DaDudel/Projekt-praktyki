@@ -1,6 +1,20 @@
 package com.example.restservice.order;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Order {
+    @Id
+    @SequenceGenerator(
+            name = "material_sequence",
+            sequenceName = "material_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "material_sequence"
+    )
     private Integer id;
     private Integer transId;
     private String client;
