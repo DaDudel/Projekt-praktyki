@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class Order {
+public class Orders {
     @Id
     @SequenceGenerator(
             name = "material_sequence",
@@ -23,10 +23,10 @@ public class Order {
     private Double discount;
     private String items;
 
-    public Order() {
+    public Orders() {
     }
 
-    public Order(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
+    public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
         this.id = id;
         this.transId = transId;
         this.client = client;
@@ -36,7 +36,7 @@ public class Order {
         this.items = items;
     }
 
-    public Order(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
+    public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
         this.transId = transId;
         this.client = client;
         this.bruttoPrice = bruttoPrice;
@@ -99,5 +99,10 @@ public class Order {
 
     public void setItems(String items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return transId + " " + client;
     }
 }
