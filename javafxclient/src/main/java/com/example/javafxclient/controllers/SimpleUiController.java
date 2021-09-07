@@ -192,7 +192,6 @@ public class SimpleUiController implements Initializable {
     }
 
     public Double updatePrice(){
-        //Material material = (Material) testList.getSelectionModel().getSelectedItem();
         if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
@@ -1054,6 +1053,122 @@ public class SimpleUiController implements Initializable {
         System.out.println("null");
         return null;
     }
+
+    @FXML
+    public Button updateOrderButton;
+
+    public Integer updateOrderTransId(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        Integer id;
+        try{
+            id=Integer.parseInt(transIdTF.getText());
+            quantityErrorLabel1.setText("");
+            return id;
+
+        }catch (Exception e){
+            quantityErrorLabel1.setTextFill(Color.RED);
+            quantityErrorLabel1.setText("ID musi być liczbą całkowitą");
+        }
+        return tempOrder.getTransId();
+    }
+
+    public String updateOrderClient(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+
+        if(clientTF.getText()==""){
+        }
+        else{
+            return clientTF.getText();
+        }
+        return tempOrder.getClient();
+    }
+
+    public Double updateBruttoPrice(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        String temp = bruttoPriceTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            priceErrorLabel1.setText("");
+            return price;
+
+        }catch (Exception e){
+            priceErrorLabel1.setTextFill(Color.RED);
+            priceErrorLabel1.setText("Cena musi być liczbą");
+        }
+        return tempOrder.getBruttoPrice();
+    }
+
+    public Double updateNettoPrice(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        String temp = nettoPriceTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            deleteArticleLabel.setText("");
+            return price;
+
+        }catch (Exception e){
+            deleteArticleLabel.setTextFill(Color.RED);
+            deleteArticleLabel.setText("Cena musi być liczbą");
+        }
+        return tempOrder.getNettoPrice();
+    }
+
+    public Double updateDiscount(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        String temp = discountTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            discErrorLabel.setText("");
+            return price;
+
+        }catch (Exception e){
+            discErrorLabel.setTextFill(Color.RED);
+            discErrorLabel.setText("Rabat musi być liczbą");
+        }
+        return tempOrder.getDiscount();
+    }
+
+    @FXML
+    public void updateOrderDetails(){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        try{
+            httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), updateOrderTransId(),updateOrderClient(),
+                    updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems()));
+
+            tempOrder.setTransId(updateOrderTransId());
+            tempOrder.setClient(updateOrderClient());
+            tempOrder.setBruttoPrice(updateBruttoPrice());
+            tempOrder.setNettoPrice(updateNettoPrice());
+            tempOrder.setDiscount(updateDiscount());
+
+            
+        }catch (Exception e){
+
+        }
+        refreshDatabase();
+    }
+
+
+    @FXML
+    public Label discErrorLabel;
 
 
 

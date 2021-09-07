@@ -60,5 +60,7 @@
       <TextField fx:id="bruttoPriceTF" layoutX="95.0" layoutY="515.0" />
       <TextField fx:id="nettoPriceTF" layoutX="95.0" layoutY="540.0" />
       <TextField fx:id="discountTF" layoutX="95.0" layoutY="565.0" />
+      <Button fx:id="updateOrderButton" layoutX="14.0" layoutY="598.0" mnemonicParsing="false" onAction="#updateOrderDetails" prefHeight="26.0" prefWidth="280.0" text="Zaktualizuj dane" />
+      <Label fx:id="discErrorLabel" layoutX="500.0" layoutY="700.0" prefHeight="18.0" prefWidth="280.0" />
     </children>
 </AnchorPane>
