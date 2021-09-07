@@ -3,8 +3,10 @@ package com.example.javafxclient.controllers;
 
 import com.example.javafxclient.Article;
 import com.example.javafxclient.Material;
+import com.example.javafxclient.Orders;
 import com.example.javafxclient.httprequesters.HttpRequesterArticle;
 import com.example.javafxclient.httprequesters.HttpRequesterMaterial;
+import com.example.javafxclient.httprequesters.HttpRequesterOrders;
 import com.example.javafxclient.httprequesters.JsonGetter;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
@@ -32,8 +34,9 @@ public class SimpleUiController implements Initializable {
     private HttpRequesterMaterial httpRequesterMaterial = new HttpRequesterMaterial();
     private Material tempMaterial;
     private Article tempArticle;
-    //private SafetyController safetyController = new SafetyController();
+    private Orders tempOrder;
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
+    private HttpRequesterOrders httpRequesterOrders = new HttpRequesterOrders();
 
     public SimpleUiController() {
     }
@@ -53,10 +56,6 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public Label connectionLabel;
-
-//    //SimpleUiController(HostServices hostServices) {
-//        this.hostServices = hostServices;
-//    }
 
     @FXML
     public void connectJson(){
@@ -112,6 +111,9 @@ public class SimpleUiController implements Initializable {
 
     }
 
+    @FXML
+    public ListView ordersList;
+
     public void refreshDatabase(){
         try {
             ObservableList<Material> helpList = FXCollections.observableList(jsonGetter.getJson());
@@ -119,6 +121,9 @@ public class SimpleUiController implements Initializable {
 
             ObservableList<Article> tempList = FXCollections.observableList(httpRequesterArticle.getRequest());
             articleList.setItems(tempList);
+
+            ObservableList<Orders> tmpList = FXCollections.observableList(httpRequesterOrders.getRequest());
+            ordersList.setItems(tmpList);
 
             connectionLabel.setTextFill(Color.GREEN);
             connectionLabel.setText("Połączono");
@@ -962,6 +967,10 @@ public class SimpleUiController implements Initializable {
         return false;
 
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 

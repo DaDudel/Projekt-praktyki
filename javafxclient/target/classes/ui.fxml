@@ -46,5 +46,9 @@
         <Button fx:id="plusButton1" layoutX="708.0" layoutY="491.0" mnemonicParsing="false" onAction="#plusArticleQuantity" prefWidth="25.6" text="+" />
         <Button fx:id="minusButton1" layoutX="734.0" layoutY="491.0" mnemonicParsing="false" onAction="#minusArticleQuantity" prefWidth="25.6" text="-" />
         <Button fx:id="editMaterialsButton" layoutX="790.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleEditMaterialsWindow" prefHeight="75.0" prefWidth="52.0" text="Edytuj" />
+      <ListView fx:id="ordersList" layoutX="14.0" layoutY="48.0" onMouseClicked="#displaySelectedArticle" prefHeight="320.0" prefWidth="280.0" />
+      <TextField fx:id="filterOrders" layoutX="14.0" layoutY="14.0" onKeyTyped="#filterTable" prefHeight="26.0" prefWidth="280.0" promptText="Szukaj zamówienia" />
+      <ListView fx:id="itemsList" layoutX="14.0" layoutY="378.0" prefHeight="75.0" prefWidth="280.0" />
+      <Button fx:id="editMaterialsButton1" layoutX="304.0" layoutY="381.0" mnemonicParsing="false" onAction="#handleEditMaterialsWindow" prefHeight="75.0" prefWidth="52.0" text="Edytuj" />
     </children>
 </AnchorPane>
