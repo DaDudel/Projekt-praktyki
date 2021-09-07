@@ -1159,18 +1159,37 @@ public class SimpleUiController implements Initializable {
             tempOrder.setNettoPrice(updateNettoPrice());
             tempOrder.setDiscount(updateDiscount());
 
-            
+
         }catch (Exception e){
 
         }
         refreshDatabase();
     }
 
-
     @FXML
     public Label discErrorLabel;
 
+    @FXML
+    public Button deleteOrderButton;
 
+    @FXML
+    public void deleteOrder(){
+        Orders order = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(order==null){
+            deleteArticleLabel.setTextFill(Color.RED);
+            deleteArticleLabel.setText("Wybierz transakcję do usunięcia");
+        }
+        else {
+            httpRequesterOrders.deleteRequest(order.getId());
+            deleteArticleLabel.setText("");
+            transIdTF.setText("");
+            clientTF.setText("");
+            bruttoPriceTF.setText("");
+            nettoPriceTF.setText("");
+            discountTF.setText("");
+            refreshDatabase();
+        }
+    }
 
 }
 
