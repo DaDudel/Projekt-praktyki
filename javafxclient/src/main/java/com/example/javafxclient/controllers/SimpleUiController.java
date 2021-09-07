@@ -1191,5 +1191,13 @@ public class SimpleUiController implements Initializable {
         }
     }
 
+    @FXML
+    public Button addOrderButton;
+
+    @FXML
+    public void handleAddOrderScene(Event event){
+        
+    }
+
 }
 
