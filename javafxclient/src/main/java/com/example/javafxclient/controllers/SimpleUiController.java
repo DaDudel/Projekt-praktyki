@@ -970,7 +970,44 @@ public class SimpleUiController implements Initializable {
 
     //////////////////////////////////////////////////////////////////////////////////////////
 
+    @FXML
+    public TextField transIdTF;
 
+    @FXML
+    public TextField clientTF;
+
+    @FXML
+    public TextField bruttoPriceTF;
+
+    @FXML
+    public TextField nettoPriceTF;
+
+    @FXML
+    public TextField discountTF;
+
+    @FXML
+    public void displaySelectedOrder(MouseEvent event){
+        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        }
+        String codedItems;
+        if(tempOrder==null){
+            transIdTF.setText("");
+            clientTF.setText("");
+            bruttoPriceTF.setText("");
+            nettoPriceTF.setText("");
+            discountTF.setText("");
+            codedItems="";
+        }
+        else{
+            transIdTF.setText(tempOrder.getTransId().toString());
+            clientTF.setText(tempOrder.getClient());
+            bruttoPriceTF.setText(tempOrder.getBruttoPrice().toString());
+            nettoPriceTF.setText(tempOrder.getNettoPrice().toString());
+            discountTF.setText(tempOrder.getDiscount().toString());
+            codedItems=tempOrder.getItems();
+        }
+    }
 
 
 
