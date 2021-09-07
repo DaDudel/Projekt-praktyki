@@ -1058,8 +1058,10 @@ public class SimpleUiController implements Initializable {
     public Button updateOrderButton;
 
     public Integer updateOrderTransId(){
-        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
-            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(ordersList!=null){
+            if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+                tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+            }
         }
         Integer id;
         try{
@@ -1071,12 +1073,19 @@ public class SimpleUiController implements Initializable {
             quantityErrorLabel1.setTextFill(Color.RED);
             quantityErrorLabel1.setText("ID musi być liczbą całkowitą");
         }
-        return tempOrder.getTransId();
+        if(tempOrder!=null){
+            return tempOrder.getTransId();
+        }
+        else{
+            return 0;
+        }
     }
 
     public String updateOrderClient(){
-        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
-            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(ordersList!=null){
+            if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+                tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+            }
         }
 
         if(clientTF.getText()==""){
@@ -1084,12 +1093,20 @@ public class SimpleUiController implements Initializable {
         else{
             return clientTF.getText();
         }
-        return tempOrder.getClient();
+        if(tempOrder!=null){
+            return tempOrder.getClient();
+        }
+        else {
+            return "";
+        }
+
     }
 
     public Double updateBruttoPrice(){
-        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
-            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(ordersList!=null){
+            if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+                tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+            }
         }
         String temp = bruttoPriceTF.getText();
         temp=temp.replaceAll(",",".");
@@ -1103,12 +1120,19 @@ public class SimpleUiController implements Initializable {
             priceErrorLabel1.setTextFill(Color.RED);
             priceErrorLabel1.setText("Cena musi być liczbą");
         }
-        return tempOrder.getBruttoPrice();
+        if(tempOrder!=null){
+            return tempOrder.getBruttoPrice();
+        }
+        else {
+            return 0.0;
+        }
     }
 
     public Double updateNettoPrice(){
-        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
-            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(ordersList!=null){
+            if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+                tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+            }
         }
         String temp = nettoPriceTF.getText();
         temp=temp.replaceAll(",",".");
@@ -1122,12 +1146,20 @@ public class SimpleUiController implements Initializable {
             deleteArticleLabel.setTextFill(Color.RED);
             deleteArticleLabel.setText("Cena musi być liczbą");
         }
-        return tempOrder.getNettoPrice();
+        if(tempOrder!=null){
+            return tempOrder.getNettoPrice();
+        }
+        else {
+            return 0.0;
+        }
+
     }
 
     public Double updateDiscount(){
-        if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
-            tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+        if(ordersList!=null){
+            if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
+                tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
+            }
         }
         String temp = discountTF.getText();
         temp=temp.replaceAll(",",".");
@@ -1141,7 +1173,12 @@ public class SimpleUiController implements Initializable {
             discErrorLabel.setTextFill(Color.RED);
             discErrorLabel.setText("Rabat musi być liczbą");
         }
-        return tempOrder.getDiscount();
+        if(tempOrder!=null){
+            return tempOrder.getDiscount();
+        }
+        else {
+            return 0.0;
+        }
     }
 
     @FXML
@@ -1195,8 +1232,56 @@ public class SimpleUiController implements Initializable {
     public Button addOrderButton;
 
     @FXML
-    public void handleAddOrderScene(Event event){
-        
+    public void handleAddOrderScene(Event event) throws IOException{
+        Stage stage;
+        Parent root;
+        if(event.getSource()==addOrderButton){
+            stage = new Stage();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/addOrderPopUp.fxml"));
+            loader.setController(new SimpleUiController());
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Dodawanie zamówienia");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.showAndWait();
+            refreshDatabase();
+        }
+        else {
+            if(event.getSource()==acceptButton){
+                stage = (Stage) acceptButton.getScene().getWindow();
+                Orders order = new Orders(updateOrderTransId(),updateOrderClient(),updateBruttoPrice(),updateNettoPrice(),
+                        updateDiscount(),"");
+                if(checkAddingOrder()){
+                    httpRequesterOrders.addRequest(order);
+                    stage.close();
+                }
+            }
+            else{
+                if(event.getSource()==returnButton){
+                    stage = (Stage) returnButton.getScene().getWindow();
+                    stage.close();
+                }
+            }
+        }
+    }
+
+    Boolean checkAddingOrder(){
+        if(!quantityErrorLabel1.getText().equals("")){
+            return false;
+        }
+        if(!priceErrorLabel1.getText().equals("")){
+            return false;
+        }
+        if(!deleteArticleLabel.getText().equals("")){
+            return false;
+        }
+        if(!discErrorLabel.getText().equals("")){
+            return false;
+        }
+        return true;
     }
 
 }
