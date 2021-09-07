@@ -1007,6 +1007,52 @@ public class SimpleUiController implements Initializable {
             discountTF.setText(tempOrder.getDiscount().toString());
             codedItems=tempOrder.getItems();
         }
+        stringCutterOrders(codedItems);
+    }
+
+    @FXML
+    public ListView itemsList;
+
+    public void stringCutterOrders(String string){
+        ObservableList<Article> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            itemsList.setItems(templist);
+            return;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Integer q = Integer.parseInt(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findArticle(idNumber,q));
+
+        }
+        itemsList.setItems(templist);
+    }
+
+    public Article findArticle(Integer id, Integer q){
+        try {
+            ObservableList<Article> helpList = FXCollections.observableList(httpRequesterArticle.getRequest());
+            for (Article temp: helpList){
+                if(temp.getId()==id){
+                    return new Article(id,temp.getName(),q,temp.getPrice(),temp.getMaterials());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("null");
+        return null;
     }
 
 
