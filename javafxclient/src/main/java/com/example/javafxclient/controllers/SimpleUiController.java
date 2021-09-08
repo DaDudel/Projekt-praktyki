@@ -1355,7 +1355,24 @@ public class SimpleUiController implements Initializable {
                             String codedItems = tempOrder.getItems();
                             stringCutterEditOrder(codedItems);
                         }
-                        
+                        else{
+                            if(event.getSource()==materialWindowUpdateButton){
+                                stage = (Stage) materialWindowUpdateButton.getScene().getWindow();
+                                Article gotOne = (Article) editMaterialsList2.getSelectionModel().getSelectedItem();
+                                gotOne.setQuantity(returnArticleQuantity());
+                                editArticleQuantityInOrder(tempOrder,gotOne);
+                                tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
+                                String codedItems = tempOrder.getItems();
+                                stringCutterEditOrder(codedItems);
+                            }
+                            else{
+                                if(event.getSource()==editMaterialsList2){
+                                    stage = (Stage) editMaterialsList2.getScene().getWindow();
+                                    Article tmp = (Article) editMaterialsList2.getSelectionModel().getSelectedItem();
+                                    articleMaterialsQuantity.setText((tmp.getQuantity().toString()));
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1447,6 +1464,54 @@ public class SimpleUiController implements Initializable {
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
                 ord.getNettoPrice(),ord.getDiscount(),fullStr));
 
+        tempOrder.setItems(fullStr);
+    }
+
+    public Integer returnArticleQuantity(){
+        if((Article) editMaterialsList2.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) editMaterialsList2.getSelectionModel().getSelectedItem();
+        }
+        String temp = articleMaterialsQuantity.getText();
+        temp=temp.replaceAll(",",".");
+        Integer quantity;
+        try{
+            quantity=Integer.parseInt(temp);
+            editMaterialsWindowLabel.setText("");
+            return quantity;
+
+        }catch (Exception e){
+            editMaterialsWindowLabel.setTextFill(Color.RED);
+            editMaterialsWindowLabel.setText("Cena musi być liczbą");
+        }
+        return tempArticle.getQuantity();
+
+    }
+
+    public void editArticleQuantityInOrder(Orders ord, Article art){
+        String str = ord.getItems();
+        String fullStr = ord.getItems();
+        Integer index = str.indexOf(art.getId()+",");
+        if(index!=0){
+            index = str.indexOf(";"+art.getId()+",")+1;
+        }
+        str = str.substring(index);
+        String temp = art.getId().toString();
+        Integer tempLength = temp.length() + 1;
+
+        index = str.indexOf(";");
+        str = str.substring(0,index+1);
+
+        if(fullStr.indexOf(str)==0){
+            fullStr=fullStr.replace(str,"");
+        }
+        else {
+            fullStr=fullStr.replace(";"+str,";");
+        }
+
+        fullStr = fullStr+art.getId()+","+art.getQuantity()+";";
+
+        httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
+                ord.getNettoPrice(),ord.getDiscount(),fullStr));
         tempOrder.setItems(fullStr);
     }
 
