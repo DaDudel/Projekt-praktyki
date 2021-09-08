@@ -1332,6 +1332,13 @@ public class SimpleUiController implements Initializable {
                 String codedMaterials= tempOrder.getItems();
                 stringCutterEditOrder(codedMaterials);
             }
+
+            else {
+                if(event.getSource()==exitEditButton){
+                    stage = (Stage) exitEditButton.getScene().getWindow();
+                    stage.close();
+                }
+            }
         }
     }
 
