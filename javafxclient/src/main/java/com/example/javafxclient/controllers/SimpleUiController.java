@@ -1284,5 +1284,10 @@ public class SimpleUiController implements Initializable {
         return true;
     }
 
+    @FXML
+    public void handleEditOrdersWindow(Event event) throws IOException{
+
+    }
+
 }
 
