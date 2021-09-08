@@ -1338,6 +1338,16 @@ public class SimpleUiController implements Initializable {
                     stage = (Stage) exitEditButton.getScene().getWindow();
                     stage.close();
                 }
+                else {
+                    if(event.getSource()==addMaterialToListButton){
+                        stage = (Stage) addMaterialToListButton.getScene().getWindow();
+                        Article gotOne = (Article) editMaterialsList.getSelectionModel().getSelectedItem();
+                        addArticleToOrder(tempOrder,gotOne);
+                        tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
+                        String codedItems = tempOrder.getItems();
+                        stringCutterEditOrder(codedItems);
+                    }
+                }
             }
         }
     }
@@ -1394,6 +1404,13 @@ public class SimpleUiController implements Initializable {
         }
         editMaterialsList2.setItems(templist);
 
+    }
+
+    public void addArticleToOrder(Orders ord, Article art){
+        String str = ord.getItems();
+        str = str + art.getId()+",1;";
+        ord.setItems(str);
+        httpRequesterOrders.editRequest(ord);
     }
 
 }
