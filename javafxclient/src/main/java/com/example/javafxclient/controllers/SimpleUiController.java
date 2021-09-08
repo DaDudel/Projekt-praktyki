@@ -658,6 +658,7 @@ public class SimpleUiController implements Initializable {
             refreshDatabase();
             tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
             refreshArticleList();
+            fillUsedMaterials(tempOrder);
         }
         else {
             if(event.getSource()==connectEditButton){
@@ -1011,23 +1012,26 @@ public class SimpleUiController implements Initializable {
             tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
         }
 
-        //System.out.println(tempMaterialList);
+        //System.out.println(tempArticleList);
+        System.out.println(tempMaterialList);
         tempMaterialList=(ObservableList<Material>) reduceElements(tempMaterialList);
+        System.out.println(tempMaterialList);
         usedMaterialsList.setItems(tempMaterialList);
 
     }
 
     public List reduceElements(List tempList){
+        List helpList = tempList;
         ObservableList<Material>finalMaterials = FXCollections.observableArrayList();
-        Integer j = tempList.size();
+        Integer j = helpList.size();
         for (Integer i = 0; i<j; i++){
-            Material tempMaterial = (Material) tempList.get(i);
+            Material tempMaterial = (Material) helpList.get(i);
             for (Integer k = i+1;k<j;k++){
-                Material secondMaterial = (Material) tempList.get(k);
+                Material secondMaterial = (Material) helpList.get(k);
                 if(tempMaterial.getId()==secondMaterial.getId()){
                     tempMaterial.setQuantity(tempMaterial.getQuantity()+secondMaterial.getQuantity());
-                    tempList.remove(k);
-                    j--;
+                    helpList.remove(secondMaterial);
+                    j=helpList.size();
                 }
             }
             finalMaterials.add(tempMaterial);
@@ -1415,6 +1419,7 @@ public class SimpleUiController implements Initializable {
             refreshDatabase();
             tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
             refreshOrderList();
+            fillUsedMaterials(tempOrder);
         }
         else {
             if(event.getSource()==connectEditButton){
