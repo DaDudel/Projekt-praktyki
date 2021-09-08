@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -989,6 +990,103 @@ public class SimpleUiController implements Initializable {
     public TextField discountTF;
 
     @FXML
+    public ListView usedMaterialsList;
+
+    public void fillUsedMaterials(Orders ord){
+        if(ord==null){
+            ObservableList<Material> templist = FXCollections.observableArrayList();
+            usedMaterialsList.setItems(templist);
+            return;
+        }
+        if(ord.getItems()==""){
+            ObservableList<Material> templist = FXCollections.observableArrayList();
+            usedMaterialsList.setItems(templist);
+            return;
+        }
+
+        ObservableList<Article> tempArticleList = FXCollections.observableList(stringCutterOrdersToList(ord.getItems()));
+        ObservableList<Material> tempMaterialList = FXCollections.observableArrayList();
+
+        for(Article art: tempArticleList){
+            tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
+        }
+
+        //System.out.println(tempMaterialList);
+        tempMaterialList=(ObservableList<Material>) reduceElements(tempMaterialList);
+        usedMaterialsList.setItems(tempMaterialList);
+
+    }
+
+    public List reduceElements(List tempList){
+        ObservableList<Material>finalMaterials = FXCollections.observableArrayList();
+        Integer j = tempList.size();
+        for (Integer i = 0; i<j; i++){
+            Material tempMaterial = (Material) tempList.get(i);
+            for (Integer k = i+1;k<j;k++){
+                Material secondMaterial = (Material) tempList.get(k);
+                if(tempMaterial.getId()==secondMaterial.getId()){
+                    tempMaterial.setQuantity(tempMaterial.getQuantity()+secondMaterial.getQuantity());
+                    tempList.remove(k);
+                    j--;
+                }
+            }
+            finalMaterials.add(tempMaterial);
+        }
+        return finalMaterials;
+    }
+
+    public List stringCutterArticleToList(String string){
+        ObservableList<Material> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            materialsList.setItems(templist);
+            return templist;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Double q = Double.parseDouble(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findMaterial(idNumber,q));
+
+        }
+        return templist;
+    }
+
+    public List stringCutterOrdersToList(String string){
+        ObservableList<Article> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            itemsList.setItems(templist);
+            return templist;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Integer q = Integer.parseInt(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findArticle(idNumber,q));
+
+        }
+        return templist;
+
+    }
+
+    @FXML
     public void displaySelectedOrder(MouseEvent event){
         if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
             tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
@@ -1011,6 +1109,7 @@ public class SimpleUiController implements Initializable {
             codedItems=tempOrder.getItems();
         }
         stringCutterOrders(codedItems);
+        fillUsedMaterials(tempOrder);
     }
 
     @FXML
