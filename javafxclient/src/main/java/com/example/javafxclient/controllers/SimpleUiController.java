@@ -1347,6 +1347,16 @@ public class SimpleUiController implements Initializable {
                         String codedItems = tempOrder.getItems();
                         stringCutterEditOrder(codedItems);
                     }
+                    else {
+                        if(event.getSource()==deleteFromMaterials){
+                            stage = (Stage) deleteFromMaterials.getScene().getWindow();
+                            Article gotOne = (Article) editMaterialsList2.getSelectionModel().getSelectedItem();
+                            deleteArticleFromOrder(tempOrder, gotOne);
+                            String codedItems = tempOrder.getItems();
+                            stringCutterEditOrder(codedItems);
+                        }
+                        
+                    }
                 }
             }
         }
@@ -1411,6 +1421,33 @@ public class SimpleUiController implements Initializable {
         str = str + art.getId()+",1;";
         ord.setItems(str);
         httpRequesterOrders.editRequest(ord);
+    }
+
+    public void deleteArticleFromOrder(Orders ord, Article art){
+        String str = ord.getItems();
+        String fullStr = ord.getItems();
+        Integer index = str.indexOf(art.getId()+",");
+        if(index!=0){
+            index = str.indexOf(";"+art.getId()+",")+1;
+        }
+        str = str.substring(index);
+        String temp = art.getId().toString();
+        Integer tempLength = temp.length() + 1;
+
+        index = str.indexOf(";");
+        str = str.substring(0,index+1);
+
+        if(fullStr.indexOf(str)==0){
+            fullStr=fullStr.replace(str,"");
+        }
+        else {
+            fullStr=fullStr.replace(";"+str,";");
+        }
+
+        httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
+                ord.getNettoPrice(),ord.getDiscount(),fullStr));
+
+        tempOrder.setItems(fullStr);
     }
 
 }
