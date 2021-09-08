@@ -1317,7 +1317,22 @@ public class SimpleUiController implements Initializable {
             tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
             refreshOrderList();
         }
-        
+        else {
+            if(event.getSource()==connectEditButton){
+                stage = (Stage) connectEditButton.getScene().getWindow();
+
+                ObservableList<Article> helpList = null;
+                try {
+                    helpList = FXCollections.observableList(httpRequesterArticle.getRequest());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                editMaterialsList.setItems(helpList);
+
+                String codedMaterials= tempOrder.getItems();
+                stringCutterEditOrder(codedMaterials);
+            }
+        }
     }
 
     public Orders getSingleOrder(Integer id){
@@ -1346,6 +1361,32 @@ public class SimpleUiController implements Initializable {
         codedItems= tempOrder.getItems();
 
         stringCutterOrders(codedItems);
+    }
+
+    public void stringCutterEditOrder(String string){
+        ObservableList<Article> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            editMaterialsList2.setItems(templist);
+            return;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Integer q = Integer.parseInt(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findArticle(idNumber,q));
+
+        }
+        editMaterialsList2.setItems(templist);
+
     }
 
 }
