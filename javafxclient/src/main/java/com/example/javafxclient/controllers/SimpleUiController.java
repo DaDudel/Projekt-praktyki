@@ -1009,7 +1009,9 @@ public class SimpleUiController implements Initializable {
         ObservableList<Material> tempMaterialList = FXCollections.observableArrayList();
 
         for(Article art: tempArticleList){
-            tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
+            for (Integer i = 0;i<art.getQuantity();i++){
+                tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
+            }
         }
 
         //System.out.println(tempArticleList);
@@ -1031,6 +1033,7 @@ public class SimpleUiController implements Initializable {
                 if(tempMaterial.getId()==secondMaterial.getId()){
                     tempMaterial.setQuantity(tempMaterial.getQuantity()+secondMaterial.getQuantity());
                     helpList.remove(secondMaterial);
+                    k--;
                     j=helpList.size();
                 }
             }
