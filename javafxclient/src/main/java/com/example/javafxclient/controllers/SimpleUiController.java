@@ -41,6 +41,10 @@ public class SimpleUiController implements Initializable {
     public SimpleUiController() {
     }
 
+    public SimpleUiController(Orders tempOrder) {
+        this.tempOrder = tempOrder;
+    }
+
     public SimpleUiController(Article tempArticle) {
         this.tempArticle = tempArticle;
     }
@@ -1285,8 +1289,63 @@ public class SimpleUiController implements Initializable {
     }
 
     @FXML
-    public void handleEditOrdersWindow(Event event) throws IOException{
+    public Button editArticlesButton;
 
+    @FXML
+    public void handleEditArticlesWindow(Event event) throws IOException{
+        Stage stage;
+        Parent root;
+
+        if(event.getSource()==editArticlesButton){
+            if(tempOrder==null){
+                return;
+            }
+
+            stage = new Stage();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/editOrderArticles.fxml"));
+            loader.setController(new SimpleUiController(tempOrder));
+            root = loader.load();
+
+            stage.setScene(new Scene(root));
+            stage.setTitle("Edycja zamówienia");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.showAndWait();
+
+            refreshDatabase();
+            tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
+            refreshOrderList();
+        }
+        
+    }
+
+    public Orders getSingleOrder(Integer id){
+        try {
+            ObservableList<Orders> helpList = FXCollections.observableList(httpRequesterOrders.getRequest());
+            for(Orders ord: helpList){
+                if(id == ord.getId()){
+                    return ord;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void refreshOrderList(){
+        String codedItems;
+        transIdTF.setText(tempOrder.getTransId().toString());
+        clientTF.setText(tempOrder.getClient());
+        bruttoPriceTF.setText(tempOrder.getBruttoPrice().toString());
+        nettoPriceTF.setText(tempOrder.getNettoPrice().toString());
+        discountTF.setText(tempOrder.getDiscount().toString());
+        codedItems= tempOrder.getItems();
+
+        stringCutterOrders(codedItems);
     }
 
 }
