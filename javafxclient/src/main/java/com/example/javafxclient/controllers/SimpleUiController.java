@@ -1125,6 +1125,7 @@ public class SimpleUiController implements Initializable {
         fillUsedMaterials(tempOrder);
         sumMaterialCosts(tempOrder);
         setPrices(tempOrder);
+        noMaterials.setText("");
     }
 
     @FXML
@@ -1719,6 +1720,7 @@ public class SimpleUiController implements Initializable {
 
     public Boolean checkMaterials(){
         if(usedMaterialsList!=null){
+            refreshDatabase();
             List tempList = usedMaterialsList.getItems();
             List tempMaterials = materialList.getItems();
 
@@ -1745,6 +1747,7 @@ public class SimpleUiController implements Initializable {
     @FXML
     public void realize(){
         if(checkMaterials()){
+            refreshDatabase();
             List tempList = usedMaterialsList.getItems();
             List tempMaterials = materialList.getItems();
 
