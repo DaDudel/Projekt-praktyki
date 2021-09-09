@@ -438,6 +438,7 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
+        deleteArticleLabel.setText("");
         String codedMaterials;
         if(tempArticle==null){
             nameTextField1.setText("");
@@ -526,12 +527,19 @@ public class SimpleUiController implements Initializable {
             deleteArticleLabel.setText("Wybierz przedmiot do usunięcia");
         }
         else {
-            httpRequesterArticle.deleteRequest(article.getId());
-            deleteArticleLabel.setText("");
-            nameTextField1.setText("");
-            priceTextField1.setText("");
-            quantityTextField1.setText("");
-            refreshDatabase();
+            if(canDeleteArticle(article)){
+                httpRequesterArticle.deleteRequest(article.getId());
+                deleteArticleLabel.setText("");
+                nameTextField1.setText("");
+                priceTextField1.setText("");
+                quantityTextField1.setText("");
+                refreshDatabase();
+            }
+            else {
+                deleteArticleLabel.setTextFill(Color.RED);
+                deleteArticleLabel.setText("Nie można usunąć, przedmiot jest wykorzystywany.");
+            }
+
         }
 
     }
@@ -1664,6 +1672,47 @@ public class SimpleUiController implements Initializable {
             sum=sum+temp;
         }
         return sum;
+    }
+
+    public Boolean canDeleteArticle(Article article){
+
+        Integer artId = article.getId();
+        String artIdStr = artId.toString();
+        Integer index;
+
+        try {
+            ObservableList<Orders> tempList = FXCollections.observableList(httpRequesterOrders.getRequest());
+
+            for(Orders ord:tempList){
+
+                String arts = ord.getItems();
+
+                index = arts.indexOf(artIdStr+",");
+
+                if (index == 0){
+                    return false;
+                }
+                if (index > 1){
+                    index = arts.indexOf(";"+artIdStr+",");
+                    if(index == -1){
+
+                    }
+                    else{
+                        return false;
+                    }
+                }
+
+            }
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
     }
 
 }
