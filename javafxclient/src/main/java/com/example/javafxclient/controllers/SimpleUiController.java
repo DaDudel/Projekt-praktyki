@@ -301,7 +301,7 @@ public class SimpleUiController implements Initializable {
     public void handleAddMaterialScene(ActionEvent event) throws  IOException{
         Stage stage;
         Parent root;
-        System.out.println("Button pressed");
+        //System.out.println("Button pressed");
 
         if(event.getSource()==addMaterialButton){
             stage = new Stage();
@@ -1170,7 +1170,7 @@ public class SimpleUiController implements Initializable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("null");
+        //System.out.println("null");
         return null;
     }
 
@@ -1712,6 +1712,40 @@ public class SimpleUiController implements Initializable {
         }
 
         return false;
+
+    }
+
+    @FXML
+    public Label noMaterials;
+
+    @FXML
+    public void checkMaterials(){
+
+    }
+
+    @FXML
+    public Button realizeOrder;
+
+    @FXML
+    public void realize(){
+        if(usedMaterialsList!=null){
+            List tempList = usedMaterialsList.getItems();
+            List tempMaterials = materialList.getItems();
+
+            //System.out.println(tempList);
+
+            for(Material mat: (ObservableList<Material>) tempList){
+                for (Material magMat : (ObservableList<Material>) tempMaterials){
+                    if(mat.getId()==magMat.getId()){
+                        Material newMaterial = new Material(magMat.getId(),magMat.getName(),(Double) (((double) Math.round((magMat.getQuantity()-mat.getQuantity())*100))/100) ,magMat.getPrice());
+                        //System.out.println(newMaterial);
+                        httpRequesterMaterial.editRequest(newMaterial);
+
+                    }
+                }
+            }
+            refreshDatabase();
+        }
 
     }
 

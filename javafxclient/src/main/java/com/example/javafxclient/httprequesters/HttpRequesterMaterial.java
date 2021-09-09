@@ -39,7 +39,7 @@ public class HttpRequesterMaterial {
             String fixedName = material.getName();
             fixedName = fixedName.replaceAll(" ","%20");
             fixedName = functions.removePolish(fixedName);
-            System.out.println(fixedName);
+            //System.out.println(fixedName);
             String editLink = "name="+fixedName+"&quantity="+material.getQuantity()+"&price="+material.getPrice();
             URL url = new URL("http://localhost:8080/API/materials/"+material.getId()+"?"+editLink);
             //System.out.println(url);
