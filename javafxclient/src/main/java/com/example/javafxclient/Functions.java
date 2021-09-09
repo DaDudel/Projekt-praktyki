@@ -26,4 +26,8 @@ public class Functions {
         string=string.replaceAll("Ż","Z");
         return string;
     }
+
+    public Double roundDouble(Double d){
+        return (Double) (((double) Math.round(d*100))/100);
+    }
 }

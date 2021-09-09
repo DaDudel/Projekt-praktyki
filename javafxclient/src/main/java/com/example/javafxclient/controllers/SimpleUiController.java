@@ -1127,6 +1127,7 @@ public class SimpleUiController implements Initializable {
         stringCutterOrders(codedItems);
         fillUsedMaterials(tempOrder);
         sumMaterialCosts(tempOrder);
+        setPrices(tempOrder);
     }
 
     @FXML
@@ -1315,6 +1316,7 @@ public class SimpleUiController implements Initializable {
             tempOrder.setBruttoPrice(updateBruttoPrice());
             tempOrder.setNettoPrice(updateNettoPrice());
             tempOrder.setDiscount(updateDiscount());
+            setPrices(tempOrder);
 
 
         }catch (Exception e){
@@ -1757,7 +1759,8 @@ public class SimpleUiController implements Initializable {
             for(Material mat: (ObservableList<Material>) tempList){
                 for (Material magMat : (ObservableList<Material>) tempMaterials){
                     if(mat.getId()==magMat.getId()){
-                        Material newMaterial = new Material(magMat.getId(),magMat.getName(),(Double) (((double) Math.round((magMat.getQuantity()-mat.getQuantity())*100))/100) ,magMat.getPrice());
+                        Material newMaterial = new Material(magMat.getId(), magMat.getName(),
+                                functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
                         //System.out.println(newMaterial);
                         httpRequesterMaterial.editRequest(newMaterial);
 
@@ -1767,6 +1770,26 @@ public class SimpleUiController implements Initializable {
             refreshDatabase();
         }
 
+    }
+
+    @FXML
+    public Label bruttoDiscount;
+
+    @FXML
+    public Label nettoDiscount;
+
+    public void setPrices(Orders ord){
+        if(ord==null)
+        {
+            bruttoDiscount.setText("");
+            nettoDiscount.setText("");
+            return;
+        }
+        Double bPrice = functions.roundDouble(ord.getBruttoPrice()*(100-ord.getDiscount())/100);
+        bruttoDiscount.setText(bPrice + " zł");
+        Double nPrice = functions.roundDouble(ord.getNettoPrice()*(100-ord.getDiscount())/100);
+        nettoDiscount.setText(nPrice + " zł");
+        return;
     }
 
 }
