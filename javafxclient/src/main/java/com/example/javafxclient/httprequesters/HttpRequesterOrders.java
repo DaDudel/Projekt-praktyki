@@ -1,5 +1,6 @@
 package com.example.javafxclient.httprequesters;
 
+import com.example.javafxclient.Functions;
 import com.example.javafxclient.Orders;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class HttpRequesterOrders {
     private HttpURLConnection connection;
+    private Functions functions = new Functions();
 
     public HttpRequesterOrders() {
     }
@@ -92,6 +94,7 @@ public class HttpRequesterOrders {
         try {
             String fixedClient = order.getClient();
             fixedClient = fixedClient.replaceAll(" ","%20");
+            fixedClient = functions.removePolish(fixedClient);
             String editLink = "transId="+order.getTransId()+"&client="+fixedClient+"&bruttoPrice="+order.getBruttoPrice()
                     +"&nettoPrice="+order.getNettoPrice()+"&discount="+order.getDiscount()+"&items="+order.getItems();
             URL url = new URL("http://localhost:8080/API/orders/"+order.getId()+"?"+editLink);

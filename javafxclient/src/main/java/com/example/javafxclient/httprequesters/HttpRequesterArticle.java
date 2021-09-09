@@ -3,6 +3,7 @@ package com.example.javafxclient.httprequesters;
 
 
 import com.example.javafxclient.Article;
+import com.example.javafxclient.Functions;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class HttpRequesterArticle {
     private HttpURLConnection connection;
+    private Functions functions = new Functions();
 
     public HttpRequesterArticle() {
     }
@@ -77,6 +79,7 @@ public class HttpRequesterArticle {
         try {
             String fixedName = article.getName();
             fixedName = fixedName.replaceAll(" ","%20");
+            fixedName = functions.removePolish(fixedName);
             String editLink = "name="+fixedName+"&quantity="+article.getQuantity()+"&price="+article.getPrice()+"&materials="+article.getMaterials();
             URL url = new URL("http://localhost:8080/API/articles/"+article.getId()+"?"+editLink);
             connection = (HttpURLConnection) url.openConnection();

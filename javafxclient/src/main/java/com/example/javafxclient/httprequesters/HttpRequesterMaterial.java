@@ -2,6 +2,7 @@ package com.example.javafxclient.httprequesters;
 
 
 
+import com.example.javafxclient.Functions;
 import com.example.javafxclient.Material;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class HttpRequesterMaterial {
     private HttpURLConnection connection;
+    private Functions functions = new Functions();
 
     public void deleteRequest (Integer id){
         try {
@@ -36,6 +38,8 @@ public class HttpRequesterMaterial {
         try {
             String fixedName = material.getName();
             fixedName = fixedName.replaceAll(" ","%20");
+            fixedName = functions.removePolish(fixedName);
+            System.out.println(fixedName);
             String editLink = "name="+fixedName+"&quantity="+material.getQuantity()+"&price="+material.getPrice();
             URL url = new URL("http://localhost:8080/API/materials/"+material.getId()+"?"+editLink);
             //System.out.println(url);

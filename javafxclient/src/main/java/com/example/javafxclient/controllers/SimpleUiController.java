@@ -2,6 +2,7 @@ package com.example.javafxclient.controllers;
 
 
 import com.example.javafxclient.Article;
+import com.example.javafxclient.Functions;
 import com.example.javafxclient.Material;
 import com.example.javafxclient.Orders;
 import com.example.javafxclient.httprequesters.HttpRequesterArticle;
@@ -38,6 +39,7 @@ public class SimpleUiController implements Initializable {
     private Orders tempOrder;
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
     private HttpRequesterOrders httpRequesterOrders = new HttpRequesterOrders();
+    private Functions functions = new Functions();
 
     public SimpleUiController() {
     }
@@ -223,8 +225,8 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), updateName(),updateQuantity(), updatePrice()));
-            tempMaterial.setName(nameTextField.getText());
+            httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), functions.removePolish(updateName()),updateQuantity(), updatePrice()));
+            tempMaterial.setName(functions.removePolish(nameTextField.getText()));
             tempMaterial.setPrice(updatePrice());
             tempMaterial.setQuantity(updateQuantity());
             //errorLabel.setText("");
@@ -323,7 +325,7 @@ public class SimpleUiController implements Initializable {
             else {
                 if(event.getSource()==acceptButton){
                     stage = (Stage) acceptButton.getScene().getWindow();
-                    Material material = new Material(getNewMaterialName(),getNewMaterialQuantity(),getNewMaterialPrice());
+                    Material material = new Material(functions.removePolish(getNewMaterialName()) ,getNewMaterialQuantity(),getNewMaterialPrice());
                     if(checkAdding()){
                         httpRequesterMaterial.addRequest(material);
                         stage.close();
@@ -588,8 +590,8 @@ public class SimpleUiController implements Initializable {
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterArticle.editRequest(new Article(tempArticle.getId(), updateArticleName(),updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials()));
-            tempArticle.setName(nameTextField1.getText());
+            httpRequesterArticle.editRequest(new Article(tempArticle.getId(),functions.removePolish(updateArticleName()) ,updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials()));
+            tempArticle.setName(functions.removePolish(nameTextField1.getText()));
             tempArticle.setPrice(updateArticlePrice());
         }catch (Exception e){
 
@@ -904,7 +906,7 @@ public class SimpleUiController implements Initializable {
         else {
             if(event.getSource()==acceptButton){
                 stage = (Stage) acceptButton.getScene().getWindow();
-                Article article = new Article(getNewMaterialName(),getNewArticleQuantity(),getNewMaterialPrice(),"");
+                Article article = new Article(functions.removePolish(getNewMaterialName()),getNewArticleQuantity(),getNewMaterialPrice(),"");
                 if(checkAdding()){
                     httpRequesterArticle.addRequest(article);
                     stage.close();
@@ -1014,10 +1016,7 @@ public class SimpleUiController implements Initializable {
             }
         }
 
-        //System.out.println(tempArticleList);
-        System.out.println(tempMaterialList);
         tempMaterialList=(ObservableList<Material>) reduceElements(tempMaterialList);
-        System.out.println(tempMaterialList);
         usedMaterialsList.setItems(tempMaterialList);
 
     }
@@ -1297,11 +1296,11 @@ public class SimpleUiController implements Initializable {
             tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), updateOrderTransId(),updateOrderClient(),
-                    updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems()));
+            httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), updateOrderTransId(),
+                    functions.removePolish(updateOrderClient()), updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems()));
 
             tempOrder.setTransId(updateOrderTransId());
-            tempOrder.setClient(updateOrderClient());
+            tempOrder.setClient(functions.removePolish(updateOrderClient()));
             tempOrder.setBruttoPrice(updateBruttoPrice());
             tempOrder.setNettoPrice(updateNettoPrice());
             tempOrder.setDiscount(updateDiscount());
@@ -1362,7 +1361,7 @@ public class SimpleUiController implements Initializable {
         else {
             if(event.getSource()==acceptButton){
                 stage = (Stage) acceptButton.getScene().getWindow();
-                Orders order = new Orders(updateOrderTransId(),updateOrderClient(),updateBruttoPrice(),updateNettoPrice(),
+                Orders order = new Orders(updateOrderTransId(),functions.removePolish(updateOrderClient()) ,updateBruttoPrice(),updateNettoPrice(),
                         updateDiscount(),"");
                 if(checkAddingOrder()){
                     httpRequesterOrders.addRequest(order);
