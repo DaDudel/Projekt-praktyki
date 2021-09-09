@@ -1718,9 +1718,29 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label noMaterials;
 
-    @FXML
-    public void checkMaterials(){
 
+    public Boolean checkMaterials(){
+        if(usedMaterialsList!=null){
+            List tempList = usedMaterialsList.getItems();
+            List tempMaterials = materialList.getItems();
+
+            //System.out.println(tempList);
+
+            for(Material mat: (ObservableList<Material>) tempList){
+                for (Material magMat : (ObservableList<Material>) tempMaterials){
+                    if(mat.getId()==magMat.getId()){
+                        if((magMat.getQuantity()- mat.getQuantity())<0){
+                            noMaterials.setText("BRAK MATERIAŁÓW");
+                            return false;
+                        }
+                    }
+                }
+            }
+            noMaterials.setText("");
+            return true;
+        }
+        noMaterials.setText("");
+        return false;
     }
 
     @FXML
@@ -1728,7 +1748,7 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public void realize(){
-        if(usedMaterialsList!=null){
+        if(checkMaterials()){
             List tempList = usedMaterialsList.getItems();
             List tempMaterials = materialList.getItems();
 
