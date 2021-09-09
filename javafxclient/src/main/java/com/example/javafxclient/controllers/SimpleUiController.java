@@ -1116,6 +1116,7 @@ public class SimpleUiController implements Initializable {
         }
         stringCutterOrders(codedItems);
         fillUsedMaterials(tempOrder);
+        sumMaterialCosts(tempOrder);
     }
 
     @FXML
@@ -1619,6 +1620,45 @@ public class SimpleUiController implements Initializable {
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
                 ord.getNettoPrice(),ord.getDiscount(),fullStr));
         tempOrder.setItems(fullStr);
+    }
+
+    @FXML
+    public Label materialCosts;
+
+    public void sumMaterialCosts(Orders ord){
+        if(ord==null){
+            materialCosts.setText("0 zł");
+            return;
+        }
+        if(ord.getItems()==""){
+            materialCosts.setText("0 zł");
+            return;
+        }
+
+        ObservableList<Article> tempArticleList = FXCollections.observableList(stringCutterOrdersToList(ord.getItems()));
+        ObservableList<Material> tempMaterialList = FXCollections.observableArrayList();
+
+        for(Article art: tempArticleList){
+            for (Integer i = 0;i<art.getQuantity();i++){
+                tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
+            }
+        }
+
+        tempMaterialList=(ObservableList<Material>) reduceElements(tempMaterialList);
+
+        materialCosts.setText(returnSum(tempMaterialList).toString() + " zł");
+
+    }
+
+    public Double returnSum(List templist){
+
+        Double sum = 0.0;
+
+        for(Material mat: (ObservableList<Material>) templist){
+            Double temp = mat.getPrice()*mat.getQuantity();
+            sum=sum+temp;
+        }
+        return sum;
     }
 
 }
