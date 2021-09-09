@@ -234,6 +234,7 @@ public class SimpleUiController implements Initializable {
 
         }
         refreshDatabase();
+        sumMaterialCosts(tempOrder);
     }
 
     @FXML
@@ -661,6 +662,7 @@ public class SimpleUiController implements Initializable {
             tempArticle.setMaterials(getSingleArticle(tempArticle.getId()).getMaterials());
             refreshArticleList();
             fillUsedMaterials(tempOrder);
+            sumMaterialCosts(tempOrder);
         }
         else {
             if(event.getSource()==connectEditButton){
@@ -1423,6 +1425,7 @@ public class SimpleUiController implements Initializable {
             tempOrder.setItems(getSingleOrder(tempOrder.getId()).getItems());
             refreshOrderList();
             fillUsedMaterials(tempOrder);
+            sumMaterialCosts(tempOrder);
         }
         else {
             if(event.getSource()==connectEditButton){
@@ -1646,7 +1649,9 @@ public class SimpleUiController implements Initializable {
 
         tempMaterialList=(ObservableList<Material>) reduceElements(tempMaterialList);
 
-        materialCosts.setText(returnSum(tempMaterialList).toString() + " zł");
+        Double costs =(Double) (((double) Math.round(returnSum(tempMaterialList)*100))/100);
+
+        materialCosts.setText(costs + " zł");
 
     }
 
@@ -1655,7 +1660,7 @@ public class SimpleUiController implements Initializable {
         Double sum = 0.0;
 
         for(Material mat: (ObservableList<Material>) templist){
-            Double temp = mat.getPrice()*mat.getQuantity();
+            Double temp = (Double) mat.getPrice() * (Double) mat.getQuantity();
             sum=sum+temp;
         }
         return sum;
