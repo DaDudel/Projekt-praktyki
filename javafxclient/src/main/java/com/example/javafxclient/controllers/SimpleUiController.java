@@ -12,6 +12,7 @@ import com.example.javafxclient.httprequesters.JsonGetter;
 import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -67,11 +69,6 @@ public class SimpleUiController implements Initializable {
     @FXML
     public void connectJson(){
         refreshDatabase();
-    }
-
-    @FXML
-    public void filterTable(){
-
     }
 
     @Override
@@ -772,7 +769,7 @@ public class SimpleUiController implements Initializable {
 
     public void addMaterialToArticle(Article art, Material mat){
         String str = art.getMaterials();
-        str = str + mat.getId()+",0;";
+        str = str + mat.getId()+",1.0;";
         art.setMaterials(str);
         httpRequesterArticle.editRequest(art);
     }
@@ -1720,13 +1717,10 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label noMaterials;
 
-
     public Boolean checkMaterials(){
         if(usedMaterialsList!=null){
             List tempList = usedMaterialsList.getItems();
             List tempMaterials = materialList.getItems();
-
-            //System.out.println(tempList);
 
             for(Material mat: (ObservableList<Material>) tempList){
                 for (Material magMat : (ObservableList<Material>) tempMaterials){
@@ -1753,8 +1747,6 @@ public class SimpleUiController implements Initializable {
         if(checkMaterials()){
             List tempList = usedMaterialsList.getItems();
             List tempMaterials = materialList.getItems();
-
-            //System.out.println(tempList);
 
             for(Material mat: (ObservableList<Material>) tempList){
                 for (Material magMat : (ObservableList<Material>) tempMaterials){
@@ -1790,6 +1782,63 @@ public class SimpleUiController implements Initializable {
         Double nPrice = functions.roundDouble(ord.getNettoPrice()*(100-ord.getDiscount())/100);
         nettoDiscount.setText(nPrice + " zł");
         return;
+    }
+
+    @FXML
+    public void filterMaterialTable(){
+        ObservableList<Material> data = materialList.getItems();
+        FilteredList<Material> filteredData = new FilteredList<>(data, s -> true);
+
+        filterMaterial.textProperty().addListener(obs->{
+            String filter = filterMaterial.getText().toLowerCase();
+            if(filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            }
+            else {
+                filteredData.setPredicate(s -> s.toString().toLowerCase().contains(filter));
+            }
+        });
+        materialList.setItems(filteredData);
+    }
+
+    @FXML
+    public TextField filterArticle;
+
+    @FXML
+    public TextField filterOrders;
+
+    @FXML
+    public void filterArticleTable(){
+        ObservableList<Article> data = articleList.getItems();
+        FilteredList<Article> filteredData = new FilteredList<>(data, s -> true);
+
+        filterArticle.textProperty().addListener(obs->{
+            String filter = filterArticle.getText().toLowerCase();
+            if(filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            }
+            else {
+                filteredData.setPredicate(s -> s.toString().toLowerCase().contains(filter));
+            }
+        });
+        articleList.setItems(filteredData);
+    }
+
+    @FXML
+    public void filterOrdersTable(){
+        ObservableList<Orders> data = ordersList.getItems();
+        FilteredList<Orders> filteredData = new FilteredList<>(data, s -> true);
+
+        filterOrders.textProperty().addListener(obs->{
+            String filter = filterOrders.getText().toLowerCase();
+            if(filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            }
+            else {
+                filteredData.setPredicate(s -> s.toString().toLowerCase().contains(filter));
+            }
+        });
+        ordersList.setItems(filteredData);
     }
 
 }
