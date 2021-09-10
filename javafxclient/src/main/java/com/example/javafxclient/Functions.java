@@ -1,5 +1,10 @@
 package com.example.javafxclient;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.List;
+
 public class Functions {
 
     public Functions() {
@@ -29,5 +34,36 @@ public class Functions {
 
     public Double roundDouble(Double d){
         return (Double) (((double) Math.round(d*100))/100);
+    }
+
+    public Double returnSum(List templist){
+
+        Double sum = 0.0;
+
+        for(Material mat: (ObservableList<Material>) templist){
+            Double temp = (Double) mat.getPrice() * (Double) mat.getQuantity();
+            sum=sum+temp;
+        }
+        return sum;
+    }
+
+    public List reduceElements(List tempList){
+        List helpList = tempList;
+        ObservableList<Material>finalMaterials = FXCollections.observableArrayList();
+        Integer j = helpList.size();
+        for (Integer i = 0; i<j; i++){
+            Material tempMaterial = (Material) helpList.get(i);
+            for (Integer k = i+1;k<j;k++){
+                Material secondMaterial = (Material) helpList.get(k);
+                if(tempMaterial.getId()==secondMaterial.getId()){
+                    tempMaterial.setQuantity(tempMaterial.getQuantity()+secondMaterial.getQuantity());
+                    helpList.remove(secondMaterial);
+                    k--;
+                    j=helpList.size();
+                }
+            }
+            finalMaterials.add(tempMaterial);
+        }
+        return finalMaterials;
     }
 }
