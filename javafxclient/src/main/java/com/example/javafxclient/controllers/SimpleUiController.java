@@ -1104,7 +1104,7 @@ public class SimpleUiController implements Initializable {
         stringCutterOrders(codedItems);
         fillUsedMaterials(tempOrder);
         sumMaterialCosts(tempOrder);
-        setPrices(tempOrder);
+        //setPrices(tempOrder);
         noMaterials.setText("");
     }
 
@@ -1294,7 +1294,7 @@ public class SimpleUiController implements Initializable {
             tempOrder.setBruttoPrice(updateBruttoPrice());
             tempOrder.setNettoPrice(updateNettoPrice());
             tempOrder.setDiscount(updateDiscount());
-            setPrices(tempOrder);
+            //setPrices(tempOrder);
 
 
         }catch (Exception e){
@@ -1742,19 +1742,19 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label nettoDiscount;
 
-    public void setPrices(Orders ord){
-        if(ord==null)
-        {
-            bruttoDiscount.setText("");
-            nettoDiscount.setText("");
-            return;
-        }
-        Double bPrice = functions.roundDouble(ord.getBruttoPrice()*(100-ord.getDiscount())/100);
-        bruttoDiscount.setText(bPrice + " zł");
-        Double nPrice = functions.roundDouble(ord.getNettoPrice()*(100-ord.getDiscount())/100);
-        nettoDiscount.setText(nPrice + " zł");
-        return;
-    }
+//    public void setPrices(Orders ord){
+//        if(ord==null)
+//        {
+//            bruttoDiscount.setText("");
+//            nettoDiscount.setText("");
+//            return;
+//        }
+//        Double bPrice = functions.roundDouble(ord.getBruttoPrice()*(100-ord.getDiscount())/100);
+//        bruttoDiscount.setText(bPrice + " zł");
+//        Double nPrice = functions.roundDouble(ord.getNettoPrice()*(100-ord.getDiscount())/100);
+//        nettoDiscount.setText(nPrice + " zł");
+//        return;
+//    }
 
     @FXML
     public void filterMaterialTable(){
