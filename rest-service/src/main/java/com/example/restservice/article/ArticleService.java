@@ -41,7 +41,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public void updateArticle(Integer articleId, String name, Integer quantity, Double price, String materials) {
+    public void updateArticle(Integer articleId, String name, Integer quantity, Double price, String materials, Double workPrice) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(()->new IllegalStateException("article with id " + articleId + " does not exist"));
 
@@ -64,6 +64,10 @@ public class ArticleService {
                 materials.length() > 0 &&
                 !Objects.equals(article.getMaterials(),materials)){
             article.setMaterials(materials);
+        }
+        if(workPrice != null &&
+                !Objects.equals(article.getWorkPrice(),workPrice)){
+            article.setWorkPrice(price);
         }
     }
 }

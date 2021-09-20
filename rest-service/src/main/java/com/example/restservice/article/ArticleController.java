@@ -38,7 +38,8 @@ public class ArticleController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer quantity,
             @RequestParam(required = false) Double price,
-            @RequestParam(required = false) String materials){
-        articleService.updateArticle(articleId,name, quantity,price,materials);
+            @RequestParam(required = false) String materials,
+            @RequestParam(required = false) Double workPrice){
+        articleService.updateArticle(articleId,name, quantity,price,materials,workPrice);
     }
 }
