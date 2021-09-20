@@ -1,4 +1,4 @@
-package com.example.restservice.order;
+package com.example.restservice.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class OrdersService {
     }
 
     @Transactional
-    public void updateOrders(Integer orderId, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items){
+    public void updateOrders(Integer orderId, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone){
         Orders orders = ordersRepository.findById(orderId)
                 .orElseThrow(()->new IllegalStateException("order with id "+ orderId+ " does not exist"));
 
@@ -75,6 +75,10 @@ public class OrdersService {
                 items.length() > 0 &&
                 !Objects.equals(orders.getItems(),items)){
             orders.setItems(items);
+        }
+
+        if(isDone != null){
+            orders.setDone(isDone);
         }
     }
 }

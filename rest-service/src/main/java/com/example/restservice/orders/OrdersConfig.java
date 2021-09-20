@@ -1,4 +1,4 @@
-package com.example.restservice.order;
+package com.example.restservice.orders;
 
 import org.springframework.context.annotation.Configuration;
 

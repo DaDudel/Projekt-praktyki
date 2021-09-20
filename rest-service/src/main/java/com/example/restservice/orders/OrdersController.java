@@ -1,4 +1,4 @@
-package com.example.restservice.order;
+package com.example.restservice.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,8 @@ public class OrdersController {
             @RequestParam(required = false) Double bruttoPrice,
             @RequestParam(required = false) Double nettoPrice,
             @RequestParam(required = false) Double discount,
-            @RequestParam(required = false) String items){
-        ordersService.updateOrders(ordersId,transId,client,bruttoPrice,nettoPrice,discount,items);
+            @RequestParam(required = false) String items,
+            @RequestParam(required = false) Boolean isDone){
+        ordersService.updateOrders(ordersId,transId,client,bruttoPrice,nettoPrice,discount,items,isDone);
     }
 }
