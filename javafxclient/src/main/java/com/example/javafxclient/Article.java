@@ -6,6 +6,33 @@ public class Article {
     private Integer quantity;
     private Double price;
     private String materials;
+    private Double workPrice;
+
+    public Article(String name, Integer quantity, Double price, String materials, Double workPrice) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.materials = materials;
+        this.workPrice = workPrice;
+    }
+
+    public Article(Integer id, String name, Integer quantity, Double price, String materials, Double workPrice) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.materials = materials;
+        this.workPrice = workPrice;
+    }
+
+    public Double getWorkPrice() {
+        return workPrice;
+    }
+
+    public void setWorkPrice(Double workPrice) {
+        this.workPrice = workPrice;
+    }
+
 
     public Article(Integer id, String name, Integer quantity, Double price, String materials) {
         this.id = id;

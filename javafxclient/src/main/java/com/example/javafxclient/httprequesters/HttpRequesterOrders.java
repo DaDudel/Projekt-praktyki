@@ -73,6 +73,8 @@ public class HttpRequesterOrders {
                     + order.getDiscount()
                     + "\", \"items\": \""
                     + order.getItems()
+                    + "\", \"done\": \""
+                    + order.getDone()
                     + "\"}";
             try(OutputStream os = connection.getOutputStream()){
                 byte[] input = jsonInputString.getBytes("utf-8");
@@ -96,7 +98,8 @@ public class HttpRequesterOrders {
             fixedClient = fixedClient.replaceAll(" ","%20");
             fixedClient = functions.removePolish(fixedClient);
             String editLink = "transId="+order.getTransId()+"&client="+fixedClient+"&bruttoPrice="+order.getBruttoPrice()
-                    +"&nettoPrice="+order.getNettoPrice()+"&discount="+order.getDiscount()+"&items="+order.getItems();
+                    +"&nettoPrice="+order.getNettoPrice()+"&discount="+order.getDiscount()+"&items="+order.getItems()
+                    +"&isDone="+order.getDone();
             URL url = new URL("http://localhost:8080/API/orders/"+order.getId()+"?"+editLink);
             connection = (HttpURLConnection) url.openConnection();
 

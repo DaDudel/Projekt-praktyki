@@ -58,6 +58,8 @@ public class HttpRequesterArticle {
                     + article.getPrice()
                     + "\", \"materials\": \""
                     + article.getMaterials()
+                    + "\", \"workPrice\": \""
+                    + article.getWorkPrice()
                     + "\"}";
             try(OutputStream os = connection.getOutputStream()){
                 byte[] input = jsonInputString.getBytes("utf-8");
@@ -80,7 +82,7 @@ public class HttpRequesterArticle {
             String fixedName = article.getName();
             fixedName = fixedName.replaceAll(" ","%20");
             fixedName = functions.removePolish(fixedName);
-            String editLink = "name="+fixedName+"&quantity="+article.getQuantity()+"&price="+article.getPrice()+"&materials="+article.getMaterials();
+            String editLink = "name="+fixedName+"&quantity="+article.getQuantity()+"&price="+article.getPrice()+"&materials="+article.getMaterials()+"&workPrice="+article.getWorkPrice();
             URL url = new URL("http://localhost:8080/API/articles/"+article.getId()+"?"+editLink);
             connection = (HttpURLConnection) url.openConnection();
 
