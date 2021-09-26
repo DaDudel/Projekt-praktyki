@@ -1813,5 +1813,45 @@ public class SimpleUiController implements Initializable {
         ordersList.setItems(filteredData);
     }
 
+    @FXML
+    public TextField orderSearchBar;
+
+    @FXML
+    public void filterEditOrder(){
+        ObservableList<Article> data = editMaterialsList.getItems();
+        FilteredList<Article> filteredData = new FilteredList<>(data, s -> true);
+
+        orderSearchBar.textProperty().addListener(obs->{
+            String filter = orderSearchBar.getText().toLowerCase();
+            if(filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            }
+            else {
+                filteredData.setPredicate(s -> s.toString().toLowerCase().contains(filter));
+            }
+        });
+        editMaterialsList.setItems(filteredData);
+    }
+
+    @FXML
+    public TextField articleSearchBar;
+
+    @FXML
+    public void filterEditArticle(){
+        ObservableList<Material> data = editMaterialsList.getItems();
+        FilteredList<Material> filteredData = new FilteredList<>(data, s -> true);
+
+        articleSearchBar.textProperty().addListener(obs->{
+            String filter = articleSearchBar.getText().toLowerCase();
+            if(filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            }
+            else {
+                filteredData.setPredicate(s -> s.toString().toLowerCase().contains(filter));
+            }
+        });
+        editMaterialsList.setItems(filteredData);
+    }
+
 }
 
