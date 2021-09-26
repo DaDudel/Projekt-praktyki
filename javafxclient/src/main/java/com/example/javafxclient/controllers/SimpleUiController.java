@@ -442,12 +442,14 @@ public class SimpleUiController implements Initializable {
             quantityTextField1.setText("");
             priceTextField1.setText("");
             codedMaterials="";
+            workPriceTF.setText("");
         }
         else{
             nameTextField1.setText(tempArticle.getName());
             quantityTextField1.setText(tempArticle.getQuantity().toString());
             priceTextField1.setText(tempArticle.getPrice().toString());
             codedMaterials=tempArticle.getMaterials();
+            workPriceTF.setText(tempArticle.getWorkPrice().toString());
         }
 
         stringCutter(codedMaterials);
@@ -590,15 +592,36 @@ public class SimpleUiController implements Initializable {
         return tempArticle.getName();
     }
 
+    public Double updateArticleWorkPrice(){
+        if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
+            tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
+        }
+        String temp = workPriceTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            discErrorLabel.setText("");
+            return price;
+
+        }catch (Exception e){
+            discErrorLabel.setTextFill(Color.RED);
+            discErrorLabel.setText("Koszt musi być liczbą");
+        }
+        return tempArticle.getWorkPrice();
+    }
+
     @FXML
     public void updateArticleDetails(){
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterArticle.editRequest(new Article(tempArticle.getId(),functions.removePolish(updateArticleName()) ,updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials()));
+            httpRequesterArticle.editRequest(new Article(tempArticle.getId(),functions.removePolish(updateArticleName()) ,updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials(), updateArticleWorkPrice()));
             tempArticle.setName(functions.removePolish(nameTextField1.getText()));
             tempArticle.setPrice(updateArticlePrice());
+            tempArticle.setWorkPrice(updateArticleWorkPrice());
+            tempArticle.setQuantity(updateArticleQuantity());
         }catch (Exception e){
 
         }
@@ -1852,6 +1875,9 @@ public class SimpleUiController implements Initializable {
         });
         editMaterialsList.setItems(filteredData);
     }
+
+    @FXML
+    public TextField workPriceTF;
 
 }
 

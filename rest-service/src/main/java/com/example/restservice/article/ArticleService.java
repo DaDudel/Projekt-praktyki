@@ -67,7 +67,7 @@ public class ArticleService {
         }
         if(workPrice != null &&
                 !Objects.equals(article.getWorkPrice(),workPrice)){
-            article.setWorkPrice(price);
+            article.setWorkPrice(workPrice);
         }
     }
 }

@@ -73,7 +73,7 @@
       <Label layoutX="245.0" layoutY="410.0" text="zł" />
       <Label layoutX="244.0" layoutY="435.0" text="\%" />
       <Label layoutX="600.0" layoutY="520.0" text="Robocizna:" />
-      <TextField layoutX="670.0" layoutY="515.0" promptText="DO ZROBIENIA" />
+      <TextField fx:id="workPriceTF" layoutX="670.0" layoutY="515.0" />
       <Label layoutX="820.0" layoutY="520.0" text="zł" />
       <Label layoutX="14.0" layoutY="310.0" text="Zrealizowane:" />
       <Label layoutX="95.0" layoutY="310.0" text="DO ZROBIENIA" />
