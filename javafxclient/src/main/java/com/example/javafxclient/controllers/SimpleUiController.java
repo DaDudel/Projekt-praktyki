@@ -822,7 +822,7 @@ public class SimpleUiController implements Initializable {
         }
 
         //System.out.println(fullStr);
-        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
+        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr,art.getWorkPrice()));
         tempArticle.setMaterials(fullStr);
     }
 
@@ -850,7 +850,7 @@ public class SimpleUiController implements Initializable {
 
         fullStr = fullStr+mat.getId()+","+mat.getQuantity()+";";
 
-        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr));
+        httpRequesterArticle.editRequest(new Article(art.getId(),art.getName(),art.getQuantity(),art.getPrice(),fullStr,art.getWorkPrice()));
         tempArticle.setMaterials(fullStr);
     }
 
