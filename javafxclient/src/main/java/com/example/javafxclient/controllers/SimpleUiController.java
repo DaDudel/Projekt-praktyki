@@ -415,6 +415,9 @@ public class SimpleUiController implements Initializable {
         if(!createPriceErrorLabel.getText().equals("")){
             return false;
         }
+        if(createWorkPriceErrorLabel!=null&&!(createWorkPriceErrorLabel.getText().equals(""))){
+            return false;
+        }
         return true;
     }
 
@@ -936,7 +939,7 @@ public class SimpleUiController implements Initializable {
         else {
             if(event.getSource()==acceptButton){
                 stage = (Stage) acceptButton.getScene().getWindow();
-                Article article = new Article(functions.removePolish(getNewMaterialName()),getNewArticleQuantity(),getNewMaterialPrice(),"");
+                Article article = new Article(functions.removePolish(getNewMaterialName()),getNewArticleQuantity(),getNewMaterialPrice(),"",getNewArticleWorkPrice());
                 if(checkAdding()){
                     httpRequesterArticle.addRequest(article);
                     stage.close();
@@ -962,6 +965,21 @@ public class SimpleUiController implements Initializable {
             createQuantityErrorLabel.setText("Ilość musi być liczbą całkowitą.");
             return 0;
         }
+    }
+    public Double getNewArticleWorkPrice(){
+        String temp = createMaterialWorkPriceTF.getText();
+        temp=temp.replaceAll(",",".");
+        Double price;
+        try{
+            price=Double.parseDouble(temp);
+            createWorkPriceErrorLabel.setText("");
+            return price;
+
+        }catch (Exception e){
+            createWorkPriceErrorLabel.setTextFill(Color.RED);
+            createWorkPriceErrorLabel.setText("Koszt musi być liczbą.");
+        }
+        return 0.0;
     }
 
     public Boolean canDeleteMaterial(Material material){
@@ -1878,6 +1896,12 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public TextField workPriceTF;
+
+    @FXML
+    public TextField createMaterialWorkPriceTF;
+
+    @FXML
+    public Label createWorkPriceErrorLabel;
 
 }
 
