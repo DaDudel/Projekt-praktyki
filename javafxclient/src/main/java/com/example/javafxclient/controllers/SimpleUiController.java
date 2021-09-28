@@ -1133,6 +1133,7 @@ public class SimpleUiController implements Initializable {
             nettoPriceTF.setText("");
             discountTF.setText("");
             codedItems="";
+            realisedCheckBox.setSelected(false);
         }
         else{
             transIdTF.setText(tempOrder.getTransId().toString());
@@ -1141,6 +1142,13 @@ public class SimpleUiController implements Initializable {
             nettoPriceTF.setText(tempOrder.getNettoPrice().toString());
             discountTF.setText(tempOrder.getDiscount().toString());
             codedItems=tempOrder.getItems();
+            realisedCheckBox.setSelected(tempOrder.getDone());
+            if(tempOrder.getDone()){
+                realizeOrder.setDisable(true);
+            }
+            else{
+                realizeOrder.setDisable(false);
+            }
         }
         stringCutterOrders(codedItems);
         fillUsedMaterials(tempOrder);
@@ -1902,6 +1910,23 @@ public class SimpleUiController implements Initializable {
 
     @FXML
     public Label createWorkPriceErrorLabel;
+
+    @FXML
+    public CheckBox realisedCheckBox;
+
+    @FXML
+    public void changeRealisation(){
+        httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), tempOrder.getTransId(), tempOrder.getClient(),
+                tempOrder.getBruttoPrice(), tempOrder.getNettoPrice(), tempOrder.getDiscount(), tempOrder.getItems(),
+                realisedCheckBox.isSelected()));
+        tempOrder.setDone(realisedCheckBox.isSelected());
+        if(tempOrder.getDone()){
+            realizeOrder.setDisable(true);
+        }
+        else{
+            realizeOrder.setDisable(false);
+        }
+    }
 
 }
 

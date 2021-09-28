@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -76,13 +77,13 @@
       <TextField fx:id="workPriceTF" layoutX="670.0" layoutY="515.0" />
       <Label layoutX="820.0" layoutY="520.0" text="zł" />
       <Label layoutX="14.0" layoutY="310.0" text="Zrealizowane:" />
-      <Label layoutX="95.0" layoutY="310.0" text="DO ZROBIENIA" />
-      <Button fx:id="realizeOrder" layoutX="176.0" layoutY="307.0" mnemonicParsing="false" onAction="#realize" prefHeight="24.0" prefWidth="68.0" text="Zrealizuj">
+      <Button fx:id="realizeOrder" layoutX="124.0" layoutY="307.0" mnemonicParsing="false" onAction="#realize" prefHeight="24.0" prefWidth="119.0" text="Zrealizuj">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
       <Label fx:id="noMaterials" alignment="CENTER" layoutX="14.0" layoutY="656.0" prefHeight="18.0" prefWidth="280.0" textFill="RED" />
+      <CheckBox fx:id="realisedCheckBox" layoutX="95.0" layoutY="310.0" mnemonicParsing="false" onAction="#changeRealisation" />
 <!--      <Label layoutX="14.0" layoutY="460.0" text="Cena brutto po rabacie:" />-->
 <!--      <Label layoutX="14.0" layoutY="485.0" text="Cena netto po rabacie:" />-->
 <!--      <Label fx:id="bruttoDiscount" layoutX="155.0" layoutY="460.0" prefHeight="18.0" prefWidth="52.0" />-->
