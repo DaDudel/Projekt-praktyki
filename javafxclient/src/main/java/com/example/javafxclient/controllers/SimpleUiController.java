@@ -1336,7 +1336,7 @@ public class SimpleUiController implements Initializable {
         }
         try{
             httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), updateOrderTransId(),
-                    functions.removePolish(updateOrderClient()), updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems()));
+                    functions.removePolish(updateOrderClient()), updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems(),tempOrder.getDone()));
 
             tempOrder.setTransId(updateOrderTransId());
             tempOrder.setClient(functions.removePolish(updateOrderClient()));
@@ -1402,7 +1402,7 @@ public class SimpleUiController implements Initializable {
             if(event.getSource()==acceptButton){
                 stage = (Stage) acceptButton.getScene().getWindow();
                 Orders order = new Orders(updateOrderTransId(),functions.removePolish(updateOrderClient()) ,updateBruttoPrice(),updateNettoPrice(),
-                        updateDiscount(),"");
+                        updateDiscount(),"",false);
                 if(checkAddingOrder()){
                     httpRequesterOrders.addRequest(order);
                     stage.close();
@@ -1609,7 +1609,7 @@ public class SimpleUiController implements Initializable {
         }
 
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
-                ord.getNettoPrice(),ord.getDiscount(),fullStr));
+                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone()));
 
         tempOrder.setItems(fullStr);
     }
@@ -1658,7 +1658,7 @@ public class SimpleUiController implements Initializable {
         fullStr = fullStr+art.getId()+","+art.getQuantity()+";";
 
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
-                ord.getNettoPrice(),ord.getDiscount(),fullStr));
+                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone()));
         tempOrder.setItems(fullStr);
     }
 
@@ -1780,6 +1780,10 @@ public class SimpleUiController implements Initializable {
                     }
                 }
             }
+            tempOrder.setDone(true);
+            realisedCheckBox.setSelected(true);
+            httpRequesterOrders.editRequest(tempOrder);
+            realizeOrder.setDisable(true);
             refreshDatabase();
         }
 
