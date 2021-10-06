@@ -1155,6 +1155,10 @@ public class SimpleUiController implements Initializable {
         sumMaterialCosts(tempOrder);
         //setPrices(tempOrder);
         noMaterials.setText("");
+        //disable when done
+        //disable button when not enough
+        //fix + - articles
+        fillNeededMaterials();
     }
 
     @FXML
@@ -2076,6 +2080,77 @@ public class SimpleUiController implements Initializable {
             refreshDatabase();
         }
 
+    }
+
+    @FXML
+    public ListView usedMaterialsList1;
+
+    public void fillNeededMaterials(){
+        if(usedMaterialsList!=null){
+            refreshDatabase();
+
+            ObservableList<Article> usedArticlesList =  FXCollections.observableList(itemsList.getItems());
+            ObservableList<Material> tempList = FXCollections.observableArrayList();
+            ObservableList<Material> tempMaterials = FXCollections.observableList(materialList.getItems());
+            ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+
+            ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
+            ObservableList<Material> tempList2 = FXCollections.observableArrayList();
+            ObservableList<Material> tempMaterials2 = FXCollections.observableArrayList();
+            ObservableList<Article> tempArticles2 = FXCollections.observableArrayList();
+
+
+            //System.out.println(itemsList.getItems());
+
+            for (Article art: (ObservableList<Article>) usedArticlesList){
+                for(Article magArt : (ObservableList<Article>)tempArticles){
+                    if(art.getId()==magArt.getId()){
+                        Article tmpArt = new Article(art.getId(),art.getName(),
+                                art.getQuantity(),art.getPrice(),art.getMaterials(), art.getWorkPrice());
+                        //System.out.println("check: itemy przed: "+magArt.getQuantity());
+                        //System.out.println("check: potrzebne przed: "+tmpArt.getQuantity());
+                        if((magArt.getQuantity()-art.getQuantity())<0){
+                            tmpArt.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            usedArticlesList2.add(tmpArt);
+                            //art.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            magArt.setQuantity(0);
+                        }
+                        else {
+                            magArt.setQuantity(magArt.getQuantity()-art.getQuantity());
+                            //art.setQuantity(0);
+                            tmpArt.setQuantity(0);
+                            usedArticlesList2.add(tmpArt);
+                        }
+                        //System.out.println("check: itemy po: "+magArt.getQuantity());
+                        //System.out.println("check: potrzebne po: "+tmpArt.getQuantity());
+                    }
+                }
+            }
+
+            //System.out.println(itemsList.getItems());
+            //System.out.println();
+
+            for(Article art: (ObservableList<Article>) usedArticlesList2){
+                for (Integer i = 0;i<art.getQuantity();i++){
+                    tempList.addAll(stringCutterArticleToList(art.getMaterials()));
+                }
+            }
+
+            tempList=(ObservableList<Material>) functions.reduceElements(tempList);
+
+            for(Material mat: (ObservableList<Material>) tempList){
+                for (Material magMat : (ObservableList<Material>) tempMaterials){
+                    if(mat.getId()==magMat.getId()){
+                        if((magMat.getQuantity()- mat.getQuantity())<0){
+                            ///////
+                            tempMaterials2.add(new Material(mat.getId(),mat.getName(),
+                                    mat.getQuantity()-magMat.getQuantity(), mat.getPrice()));
+                        }
+                    }
+                }
+            }
+            usedMaterialsList1.setItems(tempMaterials2);
+        }
     }
 
 }

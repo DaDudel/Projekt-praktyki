@@ -56,7 +56,7 @@ public class Material {
     @Override
     public String toString() {
         Double roundQuantity =(Double) (((double) Math.round(this.quantity*100))/100);
-        return name + " " + roundQuantity;
+        return name + "  |  " + roundQuantity;
     }
 }
 
