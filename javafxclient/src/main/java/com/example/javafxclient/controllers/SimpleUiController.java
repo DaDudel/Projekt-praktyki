@@ -1762,32 +1762,32 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Button realizeOrder;
 
-    @FXML
-    public void realize(){
-        if(checkMaterials()){
-            refreshDatabase();
-            List tempList = usedMaterialsList.getItems();
-            List tempMaterials = materialList.getItems();
-
-            for(Material mat: (ObservableList<Material>) tempList){
-                for (Material magMat : (ObservableList<Material>) tempMaterials){
-                    if(mat.getId()==magMat.getId()){
-                        Material newMaterial = new Material(magMat.getId(), magMat.getName(),
-                                functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
-                        //System.out.println(newMaterial);
-                        httpRequesterMaterial.editRequest(newMaterial);
-
-                    }
-                }
-            }
-            tempOrder.setDone(true);
-            realisedCheckBox.setSelected(true);
-            httpRequesterOrders.editRequest(tempOrder);
-            realizeOrder.setDisable(true);
-            refreshDatabase();
-        }
-
-    }
+//    @FXML
+//    public void realize(){
+//        if(checkMaterials()){
+//            refreshDatabase();
+//            List tempList = usedMaterialsList.getItems();
+//            List tempMaterials = materialList.getItems();
+//
+//            for(Material mat: (ObservableList<Material>) tempList){
+//                for (Material magMat : (ObservableList<Material>) tempMaterials){
+//                    if(mat.getId()==magMat.getId()){
+//                        Material newMaterial = new Material(magMat.getId(), magMat.getName(),
+//                                functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
+//                        //System.out.println(newMaterial);
+//                        httpRequesterMaterial.editRequest(newMaterial);
+//
+//                    }
+//                }
+//            }
+//            tempOrder.setDone(true);
+//            realisedCheckBox.setSelected(true);
+//            httpRequesterOrders.editRequest(tempOrder);
+//            realizeOrder.setDisable(true);
+//            refreshDatabase();
+//        }
+//
+//    }
 
     @FXML
     public Label bruttoDiscount;
@@ -1930,6 +1930,152 @@ public class SimpleUiController implements Initializable {
         else{
             realizeOrder.setDisable(false);
         }
+    }
+
+    Boolean checkMaterialsv2(){
+        //skopiować przedmioty z list i podmienic do innych
+        if(usedMaterialsList!=null){
+            refreshDatabase();
+//            ObservableList<Article> usedArticlesList =  itemsList.getItems();
+//            ObservableList<Material> tempList = FXCollections.observableArrayList();
+//            ObservableList<Material> tempMaterials = materialList.getItems();
+//            ObservableList<Article> tempArticles = articleList.getItems();
+
+
+            ObservableList<Article> usedArticlesList =  FXCollections.observableList(itemsList.getItems());
+            ObservableList<Material> tempList = FXCollections.observableArrayList();
+            ObservableList<Material> tempMaterials = FXCollections.observableList(materialList.getItems());
+            ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+
+            ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
+            ObservableList<Material> tempList2 = FXCollections.observableArrayList();
+            ObservableList<Material> tempMaterials2 = FXCollections.observableArrayList();
+            ObservableList<Article> tempArticles2 = FXCollections.observableArrayList();
+
+
+            System.out.println(itemsList.getItems());
+
+            for (Article art: (ObservableList<Article>) usedArticlesList){
+                for(Article magArt : (ObservableList<Article>)tempArticles){
+                    if(art.getId()==magArt.getId()){
+                        Article tmpArt = new Article(art.getId(),art.getName(),
+                                art.getQuantity(),art.getPrice(),art.getMaterials(), art.getWorkPrice());
+                        System.out.println("check: itemy przed: "+magArt.getQuantity());
+                        System.out.println("check: potrzebne przed: "+tmpArt.getQuantity());
+                        if((magArt.getQuantity()-art.getQuantity())<0){
+                            tmpArt.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            usedArticlesList2.add(tmpArt);
+                            //art.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            magArt.setQuantity(0);
+                        }
+                        else {
+                            magArt.setQuantity(magArt.getQuantity()-art.getQuantity());
+                            //art.setQuantity(0);
+                            tmpArt.setQuantity(0);
+                            usedArticlesList2.add(tmpArt);
+                        }
+                        System.out.println("check: itemy po: "+magArt.getQuantity());
+                        System.out.println("check: potrzebne po: "+tmpArt.getQuantity());
+                    }
+                }
+            }
+
+            System.out.println(itemsList.getItems());
+            System.out.println();
+
+            for(Article art: (ObservableList<Article>) usedArticlesList2){
+                for (Integer i = 0;i<art.getQuantity();i++){
+                    tempList.addAll(stringCutterArticleToList(art.getMaterials()));
+                }
+            }
+
+            tempList=(ObservableList<Material>) functions.reduceElements(tempList);
+
+            for(Material mat: (ObservableList<Material>) tempList){
+                for (Material magMat : (ObservableList<Material>) tempMaterials){
+                    if(mat.getId()==magMat.getId()){
+                        if((magMat.getQuantity()- mat.getQuantity())<0){
+                            noMaterials.setText("BRAK MATERIAŁÓW");
+                            return false;
+                        }
+                    }
+                }
+            }
+            noMaterials.setText("");
+            return true;
+        }
+        noMaterials.setText("");
+        return false;
+    }
+
+    @FXML
+    public void realizev2(){
+        if(checkMaterialsv2()){
+            refreshDatabase();
+            fillUsedMaterials(tempOrder);
+            List usedArticlesList = itemsList.getItems();
+            List tempList = FXCollections.observableArrayList();
+            List tempMaterials = materialList.getItems();
+            List tempArticles = articleList.getItems();
+
+            ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
+
+            System.out.println(itemsList.getItems());
+
+            for (Article art: (ObservableList<Article>) usedArticlesList){
+                for(Article magArt : (ObservableList<Article>)tempArticles){
+                    if(art.getId()==magArt.getId()){
+                        System.out.println("itemy przed: "+magArt.getQuantity());
+                        System.out.println("potrzebne przed: "+art.getQuantity());
+                        Article tmpArt = new Article(art.getId(),art.getName(),
+                                art.getQuantity(),art.getPrice(),art.getMaterials(), art.getWorkPrice());
+                        if((magArt.getQuantity()-art.getQuantity())<0){
+                            tmpArt.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            //art.setQuantity(art.getQuantity()-magArt.getQuantity());
+                            usedArticlesList2.add(tmpArt);
+                            magArt.setQuantity(0);
+                        }
+                        else {
+                            magArt.setQuantity(magArt.getQuantity()-art.getQuantity());
+                            //art.setQuantity(0);
+                            tmpArt.setQuantity(0);
+                            usedArticlesList2.add(tmpArt);
+                        }
+                        System.out.println("itemy po: "+magArt.getQuantity());
+                        System.out.println("potrzebne po: "+tmpArt.getQuantity());
+                        Article newArticle = new Article(magArt.getId(), magArt.getName(), magArt.getQuantity(), magArt.getPrice(),
+                                magArt.getMaterials(), magArt.getWorkPrice());
+                        httpRequesterArticle.editRequest(newArticle);
+                    }
+                }
+            }
+
+            for(Article art: (ObservableList<Article>) usedArticlesList2){
+                for (Integer i = 0;i<art.getQuantity();i++){
+                    tempList.addAll(stringCutterArticleToList(art.getMaterials()));
+                }
+            }
+
+            tempList=(ObservableList<Material>) functions.reduceElements(tempList);
+
+            for(Material mat: (ObservableList<Material>) tempList){
+                for (Material magMat : (ObservableList<Material>) tempMaterials){
+                    if(mat.getId()==magMat.getId()){
+                        Material newMaterial = new Material(magMat.getId(), magMat.getName(),
+                                functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
+                        //System.out.println(newMaterial);
+                        httpRequesterMaterial.editRequest(newMaterial);
+
+                    }
+                }
+            }
+            tempOrder.setDone(true);
+            realisedCheckBox.setSelected(true);
+            httpRequesterOrders.editRequest(tempOrder);
+            realizeOrder.setDisable(true);
+            refreshDatabase();
+        }
+
     }
 
 }

@@ -77,7 +77,7 @@
       <TextField fx:id="workPriceTF" layoutX="670.0" layoutY="515.0" />
       <Label layoutX="820.0" layoutY="520.0" text="zł" />
       <Label layoutX="14.0" layoutY="310.0" text="Zrealizowane:" />
-      <Button fx:id="realizeOrder" layoutX="124.0" layoutY="307.0" mnemonicParsing="false" onAction="#realize" prefHeight="24.0" prefWidth="119.0" text="Zrealizuj">
+      <Button fx:id="realizeOrder" layoutX="124.0" layoutY="307.0" mnemonicParsing="false" onAction="#realizev2" prefHeight="24.0" prefWidth="119.0" text="Zrealizuj">
          <font>
             <Font size="11.0" />
          </font>
