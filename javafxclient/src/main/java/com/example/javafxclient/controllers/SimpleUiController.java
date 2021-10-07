@@ -642,7 +642,9 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
-        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(), tempArticle.getQuantity()+1, tempArticle.getPrice(), tempArticle.getMaterials()));
+        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(),
+                tempArticle.getQuantity()+1, tempArticle.getPrice(), tempArticle.getMaterials(),
+                tempArticle.getWorkPrice()));
         Integer temp = tempArticle.getQuantity()+1;
         tempArticle.setQuantity(tempArticle.getQuantity()+1);
         quantityTextField1.setText(temp.toString());
@@ -654,7 +656,9 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
-        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(), tempArticle.getQuantity()-1, tempArticle.getPrice(), tempArticle.getMaterials()));
+        httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(),
+                tempArticle.getQuantity()-1, tempArticle.getPrice(), tempArticle.getMaterials(),
+                tempArticle.getWorkPrice()));
         Integer temp = tempArticle.getQuantity()-1;
         tempArticle.setQuantity(tempArticle.getQuantity()-1);
         quantityTextField1.setText(temp.toString());
@@ -1157,7 +1161,6 @@ public class SimpleUiController implements Initializable {
         noMaterials.setText("");
         //disable when done
         //disable button when not enough
-        //fix + - articles
         fillNeededMaterials();
     }
 
