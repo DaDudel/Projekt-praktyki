@@ -2090,7 +2090,7 @@ public class SimpleUiController implements Initializable {
 
     public void fillNeededMaterials(){
         if(usedMaterialsList!=null){
-            refreshDatabase();
+            //refreshDatabase();
 
             ObservableList<Article> usedArticlesList =  FXCollections.observableList(itemsList.getItems());
             ObservableList<Material> tempList = FXCollections.observableArrayList();
