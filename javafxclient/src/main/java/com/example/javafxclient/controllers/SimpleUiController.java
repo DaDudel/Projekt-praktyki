@@ -1156,7 +1156,7 @@ public class SimpleUiController implements Initializable {
         }
         stringCutterOrders(codedItems);
         fillUsedMaterials(tempOrder);
-        sumMaterialCosts(tempOrder);
+        sumMaterialCostsv2(tempOrder);
         //setPrices(tempOrder);
         noMaterials.setText("");
         //disable when done
@@ -1681,11 +1681,12 @@ public class SimpleUiController implements Initializable {
             materialCosts.setText("0 zł");
             return;
         }
-
+        //Double sum = 0.0;
         ObservableList<Article> tempArticleList = FXCollections.observableList(stringCutterOrdersToList(ord.getItems()));
         ObservableList<Material> tempMaterialList = FXCollections.observableArrayList();
 
         for(Article art: tempArticleList){
+
             for (Integer i = 0;i<art.getQuantity();i++){
                 tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
             }
@@ -1960,15 +1961,15 @@ public class SimpleUiController implements Initializable {
             ObservableList<Article> tempArticles2 = FXCollections.observableArrayList();
 
 
-            System.out.println(itemsList.getItems());
+            //System.out.println(itemsList.getItems());
 
             for (Article art: (ObservableList<Article>) usedArticlesList){
                 for(Article magArt : (ObservableList<Article>)tempArticles){
                     if(art.getId()==magArt.getId()){
                         Article tmpArt = new Article(art.getId(),art.getName(),
                                 art.getQuantity(),art.getPrice(),art.getMaterials(), art.getWorkPrice());
-                        System.out.println("check: itemy przed: "+magArt.getQuantity());
-                        System.out.println("check: potrzebne przed: "+tmpArt.getQuantity());
+                        //System.out.println("check: itemy przed: "+magArt.getQuantity());
+                        //System.out.println("check: potrzebne przed: "+tmpArt.getQuantity());
                         if((magArt.getQuantity()-art.getQuantity())<0){
                             tmpArt.setQuantity(art.getQuantity()-magArt.getQuantity());
                             usedArticlesList2.add(tmpArt);
@@ -1981,14 +1982,14 @@ public class SimpleUiController implements Initializable {
                             tmpArt.setQuantity(0);
                             usedArticlesList2.add(tmpArt);
                         }
-                        System.out.println("check: itemy po: "+magArt.getQuantity());
-                        System.out.println("check: potrzebne po: "+tmpArt.getQuantity());
+                        //System.out.println("check: itemy po: "+magArt.getQuantity());
+                        //System.out.println("check: potrzebne po: "+tmpArt.getQuantity());
                     }
                 }
             }
 
-            System.out.println(itemsList.getItems());
-            System.out.println();
+            //System.out.println(itemsList.getItems());
+            //System.out.println();
 
             for(Article art: (ObservableList<Article>) usedArticlesList2){
                 for (Integer i = 0;i<art.getQuantity();i++){
@@ -2149,11 +2150,63 @@ public class SimpleUiController implements Initializable {
                             tempMaterials2.add(new Material(mat.getId(),mat.getName(),
                                     mat.getQuantity()-magMat.getQuantity(), mat.getPrice()));
                         }
+
                     }
                 }
             }
             usedMaterialsList1.setItems(tempMaterials2);
         }
+    }
+
+    public void sumMaterialCostsv2(Orders ord){
+        if(ord==null){
+            materialCosts.setText("0 zł");
+            return;
+        }
+        if(ord.getItems()==""){
+            materialCosts.setText("0 zł");
+            return;
+        }
+
+        ObservableList<Article> usedArticlesList =  FXCollections.observableList(stringCutterOrdersToList(ord.getItems()));
+        ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+
+        ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
+
+        Double sum = 0.0;
+        ObservableList<Material> tempMaterialList = FXCollections.observableArrayList();
+
+        for (Article art: (ObservableList<Article>) usedArticlesList){
+            for(Article magArt : (ObservableList<Article>)tempArticles){
+                if(art.getId()==magArt.getId()){
+                    Article tmpArt = new Article(art.getId(),art.getName(),
+                            art.getQuantity(),art.getPrice(),art.getMaterials(), magArt.getWorkPrice());
+                    if((magArt.getQuantity()-art.getQuantity())<0){
+                        tmpArt.setQuantity(art.getQuantity()-magArt.getQuantity());
+                        usedArticlesList2.add(tmpArt);
+                    }
+                    else {
+                        tmpArt.setQuantity(0);
+                        usedArticlesList2.add(tmpArt);
+                    }
+                }
+            }
+        }
+
+
+        for(Article art: usedArticlesList2){
+            for (Integer i = 0;i<art.getQuantity();i++){
+                tempMaterialList.addAll(stringCutterArticleToList(art.getMaterials()));
+                sum = sum + art.getWorkPrice();
+            }
+        }
+
+        tempMaterialList=(ObservableList<Material>) functions.reduceElements(tempMaterialList);
+
+        Double costs =(Double) (((double) Math.round((functions.returnSum(tempMaterialList)+sum)*100))/100);
+
+        materialCosts.setText(costs + " zł");
+
     }
 
 }
