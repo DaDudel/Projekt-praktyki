@@ -112,6 +112,7 @@ public class SimpleUiController implements Initializable {
             quantityTextField.setText(tempMaterial.getQuantity().toString());
             priceTextField.setText(tempMaterial.getPrice().toString());
         }
+        cleanErrors();
 
     }
 
@@ -128,6 +129,7 @@ public class SimpleUiController implements Initializable {
 
             ObservableList<Orders> tmpList = FXCollections.observableList(httpRequesterOrders.getRequest());
             ordersList.setItems(tmpList);
+
 
             connectionLabel.setTextFill(Color.GREEN);
             connectionLabel.setText("Połączono");
@@ -456,6 +458,7 @@ public class SimpleUiController implements Initializable {
         }
 
         stringCutter(codedMaterials);
+        cleanErrors();
 
     }
 
@@ -1162,6 +1165,7 @@ public class SimpleUiController implements Initializable {
         //disable when done
         //disable button when not enough
         fillNeededMaterials();
+        cleanErrors();
     }
 
     @FXML
@@ -2207,6 +2211,17 @@ public class SimpleUiController implements Initializable {
 
         materialCosts.setText(costs + " zł");
 
+    }
+
+    public void cleanErrors(){
+        priceErrorLabel1.setText("");
+        quantityErrorLabel.setText("");
+        deleteMaterialLabel.setText("");
+        quantityErrorLabel1.setText("");
+        priceErrorLabel.setText("");
+        deleteArticleLabel.setText("");
+        discErrorLabel.setText("");
+        noMaterials.setText("");
     }
 
 }
