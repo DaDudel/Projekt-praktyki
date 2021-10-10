@@ -26,7 +26,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
@@ -2222,6 +2224,50 @@ public class SimpleUiController implements Initializable {
         deleteArticleLabel.setText("");
         discErrorLabel.setText("");
         noMaterials.setText("");
+    }
+
+    public void saveToFile(){
+        try {
+            ObservableList<Material> tempMaterialList = FXCollections.observableList(materialList.getItems());
+            ObservableList<Article> tempArticleList = FXCollections.observableList(articleList.getItems());
+            ObservableList<Orders> tempOrdersList = FXCollections.observableList(ordersList.getItems());
+            PrintStream myWriter = new PrintStream("savedData.txt");
+            myWriter.println("Materialy:");
+            for (Material mat : tempMaterialList){
+                myWriter.println("nazwa: "+mat.getName());
+                myWriter.println("cena: "+mat.getPrice().toString());
+                myWriter.println("ilosc: "+mat.getQuantity().toString());
+                myWriter.println();
+            }
+            myWriter.println("Przedmioty:");
+            for (Article art : tempArticleList){
+                myWriter.println("nazwa: "+art.getName());
+                myWriter.println("cena: "+art.getPrice());
+                myWriter.println("ilosc: "+art.getQuantity());
+                myWriter.println("robocizna: "+art.getWorkPrice());
+                myWriter.println();
+            }
+            myWriter.println("Zamowienia:");
+            for(Orders ord : tempOrdersList){
+                myWriter.println("id: "+ord.getTransId());
+                myWriter.println("klient: "+ord.getClient());
+                myWriter.println("cena brutto: "+ord.getBruttoPrice());
+                myWriter.println("cena netto: "+ord.getNettoPrice());
+                myWriter.println("rabat: "+ord.getDiscount());
+                myWriter.println("czy zrealizowane: " + ord.getDone());
+                myWriter.println();
+            }
+            myWriter.close();
+        } catch (IOException e) {
+        }
+    }
+
+    @FXML
+    public Button saveBtn;
+
+    @FXML
+    public void saveAll(){
+        saveToFile();
     }
 
 }
