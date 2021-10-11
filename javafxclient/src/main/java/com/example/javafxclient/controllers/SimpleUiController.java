@@ -2226,6 +2226,29 @@ public class SimpleUiController implements Initializable {
         noMaterials.setText("");
     }
 
+    public void stringCutterArticleToFile(String string){
+        ObservableList<Material> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            return;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Double q = Double.parseDouble(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findMaterial(idNumber,q));
+
+        }
+    }
+
     public void saveToFile(){
         try {
             ObservableList<Material> tempMaterialList = FXCollections.observableList(materialList.getItems());
@@ -2245,6 +2268,20 @@ public class SimpleUiController implements Initializable {
                 myWriter.println("cena: "+art.getPrice());
                 myWriter.println("ilosc: "+art.getQuantity());
                 myWriter.println("robocizna: "+art.getWorkPrice());
+                myWriter.println("sklad:");
+                String string = art.getMaterials();
+                while (!string.equals("")){
+                    Integer index = string.indexOf(",");
+                    String sIdNumber = string.substring(0,index);
+                    Integer idNumber = Integer.parseInt(sIdNumber);
+
+                    string = string.substring(index+1);
+                    index = string.indexOf(";");
+                    String sQ = string.substring(0,index);
+                    Double q = Double.parseDouble(sQ);
+                    string = string.substring(index+1);
+                    myWriter.println(findMaterial(idNumber,q).getName() + ";" +findMaterial(idNumber,q).getQuantity());
+                }
                 myWriter.println();
             }
             myWriter.println("Zamowienia:");
@@ -2255,6 +2292,20 @@ public class SimpleUiController implements Initializable {
                 myWriter.println("cena netto: "+ord.getNettoPrice());
                 myWriter.println("rabat: "+ord.getDiscount());
                 myWriter.println("czy zrealizowane: " + ord.getDone());
+                myWriter.println("sklad:");
+                String string = ord.getItems();
+                while (!string.equals("")){
+                    Integer index = string.indexOf(",");
+                    String sIdNumber = string.substring(0,index);
+                    Integer idNumber = Integer.parseInt(sIdNumber);
+
+                    string = string.substring(index+1);
+                    index = string.indexOf(";");
+                    String sQ = string.substring(0,index);
+                    Integer q = Integer.parseInt(sQ);
+                    string = string.substring(index+1);
+                    myWriter.println(findArticle(idNumber,q).getName() + ";" +findArticle(idNumber,q).getQuantity());
+                }
                 myWriter.println();
             }
             myWriter.close();
