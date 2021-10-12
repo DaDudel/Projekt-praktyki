@@ -2321,5 +2321,49 @@ public class SimpleUiController implements Initializable {
         saveToFile();
     }
 
+    @FXML
+    public void handleLogin(Event event) throws IOException {
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/loginPopUp.fxml"));
+        loader.setController(new SimpleUiController());
+        root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Logowanie");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(addMaterialButton.getScene().getWindow());stage.showAndWait();
+    }
+
+    @FXML
+    public Button loginButton;
+
+    @FXML
+    public PasswordField pField;
+
+    @FXML
+    public Label wrongPasswordLabel;
+
+    @FXML
+    public void switchScene()throws IOException{
+        if(pField.getText().equals("piwo1234")){
+            Stage stage;
+            Parent root;
+            stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui.fxml"));
+            //loader.setController(new SimpleUiController());
+            root = loader.load();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Aplikacja");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            //stage.initOwner(addMaterialButton.getScene().getWindow());
+            stage.show();
+            pField.getScene().getWindow().hide();
+        }
+        else {
+            wrongPasswordLabel.setTextFill(Color.RED);
+            wrongPasswordLabel.setText("Błędne hasło");
+        }
+    }
 }
 

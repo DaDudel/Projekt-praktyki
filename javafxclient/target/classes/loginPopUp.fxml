@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="360.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxclient.controllers.SimpleUiController">
+    <children>
+        <Button fx:id="loginButton" layoutX="289.0" layoutY="227.0" mnemonicParsing="false" onAction="#switchScene" text="Akceptuj" />
+        <Label layoutX="288.0" layoutY="141.0" text="Podaj hasło:" />
+        <Label fx:id="wrongPasswordLabel" alignment="CENTER" layoutX="230.0" layoutY="294.0" prefHeight="18.0" prefWidth="180.0" textAlignment="CENTER" />
+      <PasswordField fx:id="pField" layoutX="246.0" layoutY="167.0" />
+    </children>
+</AnchorPane>
