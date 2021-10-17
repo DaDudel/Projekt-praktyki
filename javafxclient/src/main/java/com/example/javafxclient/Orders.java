@@ -120,6 +120,6 @@ public class Orders {
 
     @Override
     public String toString() {
-        return transId + " " + client;
+        return transId + "  |  " + client;
     }
 }
