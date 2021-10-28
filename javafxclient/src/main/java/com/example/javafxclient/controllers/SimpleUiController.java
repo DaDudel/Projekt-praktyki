@@ -531,7 +531,7 @@ public class SimpleUiController implements Initializable {
         Article article = (Article) articleList.getSelectionModel().getSelectedItem();
         if(article==null){
             deleteArticleLabel.setTextFill(Color.RED);
-            deleteArticleLabel.setText("Wybierz przedmiot do usunięcia");
+            deleteArticleLabel.setText("Wybierz produkt do usunięcia");
         }
         else {
             if(canDeleteArticle(article)){
@@ -544,7 +544,7 @@ public class SimpleUiController implements Initializable {
             }
             else {
                 deleteArticleLabel.setTextFill(Color.RED);
-                deleteArticleLabel.setText("Nie można usunąć, przedmiot jest wykorzystywany.");
+                deleteArticleLabel.setText("Nie można usunąć, produkt jest wykorzystywany.");
             }
 
         }
@@ -939,7 +939,7 @@ public class SimpleUiController implements Initializable {
             root = loader.load();
 
             stage.setScene(new Scene(root));
-            stage.setTitle("Dodawanie przedmiotu");
+            stage.setTitle("Dodawanie produktu");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initOwner(addMaterialButton.getScene().getWindow());
             stage.showAndWait();
@@ -1376,7 +1376,7 @@ public class SimpleUiController implements Initializable {
         Orders order = (Orders) ordersList.getSelectionModel().getSelectedItem();
         if(order==null){
             deleteArticleLabel.setTextFill(Color.RED);
-            deleteArticleLabel.setText("Wybierz transakcję do usunięcia");
+            deleteArticleLabel.setText("Wybierz zamówienie do usunięcia");
         }
         else {
             httpRequesterOrders.deleteRequest(order.getId());
@@ -2262,7 +2262,7 @@ public class SimpleUiController implements Initializable {
                 myWriter.println("ilosc: "+mat.getQuantity().toString());
                 myWriter.println();
             }
-            myWriter.println("Przedmioty:");
+            myWriter.println("Produkty:");
             for (Article art : tempArticleList){
                 myWriter.println("nazwa: "+art.getName());
                 myWriter.println("cena: "+art.getPrice());

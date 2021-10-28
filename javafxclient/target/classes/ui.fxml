@@ -30,7 +30,7 @@
         <Button fx:id="plusButton" layoutX="1194.0" layoutY="407.0" mnemonicParsing="false" onAction="#plusQuantity" prefWidth="25.6" text="+" />
         <Button fx:id="minusButton" layoutX="1220.0" layoutY="407.0" mnemonicParsing="false" onAction="#minusQuantity" prefWidth="25.6" text="-" />
         <ListView fx:id="articleList" layoutX="600.0" layoutY="48.0" onMouseClicked="#displaySelectedArticle" prefHeight="295.0" prefWidth="280.0" />
-        <TextField fx:id="filterArticle" layoutX="600.0" layoutY="14.0" onKeyTyped="#filterArticleTable" prefHeight="26.0" prefWidth="280.0" promptText="Szukaj przedmiotu" />
+        <TextField fx:id="filterArticle" layoutX="600.0" layoutY="14.0" onKeyTyped="#filterArticleTable" prefHeight="26.0" prefWidth="280.0" promptText="Szukaj produktu" />
         <ListView fx:id="materialsList" layoutX="600.0" layoutY="353.0" prefHeight="75.0" prefWidth="220.0" />
         <Label fx:id="nameLabel1" layoutX="600.0" layoutY="445.0" text="Nazwa:" />
         <TextField fx:id="nameTextField1" layoutX="670.0" layoutY="440.0" />
@@ -40,8 +40,8 @@
         <TextField fx:id="priceTextField1" layoutX="670.0" layoutY="490.0" />
         <Label layoutX="820.0" layoutY="495.0" text="zł" />
         <Button fx:id="updateArticleButton" layoutX="600.0" layoutY="548.0" mnemonicParsing="false" onAction="#updateArticleDetails" prefHeight="26.0" prefWidth="280.0" text="Zaktualizuj dane" />
-        <Button fx:id="deleteArticleButton" layoutX="600.0" layoutY="578.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="26.0" prefWidth="280.0" text="Usuń wybrany przedmiot" />
-        <Button fx:id="addArticleButton" layoutX="600.0" layoutY="608.0" mnemonicParsing="false" onAction="#handleAddArticleScene" prefHeight="26.0" prefWidth="280.0" text="Dodaj nowy przedmiot" />
+        <Button fx:id="deleteArticleButton" layoutX="600.0" layoutY="578.0" mnemonicParsing="false" onAction="#deleteArticle" prefHeight="26.0" prefWidth="280.0" text="Usuń wybrany produkt" />
+        <Button fx:id="addArticleButton" layoutX="600.0" layoutY="608.0" mnemonicParsing="false" onAction="#handleAddArticleScene" prefHeight="26.0" prefWidth="280.0" text="Dodaj nowy produkt" />
         <Label fx:id="quantityErrorLabel1" layoutX="600.0" layoutY="640.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
         <Label fx:id="priceErrorLabel1" layoutX="600.0" layoutY="660.0" prefHeight="18.0" prefWidth="280.0" textAlignment="CENTER" />
         <Label fx:id="deleteArticleLabel" layoutX="600.0" layoutY="680.0" prefHeight="18.0" prefWidth="280.0" />
@@ -64,8 +64,8 @@
       <TextField fx:id="discountTF" layoutX="95.0" layoutY="430.0" />
       <Button fx:id="updateOrderButton" layoutX="265.0" layoutY="348.0" mnemonicParsing="false" onAction="#updateOrderDetails" prefHeight="26.0" prefWidth="200.0" text="Zaktualizuj dane" />
       <Label fx:id="discErrorLabel" layoutX="600.0" layoutY="700.0" prefHeight="18.0" prefWidth="280.0" />
-      <Button fx:id="deleteOrderButton" layoutX="265.0" layoutY="378.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="26.0" prefWidth="200.0" text="Usuń wybraną transakcję" />
-      <Button fx:id="addOrderButton" layoutX="265.0" layoutY="408.0" mnemonicParsing="false" onAction="#handleAddOrderScene" prefHeight="26.0" prefWidth="200.0" text="Dodaj nową transakcję" />
+      <Button fx:id="deleteOrderButton" layoutX="265.0" layoutY="378.0" mnemonicParsing="false" onAction="#deleteOrder" prefHeight="26.0" prefWidth="200.0" text="Usuń wybrane zamówienie" />
+      <Button fx:id="addOrderButton" layoutX="265.0" layoutY="408.0" mnemonicParsing="false" onAction="#handleAddOrderScene" prefHeight="26.0" prefWidth="200.0" text="Dodaj nowe zamówienie" />
       <Label layoutX="14.0" layoutY="472.0" text="Przybliżony koszt materiałów:" />
       <Label fx:id="materialCosts" layoutX="180.0" layoutY="472.0" prefHeight="18.0" prefWidth="52.0" text="0 zł" />
       <Label layoutX="14.0" layoutY="497.0" text="Materiały do produkcji:" />
