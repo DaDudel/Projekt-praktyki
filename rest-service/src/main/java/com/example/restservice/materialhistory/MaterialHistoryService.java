@@ -1,71 +1,60 @@
 package com.example.restservice.materialhistory;
 
+import com.example.restservice.material.Material;
+import com.example.restservice.material.MaterialRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-@Entity
-@Table
+@Service
 public class MaterialHistoryService {
-    @Id
-    @SequenceGenerator(
-            name = "material_sequence",
-            sequenceName = "material_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "material_sequence"
-    )
-    private Integer id;
-    private Integer materialId;
-    private Double change;
-    private LocalDate timeStamp;
+    private final MaterialHistoryRepository materialHistoryRepository;
 
-    public MaterialHistoryService() {
+    @Autowired
+    public MaterialHistoryService(MaterialHistoryRepository materialHistoryRepository) {
+        this.materialHistoryRepository = materialHistoryRepository;
     }
 
-    public MaterialHistoryService(Integer materialId, Double change, LocalDate timeStamp) {
-        this.materialId = materialId;
-        this.change = change;
-        this.timeStamp = timeStamp;
+    public List<MaterialHistory> getMaterialHistory() {
+        return materialHistoryRepository.findAll();
     }
 
-    public MaterialHistoryService(Integer id, Integer materialId, Double change, LocalDate timeStamp) {
-        this.id = id;
-        this.materialId = materialId;
-        this.change = change;
-        this.timeStamp = timeStamp;
+    public void addNewMaterialHistory(MaterialHistory materialHistory) {
+        materialHistoryRepository.save(materialHistory);
     }
 
-    public Integer getId() {
-        return id;
+    public void deleteMaterialHistory(Integer materialHistoryId) {
+        boolean exists = materialHistoryRepository.existsById(materialHistoryId);
+        if(!exists){
+            throw new IllegalStateException("materialHistory with id "+ materialHistoryId + " does not exist");
+        }
+        materialHistoryRepository.deleteById(materialHistoryId);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @Transactional
+    public void updateMaterialHistory(Integer materialHistoryId, Integer materialId, Double change, LocalDate timeStamp) {
+        MaterialHistory materialHistory = materialHistoryRepository.findById(materialHistoryId)
+                .orElseThrow(()->new IllegalStateException("materialHistory with id " + materialHistoryId + " does not exist"));
 
-    public Integer getMaterialId() {
-        return materialId;
-    }
+        if(materialId != null &&
+                !Objects.equals(materialHistory.getMaterialId(),materialId)){
+            materialHistory.setMaterialId(materialId);
+        }
 
-    public void setMaterialId(Integer materialId) {
-        this.materialId = materialId;
-    }
+        if(change != null &&
+                !Objects.equals(materialHistory.getChange(),change)){
+            materialHistory.setChange(change);
+        }
 
-    public Double getChange() {
-        return change;
-    }
-
-    public void setChange(Double change) {
-        this.change = change;
-    }
-
-    public LocalDate getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(LocalDate timeStamp) {
-        this.timeStamp = timeStamp;
+        if(timeStamp != null &&
+                !Objects.equals(materialHistory.getTimeStamp(),timeStamp)){
+            materialHistory.setTimeStamp(timeStamp);
+        }
     }
 }
