@@ -14,7 +14,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/ui.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/loginPopUp.fxml"));
+        //FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/loginPopUp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/statsPopUp.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 360);
         stage.setTitle("Aplikacja");
         stage.setScene(scene);

@@ -60,10 +60,9 @@ public class MaterialHistory {
 
     @Override
     public String toString() {
-        return "MaterialHistory{" +
+        return
                 "materialId=" + materialId +
                 ", change=" + change +
-                ", timeStamp=" + timeStamp +
-                '}';
+                ", timeStamp=" + timeStamp;
     }
 }

@@ -4,6 +4,9 @@ import com.example.javafxclient.Article;
 import com.example.javafxclient.MaterialHistory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,8 +24,11 @@ public class HttpRequesterMaterialHistory {
                 .uri(URI.create("http://localhost:8080/API/materialHistory"))
                 .build();
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
+        //mapper.registerModule(new JavaTime);
+        //System.out.println(response.body());
         List<MaterialHistory>materialHistories = mapper.readValue(response.body(),new TypeReference<List<MaterialHistory>>(){});
+        //System.out.println(materialHistories);
         return materialHistories;
     }
 }
