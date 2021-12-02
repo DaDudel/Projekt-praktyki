@@ -3,6 +3,8 @@ package com.example.javafxclient.httprequesters;
 import com.example.javafxclient.Material;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 
@@ -30,7 +32,9 @@ public class JsonGetter {
         //System.out.println(response.body());
         //System.out.println();
 
-        ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = JsonMapper.builder().build();
+
         List<Material>materials = mapper.readValue(response.body(),new TypeReference<List<Material>>(){});
         //materials.forEach(System.out::println);
         return materials;

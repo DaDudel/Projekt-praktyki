@@ -4,6 +4,7 @@ package com.example.javafxclient.httprequesters;
 
 import com.example.javafxclient.Functions;
 import com.example.javafxclient.Material;
+import com.example.javafxclient.MaterialHistory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,10 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 
 public class HttpRequesterMaterial {
     private HttpURLConnection connection;
     private Functions functions = new Functions();
+    private HttpRequesterMaterialHistory httpRequesterMaterialHistory = new HttpRequesterMaterialHistory();
 
     public void deleteRequest (Integer id){
         try {
@@ -88,6 +91,13 @@ public class HttpRequesterMaterial {
     }
 
     public HttpRequesterMaterial() {
+    }
+
+    public void doHistory(Material oldMaterial, Material newMaterial){
+        MaterialHistory materialHistory = new MaterialHistory(oldMaterial.getId(),
+                newMaterial.getQuantity()- oldMaterial.getQuantity(),
+                LocalDate.now());
+        httpRequesterMaterialHistory.addRequest(materialHistory);
     }
 }
 

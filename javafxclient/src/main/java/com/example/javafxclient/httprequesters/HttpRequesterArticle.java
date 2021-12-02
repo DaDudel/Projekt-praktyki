@@ -4,6 +4,7 @@ package com.example.javafxclient.httprequesters;
 
 import com.example.javafxclient.Article;
 import com.example.javafxclient.Functions;
+import com.example.javafxclient.MaterialHistory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

@@ -226,7 +226,10 @@ public class SimpleUiController implements Initializable {
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), functions.removePolish(updateName()),updateQuantity(), updatePrice()));
+            httpRequesterMaterial.doHistory(tempMaterial,new Material(tempMaterial.getId(),
+                    functions.removePolish(updateName()),updateQuantity(), updatePrice()));
+            httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(),
+                    functions.removePolish(updateName()),updateQuantity(), updatePrice()));
             tempMaterial.setName(functions.removePolish(nameTextField.getText()));
             tempMaterial.setPrice(updatePrice());
             tempMaterial.setQuantity(updateQuantity());
