@@ -2373,5 +2373,24 @@ public class SimpleUiController implements Initializable {
             wrongPasswordLabel.setText("Błędne hasło");
         }
     }
+
+    @FXML
+    public Button statsBtn;
+
+    @FXML
+    public void openStats() throws IOException{
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/statsPopUp.fxml"));
+        //loader.setController(new SimpleUiController());
+        root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Statystyki");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initOwner(addMaterialButton.getScene().getWindow());
+        stage.show();
+        //pField.getScene().getWindow().hide();
+    }
 }
 

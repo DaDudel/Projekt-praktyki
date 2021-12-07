@@ -31,9 +31,9 @@ public class HttpRequesterMaterialHistory {
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
         ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
         //mapper.registerModule(new JavaTime);
-        System.out.println(response.body());
+        //System.out.println(response.body());
         List<MaterialHistory>materialHistories = mapper.readValue(response.body(),new TypeReference<List<MaterialHistory>>(){});
-        System.out.println(materialHistories);
+        //System.out.println(materialHistories);
         return materialHistories;
     }
 
