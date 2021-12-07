@@ -282,7 +282,10 @@ public class SimpleUiController implements Initializable {
         if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
-        httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
+        httpRequesterMaterial.doHistory(tempMaterial,new Material(tempMaterial.getId(), tempMaterial.getName(),
+                tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
+        httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(),
+                tempMaterial.getQuantity()+1, tempMaterial.getPrice()));
         Double temp = tempMaterial.getQuantity()+1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()+1);
         quantityTextField.setText(temp.toString());
@@ -294,6 +297,8 @@ public class SimpleUiController implements Initializable {
         if((Material) materialList.getSelectionModel().getSelectedItem()!=null){
             tempMaterial = (Material) materialList.getSelectionModel().getSelectedItem();
         }
+        httpRequesterMaterial.doHistory(tempMaterial,new Material(tempMaterial.getId(), tempMaterial.getName(),
+                tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
         httpRequesterMaterial.editRequest(new Material(tempMaterial.getId(), tempMaterial.getName(), tempMaterial.getQuantity()-1, tempMaterial.getPrice()));
         Double temp = tempMaterial.getQuantity()-1;
         tempMaterial.setQuantity(tempMaterial.getQuantity()-1);
