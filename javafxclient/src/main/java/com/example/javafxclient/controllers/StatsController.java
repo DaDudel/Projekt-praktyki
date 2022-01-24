@@ -1,7 +1,9 @@
 package com.example.javafxclient.controllers;
 
+import com.example.javafxclient.Material;
 import com.example.javafxclient.MaterialHistory;
 import com.example.javafxclient.httprequesters.HttpRequesterMaterialHistory;
+import com.example.javafxclient.httprequesters.JsonGetter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.ListView;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class StatsController implements Initializable {
@@ -20,6 +23,9 @@ public class StatsController implements Initializable {
     private LocalDate firstDate;
     private LocalDate secondDate;
     private ObservableList<MaterialHistory>filteredList = FXCollections.observableArrayList();
+    private ObservableList<Material>filteredAndSortedList = FXCollections.observableArrayList();
+    private ObservableList<Material>materialList = FXCollections.observableArrayList();
+    private JsonGetter jsonGetter = new JsonGetter();
 
     public StatsController() {
     }
@@ -29,6 +35,8 @@ public class StatsController implements Initializable {
         try {
             gotList.setAll(httpRequesterMaterialHistory.getRequest());
             historyList.setItems(gotList);
+            materialList.setAll(jsonGetter.getJson());
+            //System.out.println(materialList);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -73,6 +81,34 @@ public class StatsController implements Initializable {
                 }
             }
         }
-        historyList.setItems(filteredList);
+        filterAndSort();
+        historyList.setItems(filteredAndSortedList);
+    }
+    public Material returnMaterial(Integer id){
+        for(Material tmp : materialList){
+            if(Objects.equals(id, tmp.getId())){
+                return tmp;
+            }
+        }
+        return null;
+    }
+
+    public void filterAndSort(){
+        Boolean test;
+        Material copyMat;
+        for(MaterialHistory tmp : filteredList){
+            test = true;
+            for(Material tmpMaterial: filteredAndSortedList){
+                if(Objects.equals(tmp.getMaterialId(), tmpMaterial.getId())){
+                    tmpMaterial.setQuantity(tmpMaterial.getQuantity()+tmp.getChange());
+                    test = false;
+                    break;
+                }
+            }
+            if (test){
+                copyMat = returnMaterial(tmp.getMaterialId());
+                filteredAndSortedList.add(new Material(copyMat.getId(),copyMat.getName(),tmp.getChange(), copyMat.getPrice()));
+            }
+        }
     }
 }
