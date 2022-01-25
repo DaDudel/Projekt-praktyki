@@ -2085,8 +2085,12 @@ public class SimpleUiController implements Initializable {
                     if(mat.getId()==magMat.getId()){
                         Material newMaterial = new Material(magMat.getId(), magMat.getName(),
                                 functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
+                        Material oldMaterial = new Material(magMat.getId(), magMat.getName(),
+                                functions.roundDouble(magMat.getQuantity()), magMat.getPrice());
                         //System.out.println(newMaterial);
+
                         httpRequesterMaterial.editRequest(newMaterial);
+                        httpRequesterMaterial.doHistory(oldMaterial,newMaterial);
 
                     }
                 }

@@ -34,8 +34,9 @@ public class StatsController implements Initializable {
     public void initialize (URL url, ResourceBundle rb){
         try {
             gotList.setAll(httpRequesterMaterialHistory.getRequest());
-            historyList.setItems(gotList);
+            //historyList.setItems(filteredAndSortedList);
             materialList.setAll(jsonGetter.getJson());
+            filterByDate();
             //System.out.println(materialList);
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,6 +97,7 @@ public class StatsController implements Initializable {
     public void filterAndSort(){
         Boolean test;
         Material copyMat;
+        filteredAndSortedList.clear();
         for(MaterialHistory tmp : filteredList){
             test = true;
             for(Material tmpMaterial: filteredAndSortedList){
@@ -110,5 +112,6 @@ public class StatsController implements Initializable {
                 filteredAndSortedList.add(new Material(copyMat.getId(),copyMat.getName(),tmp.getChange(), copyMat.getPrice()));
             }
         }
+
     }
 }
