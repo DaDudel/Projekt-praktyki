@@ -2,9 +2,7 @@ package com.example.javafxclient.httprequesters;
 
 
 
-import com.example.javafxclient.Article;
-import com.example.javafxclient.Functions;
-import com.example.javafxclient.MaterialHistory;
+import com.example.javafxclient.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,11 +15,13 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.List;
 
 public class HttpRequesterArticle {
     private HttpURLConnection connection;
     private Functions functions = new Functions();
+    private HttpRequesterArticleHistory httpRequesterArticleHistory = new HttpRequesterArticleHistory();
 
     public HttpRequesterArticle() {
     }
@@ -110,6 +110,13 @@ public class HttpRequesterArticle {
         ObjectMapper mapper = new ObjectMapper();
         List<Article>articles = mapper.readValue(response.body(),new TypeReference<List<Article>>(){});
         return articles;
+    }
+
+    public void doHistory(Article oldArticle, Article newArticle){
+        ArticleHistory articleHistory = new ArticleHistory(oldArticle.getId(),
+                newArticle.getQuantity()- oldArticle.getQuantity(),
+                LocalDate.now());
+        httpRequesterArticleHistory.addRequest(articleHistory);
     }
 
 
