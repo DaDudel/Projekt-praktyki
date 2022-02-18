@@ -633,7 +633,11 @@ public class SimpleUiController implements Initializable {
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
         try{
-            httpRequesterArticle.editRequest(new Article(tempArticle.getId(),functions.removePolish(updateArticleName()) ,updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials(), updateArticleWorkPrice()));
+            httpRequesterArticle.doHistory(tempArticle,new Article(tempArticle.getId(),
+                    functions.removePolish(updateArticleName()),updateArticleQuantity(), updateArticlePrice(),
+                    tempArticle.getMaterials()));
+            httpRequesterArticle.editRequest(new Article(tempArticle.getId(),functions.removePolish(updateArticleName()),
+                    updateArticleQuantity(), updateArticlePrice(), tempArticle.getMaterials(), updateArticleWorkPrice()));
             tempArticle.setName(functions.removePolish(nameTextField1.getText()));
             tempArticle.setPrice(updateArticlePrice());
             tempArticle.setWorkPrice(updateArticleWorkPrice());
@@ -655,6 +659,10 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
+
+        httpRequesterArticle.doHistory(tempArticle,new Article(tempArticle.getId(), tempArticle.getName(),
+                tempArticle.getQuantity()+1, tempArticle.getPrice(), tempArticle.getMaterials()));
+
         httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(),
                 tempArticle.getQuantity()+1, tempArticle.getPrice(), tempArticle.getMaterials(),
                 tempArticle.getWorkPrice()));
@@ -669,6 +677,8 @@ public class SimpleUiController implements Initializable {
         if((Article) articleList.getSelectionModel().getSelectedItem()!=null){
             tempArticle = (Article) articleList.getSelectionModel().getSelectedItem();
         }
+        httpRequesterArticle.doHistory(tempArticle,new Article(tempArticle.getId(), tempArticle.getName(),
+                tempArticle.getQuantity()-1, tempArticle.getPrice(), tempArticle.getMaterials()));
         httpRequesterArticle.editRequest(new Article(tempArticle.getId(), tempArticle.getName(),
                 tempArticle.getQuantity()-1, tempArticle.getPrice(), tempArticle.getMaterials(),
                 tempArticle.getWorkPrice()));
