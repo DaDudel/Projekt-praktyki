@@ -1768,35 +1768,8 @@ public class SimpleUiController implements Initializable {
     @FXML
     public Label noMaterials;
 
-    public Boolean checkMaterials(){
-        if(usedMaterialsList!=null){
-            refreshDatabase();
-            List tempList = usedMaterialsList.getItems();
-            List tempMaterials = materialList.getItems();
-
-            for(Material mat: (ObservableList<Material>) tempList){
-                for (Material magMat : (ObservableList<Material>) tempMaterials){
-                    if(mat.getId()==magMat.getId()){
-                        if((magMat.getQuantity()- mat.getQuantity())<0){
-                            noMaterials.setText("BRAK MATERIAŁÓW");
-                            return false;
-                        }
-                    }
-                }
-            }
-            noMaterials.setText("");
-            return true;
-        }
-        noMaterials.setText("");
-        return false;
-    }
-
-    @FXML
-    public Button realizeOrder;
-
-//    @FXML
-//    public void realize(){
-//        if(checkMaterials()){
+//    public Boolean checkMaterials(){
+//        if(usedMaterialsList!=null){
 //            refreshDatabase();
 //            List tempList = usedMaterialsList.getItems();
 //            List tempMaterials = materialList.getItems();
@@ -1804,22 +1777,22 @@ public class SimpleUiController implements Initializable {
 //            for(Material mat: (ObservableList<Material>) tempList){
 //                for (Material magMat : (ObservableList<Material>) tempMaterials){
 //                    if(mat.getId()==magMat.getId()){
-//                        Material newMaterial = new Material(magMat.getId(), magMat.getName(),
-//                                functions.roundDouble(magMat.getQuantity()-mat.getQuantity()), magMat.getPrice());
-//                        //System.out.println(newMaterial);
-//                        httpRequesterMaterial.editRequest(newMaterial);
-//
+//                        if((magMat.getQuantity()- mat.getQuantity())<0){
+//                            noMaterials.setText("BRAK MATERIAŁÓW");
+//                            return false;
+//                        }
 //                    }
 //                }
 //            }
-//            tempOrder.setDone(true);
-//            realisedCheckBox.setSelected(true);
-//            httpRequesterOrders.editRequest(tempOrder);
-//            realizeOrder.setDisable(true);
-//            refreshDatabase();
+//            noMaterials.setText("");
+//            return true;
 //        }
-//
+//        noMaterials.setText("");
+//        return false;
 //    }
+
+    @FXML
+    public Button realizeOrder;
 
     @FXML
     public Label bruttoDiscount;
@@ -1977,7 +1950,15 @@ public class SimpleUiController implements Initializable {
             ObservableList<Article> usedArticlesList =  FXCollections.observableList(itemsList.getItems());
             ObservableList<Material> tempList = FXCollections.observableArrayList();
             ObservableList<Material> tempMaterials = FXCollections.observableList(materialList.getItems());
-            ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+            //ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+
+            ObservableList<Article> tempArticles = FXCollections.observableArrayList();;
+
+            ObservableList<Article> tempArticlesFix = FXCollections.observableList(articleList.getItems());
+
+            for(Article ar:tempArticlesFix){
+                tempArticles.add(new Article(ar.getId(),ar.getName(),ar.getQuantity(),ar.getPrice(),ar.getMaterials(),ar.getWorkPrice()));
+            }
 
             ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
             ObservableList<Material> tempList2 = FXCollections.observableArrayList();
@@ -2048,7 +2029,14 @@ public class SimpleUiController implements Initializable {
             List usedArticlesList = itemsList.getItems();
             List tempList = FXCollections.observableArrayList();
             List tempMaterials = materialList.getItems();
-            List tempArticles = articleList.getItems();
+            //List tempArticles = articleList.getItems();
+            ObservableList<Article> tempArticles = FXCollections.observableArrayList();;
+
+            ObservableList<Article> tempArticlesFix = FXCollections.observableList(articleList.getItems());
+
+            for(Article ar:tempArticlesFix){
+                tempArticles.add(new Article(ar.getId(),ar.getName(),ar.getQuantity(),ar.getPrice(),ar.getMaterials(),ar.getWorkPrice()));
+            }
 
             ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
 
@@ -2075,9 +2063,15 @@ public class SimpleUiController implements Initializable {
                         }
                         System.out.println("itemy po: "+magArt.getQuantity());
                         System.out.println("potrzebne po: "+tmpArt.getQuantity());
-                        Article newArticle = new Article(magArt.getId(), magArt.getName(), magArt.getQuantity(), magArt.getPrice(),
-                                magArt.getMaterials(), magArt.getWorkPrice());
+                        Article newArticle = new Article(magArt.getId(), magArt.getName(), magArt.getQuantity(),
+                                magArt.getPrice(), magArt.getMaterials(), magArt.getWorkPrice());
+
+                        Article oldArticle = new Article(magArt.getId(),magArt.getName(),
+                                magArt.getQuantity()+art.getQuantity(), magArt.getPrice(),magArt.getMaterials(),
+                                magArt.getWorkPrice());
                         httpRequesterArticle.editRequest(newArticle);
+                        httpRequesterArticle.doHistory(oldArticle,newArticle);
+                        httpRequesterArticle.doHistory(newArticle,tmpArt);
                     }
                 }
             }
@@ -2124,7 +2118,15 @@ public class SimpleUiController implements Initializable {
             ObservableList<Article> usedArticlesList =  FXCollections.observableList(itemsList.getItems());
             ObservableList<Material> tempList = FXCollections.observableArrayList();
             ObservableList<Material> tempMaterials = FXCollections.observableList(materialList.getItems());
-            ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+            //ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+
+            ObservableList<Article> tempArticles = FXCollections.observableArrayList();;
+
+            ObservableList<Article> tempArticlesFix = FXCollections.observableList(articleList.getItems());
+
+            for(Article ar:tempArticlesFix){
+                tempArticles.add(new Article(ar.getId(),ar.getName(),ar.getQuantity(),ar.getPrice(),ar.getMaterials(),ar.getWorkPrice()));
+            }
 
             ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
             ObservableList<Material> tempList2 = FXCollections.observableArrayList();
@@ -2196,8 +2198,16 @@ public class SimpleUiController implements Initializable {
             return;
         }
 
+        ///chyba gdzies tu trzeba poprawic kopiowanie tablic
+
         ObservableList<Article> usedArticlesList =  FXCollections.observableList(stringCutterOrdersToList(ord.getItems()));
-        ObservableList<Article> tempArticles = FXCollections.observableList(articleList.getItems());
+        ObservableList<Article> tempArticles = FXCollections.observableArrayList();;
+
+        ObservableList<Article> tempArticles2 = FXCollections.observableList(articleList.getItems());
+
+        for(Article ar:tempArticles2){
+            tempArticles.add(new Article(ar.getId(),ar.getName(),ar.getQuantity(),ar.getPrice(),ar.getMaterials(),ar.getWorkPrice()));
+        }
 
         ObservableList<Article> usedArticlesList2 =  FXCollections.observableArrayList();
 

@@ -116,6 +116,9 @@ public class HttpRequesterArticle {
         ArticleHistory articleHistory = new ArticleHistory(oldArticle.getId(),
                 newArticle.getQuantity()- oldArticle.getQuantity(),
                 LocalDate.now());
+        if(articleHistory.getChange()==0){
+            return;
+        }
         httpRequesterArticleHistory.addRequest(articleHistory);
     }
 
