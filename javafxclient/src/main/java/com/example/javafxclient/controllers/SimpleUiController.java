@@ -2416,5 +2416,24 @@ public class SimpleUiController implements Initializable {
         stage.show();
         //pField.getScene().getWindow().hide();
     }
+
+    @FXML
+    public Button ArticleStatsBtn;
+
+    @FXML
+    public void openArticleStats() throws IOException{
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/articleStatsPopUp.fxml"));
+        //loader.setController(new SimpleUiController());
+        root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Statystyki");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initOwner(addMaterialButton.getScene().getWindow());
+        stage.show();
+        //pField.getScene().getWindow().hide();
+    }
 }
 
