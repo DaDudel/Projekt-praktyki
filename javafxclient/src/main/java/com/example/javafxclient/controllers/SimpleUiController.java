@@ -2071,7 +2071,10 @@ public class SimpleUiController implements Initializable {
                                 magArt.getWorkPrice());
                         httpRequesterArticle.editRequest(newArticle);
                         httpRequesterArticle.doHistory(oldArticle,newArticle);
-                        httpRequesterArticle.doHistory(newArticle,tmpArt);
+                        if(tmpArt.getQuantity()-newArticle.getQuantity()>0){
+                            httpRequesterArticle.doHistory(newArticle,tmpArt);
+                        }
+
                     }
                 }
             }
