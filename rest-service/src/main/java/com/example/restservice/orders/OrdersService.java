@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,7 +42,8 @@ public class OrdersService {
     }
 
     @Transactional
-    public void updateOrders(Integer orderId, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone){
+    public void updateOrders(Integer orderId, Integer transId, String client, Double bruttoPrice, Double nettoPrice,
+                             Double discount, String items, Boolean isDone, LocalDate timeStamp){
         Orders orders = ordersRepository.findById(orderId)
                 .orElseThrow(()->new IllegalStateException("order with id "+ orderId+ " does not exist"));
 
@@ -79,6 +81,10 @@ public class OrdersService {
 
         if(isDone != null){
             orders.setDone(isDone);
+        }
+
+        if(timeStamp != null){
+            orders.setTimeStamp(timeStamp);
         }
     }
 }

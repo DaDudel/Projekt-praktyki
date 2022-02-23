@@ -1,8 +1,10 @@
 package com.example.restservice.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,7 +41,9 @@ public class OrdersController {
             @RequestParam(required = false) Double nettoPrice,
             @RequestParam(required = false) Double discount,
             @RequestParam(required = false) String items,
-            @RequestParam(required = false) Boolean isDone){
-        ordersService.updateOrders(ordersId,transId,client,bruttoPrice,nettoPrice,discount,items,isDone);
+            @RequestParam(required = false) Boolean isDone,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate timeStamp){
+        ordersService.updateOrders(ordersId,transId,client,bruttoPrice,nettoPrice,discount,items,isDone,timeStamp);
     }
 }

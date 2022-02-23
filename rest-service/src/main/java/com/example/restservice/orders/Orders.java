@@ -1,6 +1,7 @@
 package com.example.restservice.orders;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -23,6 +24,38 @@ public class Orders {
     private Double discount;
     private String items;
     private Boolean isDone;
+    private LocalDate timeStamp;
+
+    public LocalDate getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDate timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone, LocalDate timeStamp) {
+        this.transId = transId;
+        this.client = client;
+        this.bruttoPrice = bruttoPrice;
+        this.nettoPrice = nettoPrice;
+        this.discount = discount;
+        this.items = items;
+        this.isDone = isDone;
+        this.timeStamp = timeStamp;
+    }
+
+    public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone, LocalDate timeStamp) {
+        this.id = id;
+        this.transId = transId;
+        this.client = client;
+        this.bruttoPrice = bruttoPrice;
+        this.nettoPrice = nettoPrice;
+        this.discount = discount;
+        this.items = items;
+        this.isDone = isDone;
+        this.timeStamp = timeStamp;
+    }
 
     public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone) {
         this.transId = transId;
