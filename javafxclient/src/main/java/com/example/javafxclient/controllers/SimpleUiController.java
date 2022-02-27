@@ -30,6 +30,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -1148,6 +1149,17 @@ public class SimpleUiController implements Initializable {
     }
 
     @FXML
+    public DatePicker orderDatePicker;
+
+    @FXML
+    public void setOrderDate(){
+        httpRequesterOrders.editRequest(new Orders(tempOrder.getId(),tempOrder.getTransId(),tempOrder.getClient(),
+                tempOrder.getBruttoPrice(), tempOrder.getNettoPrice(), tempOrder.getDiscount(), tempOrder.getItems(),
+                tempOrder.getDone(),orderDatePicker.getValue()));
+        tempOrder.setTimeStamp(orderDatePicker.getValue());
+    }
+
+    @FXML
     public void displaySelectedOrder(MouseEvent event){
         if((Orders) ordersList.getSelectionModel().getSelectedItem()!=null){
             tempOrder = (Orders) ordersList.getSelectionModel().getSelectedItem();
@@ -1161,6 +1173,7 @@ public class SimpleUiController implements Initializable {
             discountTF.setText("");
             codedItems="";
             realisedCheckBox.setSelected(false);
+            orderDatePicker.setValue(null);
         }
         else{
             transIdTF.setText(tempOrder.getTransId().toString());
@@ -1170,6 +1183,7 @@ public class SimpleUiController implements Initializable {
             discountTF.setText(tempOrder.getDiscount().toString());
             codedItems=tempOrder.getItems();
             realisedCheckBox.setSelected(tempOrder.getDone());
+            orderDatePicker.setValue(tempOrder.getTimeStamp());
             if(tempOrder.getDone()){
                 realizeOrder.setDisable(true);
             }
@@ -1367,7 +1381,8 @@ public class SimpleUiController implements Initializable {
         }
         try{
             httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), updateOrderTransId(),
-                    functions.removePolish(updateOrderClient()), updateBruttoPrice(), updateNettoPrice(), updateDiscount() ,tempOrder.getItems(),tempOrder.getDone()));
+                    functions.removePolish(updateOrderClient()), updateBruttoPrice(), updateNettoPrice(), updateDiscount(),
+                    tempOrder.getItems(),tempOrder.getDone(),tempOrder.getTimeStamp()));
 
             tempOrder.setTransId(updateOrderTransId());
             tempOrder.setClient(functions.removePolish(updateOrderClient()));
@@ -1433,7 +1448,7 @@ public class SimpleUiController implements Initializable {
             if(event.getSource()==acceptButton){
                 stage = (Stage) acceptButton.getScene().getWindow();
                 Orders order = new Orders(updateOrderTransId(),functions.removePolish(updateOrderClient()) ,updateBruttoPrice(),updateNettoPrice(),
-                        updateDiscount(),"",false);
+                        updateDiscount(),"",false, LocalDate.now());
                 if(checkAddingOrder()){
                     httpRequesterOrders.addRequest(order);
                     stage.close();
@@ -1640,7 +1655,7 @@ public class SimpleUiController implements Initializable {
         }
 
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
-                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone()));
+                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone(),ord.getTimeStamp()));
 
         tempOrder.setItems(fullStr);
     }
@@ -1689,7 +1704,7 @@ public class SimpleUiController implements Initializable {
         fullStr = fullStr+art.getId()+","+art.getQuantity()+";";
 
         httpRequesterOrders.editRequest(new Orders(ord.getId(),ord.getTransId(),ord.getClient(),ord.getBruttoPrice(),
-                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone()));
+                ord.getNettoPrice(),ord.getDiscount(),fullStr,ord.getDone(),ord.getTimeStamp()));
         tempOrder.setItems(fullStr);
     }
 
@@ -1927,7 +1942,7 @@ public class SimpleUiController implements Initializable {
     public void changeRealisation(){
         httpRequesterOrders.editRequest(new Orders(tempOrder.getId(), tempOrder.getTransId(), tempOrder.getClient(),
                 tempOrder.getBruttoPrice(), tempOrder.getNettoPrice(), tempOrder.getDiscount(), tempOrder.getItems(),
-                realisedCheckBox.isSelected()));
+                realisedCheckBox.isSelected(),tempOrder.getTimeStamp()));
         tempOrder.setDone(realisedCheckBox.isSelected());
         if(tempOrder.getDone()){
             realizeOrder.setDisable(true);
@@ -2429,6 +2444,22 @@ public class SimpleUiController implements Initializable {
         Parent root;
         stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/articleStatsPopUp.fxml"));
+        //loader.setController(new SimpleUiController());
+        root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Statystyki");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        //stage.initOwner(addMaterialButton.getScene().getWindow());
+        stage.show();
+        //pField.getScene().getWindow().hide();
+    }
+
+    @FXML
+    public void openOrdersStats() throws IOException{
+        Stage stage;
+        Parent root;
+        stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ordersStatsPopUp.fxml"));
         //loader.setController(new SimpleUiController());
         root = loader.load();
         stage.setScene(new Scene(root));

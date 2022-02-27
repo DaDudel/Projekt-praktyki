@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafxclient.controllers.OrdersStatsController">
+    <children>
+        <DatePicker fx:id="dateFrom" layoutX="32.0" layoutY="14.0" onAction="#filterByDate" />
+        <DatePicker fx:id="dateTo" layoutX="32.0" layoutY="52.0" onAction="#filterByDate" />
+        <Label layoutX="14.0" layoutY="18.0" text="Od" />
+        <Label layoutX="14.0" layoutY="56.0" text="Do" />
+        <ListView fx:id="historyList" layoutX="226.0" layoutY="52.0" onMouseClicked="#displaySelected" prefHeight="200.0" prefWidth="360.0" />
+        <TextField fx:id="searchTF" layoutX="226.0" layoutY="14.0" onKeyTyped="#useSearchBar" prefHeight="26.0" prefWidth="360.0" promptText="Szukaj" />
+        <Text fx:id="SpentText1" layoutX="14.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Klient:" />
+        <Text fx:id="SpentText11" layoutX="14.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cena brutto:" />
+        <Text fx:id="SpentText111" layoutX="14.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cena netto:" />
+        <Text layoutX="14.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
+        <Text fx:id="SpentText11111" layoutX="14.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rabat:" />
+        <Text fx:id="selectedName" layoutX="100.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+        <Text fx:id="selectedBrutto" layoutX="100.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+        <Text fx:id="selectedNetto" layoutX="100.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+        <Text fx:id="selectedId" layoutX="100.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+        <Text fx:id="selectedDiscount" layoutX="100.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+        <Text fx:id="SpentText111111" layoutX="14.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="          " />
+        <Text fx:id="SpentText1111111" layoutX="14.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="       " />
+        <Text fx:id="selectedMaterialPrice" layoutX="129.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="75.837890625" />
+        <Text fx:id="selectedWorkPrice" layoutX="129.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="75.837890625" />
+        <Text fx:id="SpentText11112" layoutX="14.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:" />
+        <Text fx:id="selectedDate" layoutX="100.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+    </children>
+</AnchorPane>

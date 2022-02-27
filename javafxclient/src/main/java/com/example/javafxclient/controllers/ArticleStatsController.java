@@ -177,8 +177,7 @@ public class ArticleStatsController implements Initializable {
 
     @FXML
     public void useSearchBar(){
-        ObservableList<Article> data = FXCollections.observableArrayList();
-        data.setAll(historyList.getItems());
+        ObservableList<Article> data = historyList.getItems();
         FilteredList<Article> filteredData = new FilteredList<>(data, s -> true);
 
         searchTF.textProperty().addListener(obs->{

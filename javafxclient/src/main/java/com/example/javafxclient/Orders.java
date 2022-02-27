@@ -1,5 +1,7 @@
 package com.example.javafxclient;
 
+import java.time.LocalDate;
+
 public class Orders {
     private Integer id;
     private Integer transId;
@@ -9,6 +11,38 @@ public class Orders {
     private Double discount;
     private String items;
     private Boolean isDone;
+    private LocalDate timeStamp;
+
+    public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone, LocalDate timeStamp) {
+        this.id = id;
+        this.transId = transId;
+        this.client = client;
+        this.bruttoPrice = bruttoPrice;
+        this.nettoPrice = nettoPrice;
+        this.discount = discount;
+        this.items = items;
+        this.isDone = isDone;
+        this.timeStamp = timeStamp;
+    }
+
+    public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone, LocalDate timeStamp) {
+        this.transId = transId;
+        this.client = client;
+        this.bruttoPrice = bruttoPrice;
+        this.nettoPrice = nettoPrice;
+        this.discount = discount;
+        this.items = items;
+        this.isDone = isDone;
+        this.timeStamp = timeStamp;
+    }
+
+    public LocalDate getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDate timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone) {
         this.transId = transId;
@@ -18,6 +52,7 @@ public class Orders {
         this.discount = discount;
         this.items = items;
         this.isDone = isDone;
+        this.timeStamp = LocalDate.now();
     }
 
     public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items, Boolean isDone) {
@@ -29,6 +64,7 @@ public class Orders {
         this.discount = discount;
         this.items = items;
         this.isDone = isDone;
+        this.timeStamp = LocalDate.now();
     }
 
     public Boolean getDone() {
@@ -43,24 +79,24 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
-        this.id = id;
-        this.transId = transId;
-        this.client = client;
-        this.bruttoPrice = bruttoPrice;
-        this.nettoPrice = nettoPrice;
-        this.discount = discount;
-        this.items = items;
-    }
-
-    public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
-        this.transId = transId;
-        this.client = client;
-        this.bruttoPrice = bruttoPrice;
-        this.nettoPrice = nettoPrice;
-        this.discount = discount;
-        this.items = items;
-    }
+//    public Orders(Integer id, Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
+//        this.id = id;
+//        this.transId = transId;
+//        this.client = client;
+//        this.bruttoPrice = bruttoPrice;
+//        this.nettoPrice = nettoPrice;
+//        this.discount = discount;
+//        this.items = items;
+//    }
+//
+//    public Orders(Integer transId, String client, Double bruttoPrice, Double nettoPrice, Double discount, String items) {
+//        this.transId = transId;
+//        this.client = client;
+//        this.bruttoPrice = bruttoPrice;
+//        this.nettoPrice = nettoPrice;
+//        this.discount = discount;
+//        this.items = items;
+//    }
 
     public Integer getId() {
         return id;

@@ -90,8 +90,8 @@
       <Button fx:id="saveBtn" layoutX="14.0" layoutY="652.0" mnemonicParsing="false" onAction="#saveAll" text="Zapisz do pliku" />
       <Button fx:id="statsBtn" layoutX="1199.0" layoutY="14.0" mnemonicParsing="false" onAction="#openStats" text="Statystyki" />
       <Button fx:id="ArticleStatsBtn" layoutX="813.0" layoutY="14.0" mnemonicParsing="false" onAction="#openArticleStats" text="Statystyki" />
-      <Button fx:id="ArticleStatsBtn1" layoutX="227.0" layoutY="14.0" mnemonicParsing="false" onAction="#openArticleStats" text="Statystyki" />
-      <DatePicker layoutX="95.0" layoutY="355.0" prefWidth="148.8" />
+      <Button fx:id="ArticleStatsBtn1" layoutX="227.0" layoutY="14.0" mnemonicParsing="false" onAction="#openOrdersStats" text="Statystyki" />
+      <DatePicker fx:id="orderDatePicker" layoutX="95.0" layoutY="355.0" onAction="#setOrderDate" prefWidth="148.8" />
       <Label layoutX="14.0" layoutY="360.0" text="Data:" />
 <!--      <Label layoutX="14.0" layoutY="460.0" text="Cena brutto po rabacie:" />-->
 <!--      <Label layoutX="14.0" layoutY="485.0" text="Cena netto po rabacie:" />-->

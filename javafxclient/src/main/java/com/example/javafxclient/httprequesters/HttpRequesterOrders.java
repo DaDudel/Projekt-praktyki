@@ -4,6 +4,8 @@ import com.example.javafxclient.Functions;
 import com.example.javafxclient.Orders;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -31,7 +33,8 @@ public class HttpRequesterOrders {
                 .uri(URI.create("http://localhost:8080/API/orders"))
                 .build();
         HttpResponse<String> response = client.send(request,HttpResponse.BodyHandlers.ofString());
-        ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
+        ObjectMapper mapper = JsonMapper.builder().addModule(new JavaTimeModule()).build();
         List<Orders>orders = mapper.readValue(response.body(),new TypeReference<List<Orders>>(){});
         return orders;
     }
@@ -75,6 +78,8 @@ public class HttpRequesterOrders {
                     + order.getItems()
                     + "\", \"done\": \""
                     + order.getDone()
+                    + "\", \"timeStamp\": \""
+                    + order.getTimeStamp()
                     + "\"}";
             try(OutputStream os = connection.getOutputStream()){
                 byte[] input = jsonInputString.getBytes("utf-8");
@@ -99,7 +104,7 @@ public class HttpRequesterOrders {
             fixedClient = functions.removePolish(fixedClient);
             String editLink = "transId="+order.getTransId()+"&client="+fixedClient+"&bruttoPrice="+order.getBruttoPrice()
                     +"&nettoPrice="+order.getNettoPrice()+"&discount="+order.getDiscount()+"&items="+order.getItems()
-                    +"&isDone="+order.getDone();
+                    +"&isDone="+order.getDone()+"&timeStamp="+order.getTimeStamp();
             URL url = new URL("http://localhost:8080/API/orders/"+order.getId()+"?"+editLink);
             connection = (HttpURLConnection) url.openConnection();
 
