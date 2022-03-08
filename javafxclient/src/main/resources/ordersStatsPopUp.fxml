@@ -31,5 +31,7 @@
         <Text fx:id="selectedWorkPrice" layoutX="129.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="75.837890625" />
         <Text fx:id="SpentText11112" layoutX="14.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:" />
         <Text fx:id="selectedDate" layoutX="100.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="120.63787841796875" />
+      <Text fx:id="SpentText111112" layoutX="14.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zamówienie:" />
+      <ListView fx:id="productList" layoutX="14.0" layoutY="260.0" prefHeight="96.0" prefWidth="256.0" />
     </children>
 </AnchorPane>

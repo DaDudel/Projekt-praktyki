@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -28,6 +29,7 @@ public class OrdersStatsController implements Initializable {
     private JsonGetter jsonGetter = new JsonGetter();
     private HttpRequesterArticle httpRequesterArticle = new HttpRequesterArticle();
     private ObservableList<Orders>filteredList = FXCollections.observableArrayList();
+    private ObservableList<Article>articleList = FXCollections.observableArrayList();
 
     public OrdersStatsController() {
     }
@@ -38,6 +40,7 @@ public class OrdersStatsController implements Initializable {
             gotList.setAll(httpRequesterOrders.getRequest());
             //historyList.setItems(filteredAndSortedList);
             orderList.setAll(httpRequesterOrders.getRequest());
+            articleList.setAll(httpRequesterArticle.getRequest());
             //materialList.setAll(jsonGetter.getJson());
             filterByDate();
             //System.out.println(materialList);
@@ -121,6 +124,7 @@ public class OrdersStatsController implements Initializable {
             selectedBrutto.setText(functions.roundDouble(selected.getBruttoPrice()).toString() + " zł");
             selectedNetto.setText(functions.roundDouble(selected.getNettoPrice()).toString() + " zł");
             selectedDiscount.setText(functions.roundDouble(selected.getDiscount()).toString() + " %");
+            setProducts(selected);
         }
     }
 
@@ -149,6 +153,60 @@ public class OrdersStatsController implements Initializable {
         selectedDate.setText("");
         selectedDiscount.setText("");
         selectedId.setText("");
+        productList.setItems(null);
     }
+
+    @FXML
+    public ListView productList;
+
+    public void setProducts(Orders ord){
+        ObservableList<Article> templist = FXCollections.observableArrayList();
+        templist.setAll(stringCutterOrdersToList(ord.getItems()));
+        productList.setItems(templist);
+    }
+
+    public List stringCutterOrdersToList(String string){
+        ObservableList<Article> templist = FXCollections.observableArrayList();
+        if(string.equals("")){
+            //itemsList.setItems(templist);
+            return templist;
+        }
+
+        while (!string.equals("")){
+            Integer index = string.indexOf(",");
+            String sIdNumber = string.substring(0,index);
+            Integer idNumber = Integer.parseInt(sIdNumber);
+
+            string = string.substring(index+1);
+            index = string.indexOf(";");
+            String sQ = string.substring(0,index);
+            Integer q = Integer.parseInt(sQ);
+
+            string = string.substring(index+1);
+
+            templist.add(findArticle(idNumber,q));
+
+        }
+        return templist;
+
+    }
+
+    public Article findArticle(Integer id, Integer q){
+        try {
+            ObservableList<Article> helpList = FXCollections.observableList(httpRequesterArticle.getRequest());
+            for (Article temp: helpList){
+                if(temp.getId()==id){
+                    return new Article(id,temp.getName(),q,temp.getPrice(),temp.getMaterials());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //System.out.println("null");
+        return null;
+    }
+
 }
 
